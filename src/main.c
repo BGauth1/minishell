@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:27:42 by gbertet           #+#    #+#             */
-/*   Updated: 2023/04/25 18:49:52 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/04/26 19:12:47 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,64 @@ int		get_nb_cmds(char *s)
 	return (n);
 }
 
+int		ft_count_words(char *s, int n)
+{
+	int		m;
+	int		i;
+	int 	nb_words;
+
+	m = 0;
+	i = 0;
+	while (m != n && s[i])
+	{
+		if (s[i] == '|' && !ft_betweenquotes(s, i))
+			m++;
+		i++;
+	}
+	nb_words = 1;
+	if (m == n)
+	{
+		while (s[i] && (s[i] != '|' || ft_betweenquotes(s, i)))
+		{
+			if (s[i] == ' ' && s[i + 1] != '|')
+				nb_words++;
+			i++;
+		}
+		return (nb_words);
+	}
+	return (0);
+}
+
+char	**ft_fill_cmd(char *s, int n)
+{
+	char	**res;
+	int		nb_words;
+	
+	nb_words = ft_count_words(s, n);
+	res = malloc((nb_words + 1) * sizeof(char *));
+	res[nb_words] = NULL;
+	return (NULL);
+}
+
 void	get_cmds(t_mishell *m)
 {
 	int	i;
 	int	j;
 
+	i = -1;
 	m->nb_cmds = get_nb_cmds(m->full_cmd);
 	m->here_doc = has_here_doc(m->full_cmd, m->nb_cmds);
-	m->cmd = malloc((m->nb_cmds + 1) * sizeof(char **));
-	m->cmd[m->nb_cmds] = NULL;
+	m->cmds = malloc((m->nb_cmds + 1) * sizeof(t_cmd));
+	m->cmds[0].c = malloc(2 * sizeof(char *));
+	m->cmds[0].c[0] = ft_strdup(m->full_cmd);
+	m->cmds[0].c[1] = NULL;
+	m->cmds[m->nb_cmds].c = NULL;
+	while (++i < m->nb_cmds)
+	{
+		m->cmds[i].here_doc = m->here_doc[i];
+		// m->cmds[i].c = ft_fill_cmd(m->full_cmd, i);
+	}
+	free(m->here_doc);
 }
 
 int empty_str(const char *s)
@@ -109,15 +158,18 @@ int main(int ac, char **av, char **ev)
 	{
 		prompt = ft_strjoin(mish.path, "$ ");
 		tmp = ft_readline(prompt);
-		if (empty_str(tmp))
-			printf("\n");
-		else
+		free(prompt);
+		if (!empty_str(tmp))
 		{
 			mish.full_cmd = normalize_str(tmp);
-			printf("%s\n", mish.full_cmd);
 			get_cmds(&mish);
+			if (!ft_strncmp(mish.full_cmd, "exit", 4))
+				ft_exit(&mish);
+			ft_free_cmds(&mish);
 		}
 		free(tmp);
-		free(prompt);
 	}
+	free(tmp);
+	free(prompt);
+	free(mish.full_cmd);
 }

@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 17:59:08 by gbertet           #+#    #+#             */
-/*   Updated: 2023/04/25 18:08:11 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/04/26 19:10:05 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ char	*ft_less_whitespace(char *s)
 				res[tmp] = res[tmp + 1];
                 tmp++;
 			}
+			res[i] = ' ';
 		}
 		else
 			i++;

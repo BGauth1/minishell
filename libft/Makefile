@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lamasson <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/28 20:59:05 by lamasson          #+#    #+#              #
-#    Updated: 2023/02/09 15:55:07 by lamasson         ###   ########.fr        #
+#    Updated: 2023/04/26 14:45:36 by gbertet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRCS	= ft_bzero.c \
 	  ft_memcpy.c \
 	  ft_memmove.c \
 	  ft_memset.c \
+	  ft_realloc.c \
 	  ft_strlcat.c \
 	  ft_strlcpy.c \
 	  ft_strlen.c \

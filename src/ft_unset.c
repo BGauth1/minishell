@@ -1,27 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_readline.c                                      :+:      :+:    :+:   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/24 19:16:03 by lamasson          #+#    #+#             */
-/*   Updated: 2023/04/26 15:30:18 by gbertet          ###   ########.fr       */
+/*   Created: 2023/04/26 19:00:32 by lamasson          #+#    #+#             */
+/*   Updated: 2023/04/26 19:01:10 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-//fct en test
-char *ft_readline(char *str)
-{
-	char    *line;
 
-	line = readline(str);
-	if (line)
+int	ft_unset(char **argv, char **env) //nom variable off //changer losque structur ok
+{
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	if (!argv[2] || getenv(argv[2]) == NULL)
 	{
-		add_history(line);
-		return (line);		
+		//return un prompt et ne se passe rien
+		exit (0);
 	}
-	else
-		return (ft_strdup("exit"));
+	if (argv[2])
+	{
+		while (ft_strncmp(env[i], argv[2], ft_strlen(argv[2])) != 0)
+			i++;
+		while (env[i] != NULL)
+		{
+			tmp = env[i + 1];
+			env[i] = tmp;
+			i++;
+		}
+	}
+	return (0);
 }

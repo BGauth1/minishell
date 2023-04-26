@@ -6,23 +6,11 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:50:18 by gbertet           #+#    #+#             */
-/*   Updated: 2023/04/24 20:29:49 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/04/26 18:46:41 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// int	write_env_var(const char *s, int start, char **ev)
-// {
-// 	int		i;
-// 	char	*tmp;
-// 	char	*res;
-	
-// 	i = 1;
-// 	while (ft_isalnum(s[start + i]))
-// 		i++;
-// 	tmp = ft_substr(s, start, )
-// }
 
 void	ft_echo_arg(char *s)
 {
@@ -64,13 +52,14 @@ int ft_echo(char **cmd)
 	{
 		ft_echo_arg(cmd[i]);
 		i++;
+		// if ()
 	}
 	if (nl)
 		write(1, "\n", 1);
 	return (0);
 }
 
-int	main(int ac, char **av)
+int	main(int ac, char **av, char **ev)
 {
 	// char str[3][10] = {"echo", "-n", NULL};
 	int	i = 0;
@@ -80,11 +69,12 @@ int	main(int ac, char **av)
 	while (i + 1 < ac)
 	{
 		str[i] = ft_strdup(av[i + 1]);
-		write(1, av[i + 1], ft_strlen(av[i + 1]));
-		write(1, " ", 1);
+		// write(1, av[i + 1], ft_strlen(av[i + 1]));
+		// write(1, " ", 1);
 		i++;
 	}
-	write(1, "\n", 1);
+	// write(1, "\n", 1);
+	execve("/usr/bin/echo", str, ev);
 	str[i] = NULL;
 
 	// i = 0;
@@ -96,5 +86,5 @@ int	main(int ac, char **av)
 	// str[i] = NULL;
 	// *av++;
 	// av[ac] = NULL;
-	ft_echo(str);
+	// ft_echo(str);
 }
