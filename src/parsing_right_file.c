@@ -21,7 +21,8 @@ int	ft_check_fdin(t_files fd)
 	fd_in = open(fd.fd_in, O_RDONLY);
 	if (fd_in == -1)
 	{
-		perror(fd.fd_in);
+		//perror(fd.fd_in);
+		printf("minishell: %s: %s\n", fd.fd_in, strerror(errno));
 		exit (1);
 	}
 	close(fd_in);
@@ -40,7 +41,8 @@ int	ft_check_fdout(t_files fd)
 		fd_out = open(fd.fd_out, O_CREAT | O_TRUNC, 0644);
 		if (fd_out == -1)
 		{
-			perror(fd.fd_out);
+			//perror(fd.fd_out);
+			printf("minishell: %s: %s\n", fd.fd_out, strerror(errno));
 			if (fd.nb_pipe > 0)
 				ft_check_fdin(fd);
 			exit (1);
