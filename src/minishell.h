@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:30:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/04/26 19:15:52 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/04/27 18:46:40 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,22 +47,22 @@ typedef struct	s_cmd
 	int		here_doc;
 }				t_cmd;
 
-
 typedef struct s_files{
 	char	*fd_in;
 	char	*fd_out;
 	int		out;
-	int	nb_pipe;
+	int		nb_pipe;
+	char	**tab_var_env;
 }t_files;
 
 //		FT_ENV.C		//
-int	ft_env(char **ev);
+int	ft_env(t_files *files);
 
 //		FT_EXPORT.C		//
-int	ft_export; //modif args
+// int	ft_export; //modif args
 
 //		FT_UNSET.C		//
-int	ft_unset; //modif args
+// int	ft_unset; //modif args
 
 //		FT_PWD.C		//
 int ft_pwd(void);
@@ -90,7 +90,20 @@ int	ft_check_fdout(t_files fd);
 //		PARSING_
 
 //		FT_EXIT.C		//
+void	ft_free_str(char **s);
 void	ft_free_cmds(t_mishell *m);
 void	ft_exit(t_mishell *m);
+
+//		FT_SPLIT_MINISHELL.C	//
+char	**ft_split_minishell(char const *s, char c);
+
+//		FT_PARSING_CMD.C	//
+int		empty_str(const char *s);
+int		synthax_check(char *s);
+
+//		FT_INIT_TAB_ENV.C	//
+void	ft_init_tab_env(char **env, t_files *files);
+void	ft_free_tab_env(t_files *files);
+
 
 #endif

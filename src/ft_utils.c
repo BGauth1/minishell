@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:53:32 by gbertet           #+#    #+#             */
-/*   Updated: 2023/04/26 12:58:02 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/04/27 18:46:40 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int ft_betweenquotes(char *s, int pos)
 	i = -1;
 	quote = 0;
 	c = '\0';
-	if (!s)
+	if (!s[pos])
 		return (0);
 	if (ft_strlen(s) <= pos)
 		return (0);

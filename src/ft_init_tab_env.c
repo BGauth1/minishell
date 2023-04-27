@@ -1,47 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   ft_init_tab_env.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/26 16:54:31 by gbertet           #+#    #+#             */
-/*   Updated: 2023/04/27 18:46:40 by gbertet          ###   ########.fr       */
+/*   Created: 2023/04/27 14:12:52 by lamasson          #+#    #+#             */
+/*   Updated: 2023/04/27 14:57:46 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_free_str(char **s)
+void	ft_init_tab_env(char **env, t_files *files) //envoyer addr & de files dans proto
+{
+	int		len;
+	int		i;
+
+	len = 0;
+	i = 0;
+	while (env[len] != NULL)
+		len++;
+	files->tab_var_env = malloc(sizeof(char *) * (len + 1));
+	while (env[i] != NULL)
+	{
+		files->tab_var_env[i] = ft_strdup(env[i]);
+		i++;
+	}
+	files->tab_var_env[i] = NULL;
+}
+
+void	ft_free_tab_env(t_files *files)
 {
 	int	i;
 
 	i = 0;
-	while (s[i])
+	while (files->tab_var_env[i] != NULL)
 	{
-		free(s[i]);
+		free(files->tab_var_env[i]);
 		i++;
 	}
-	free(s);
-}
-
-void	ft_free_cmds(t_mishell *m)
-{
-	int	i;
-
-	i = 0;
-	free(m->full_cmd);
-	while (m->cmds[i].c)
-	{
-		ft_free_str(m->cmds[i].c);
-		i++;
-	}
-	free(m->cmds);
-}
-
-void    ft_exit(t_mishell *m)   
-{
-	if (m)
-		ft_free_cmds(m);
-	exit (1);
+	free(files->tab_var_env);
 }

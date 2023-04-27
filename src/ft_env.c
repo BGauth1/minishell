@@ -6,20 +6,20 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:42:56 by gbertet           #+#    #+#             */
-/*   Updated: 2023/04/24 20:29:53 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/04/27 18:46:40 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int ft_env(char **ev)
+int ft_env(t_files files)
 {
 	int	i;
 	
 	i = 0;
-	if (!ev)
+	if (!files.tab_var_env)
 		return (0);
-	while (ev[i])
-		printf("%s\n", ev[i++]);
+	while (files.tab_var_env[i])
+		printf("%s\n", files.tab_var_env[i++]);
 	return (1);
 }

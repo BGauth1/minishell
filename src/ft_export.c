@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:59:02 by lamasson          #+#    #+#             */
-/*   Updated: 2023/04/26 18:59:55 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/04/27 18:46:40 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,21 @@ char	*rec_var_env(char *str)
 	return (rec);
 }
 
-void	switch_env(char **env, char *name, char *str)
+void	switch_env(t_files *files, char *name, char *str)
 {
 	int	i;
 
 	i = 0;
-	while (env[i] != NULL)
+	while (files->tab_var_env[i] != NULL)
 	{
-		if (ft_strncmp(env[i], name, ft_strlen(name)) == 0)
-			env[i] = str;
+		if (ft_strncmp(files->tab_var_env[i], name, ft_strlen(name)) == 0)
+			files->tab_var_env[i] = str;
 		i++;
 	}
 	free(name);
 }
 
-int	ft_export(char **argv, char **env)//(t_minishell ***data) //nom var off change struct ok
+int	ft_export(char **argv, t_files *files)//(t_minishell ***data) //nom var off change struct ok
 {
 	char	*name;
 	int		i;
@@ -48,23 +48,22 @@ int	ft_export(char **argv, char **env)//(t_minishell ***data) //nom var off chan
 	i = 0;
 	if (!argv[2])//(!data->cmd[0][1])
 	{
-		ft_env(env);//(data->env);
+		ft_env(files);
 		exit (0);
 	}
 	if (argv[2])//(data->cmd[0][1])
 	{
 		name = rec_var_env(argv[2]);
-		printf("name = %s\n", name);
 		if (getenv(name) != NULL)
 		{
-			switch_env(env, name, argv[2]);
+			switch_env(files, name, argv[2]);
 			return (0);
 		}
 		free(name);
 	}
-	while (env[i] != NULL)
+	while (files->tab_var_env[i] != NULL)
 		i++;
-	env[i] = argv[2];
-	env[i + 1] = NULL;
+	files->tab_var_env[i] = argv[2];
+	files->tab_var_env[i + 1] = NULL;
 	return (0);
 }

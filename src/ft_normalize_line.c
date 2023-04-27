@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 17:59:08 by gbertet           #+#    #+#             */
-/*   Updated: 2023/04/26 19:10:05 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/04/27 18:46:40 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,54 @@ char	*ft_less_whitespace(char *s)
 	return (res);
 }
 
+char	*add_char_right(char *s, int pos)
+{
+	int	i;
+
+	i = ft_strlen(s);
+	if (!i)
+		return (NULL);
+	s = ft_realloc(s, i, i + 1);
+	s[i + 1] = '\0';
+	while (i != pos)
+	{
+		s[i] = s[i - 1];
+		i--;
+	}
+	s[pos] = ' ';
+	return (s);
+}
+
+char	*format_str_spaces(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (!ft_betweenquotes(s, i))
+		{
+			if (s[i] != '|' && s[i] != '<' && s[i] != '>' && s[i] != ' ')
+			{
+				if (s[i + 1] == '|' || s[i + 1] == '<' || s[i + 1] == '>')
+					s = add_char_right(s, i + 1);
+			}
+			else if (s[i] == '|')
+			{
+				if (s[i + 1] != ' ')
+					s = add_char_right(s, i + 1);
+			}
+			else if (s[i] == '<' || s[i] == '>')
+			{
+				if (s[i + 1] != '<' && s[i + 1] != '>' && s[i + 1] != ' ' && s[i + 1])
+					s = add_char_right(s, i + 1);
+			}
+		}
+		i++;
+	}
+	return (s);
+}
+
 char	*normalize_str(char *s)
 {
 	int	i;
@@ -57,6 +105,7 @@ char	*normalize_str(char *s)
 	}
 	tmp = ft_substr(s, i, j - i + 1);
 	res = ft_less_whitespace(tmp);
+	res = format_str_spaces(res);
 	free(tmp);
 	return (res);
 }
