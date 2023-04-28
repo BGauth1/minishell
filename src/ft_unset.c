@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:00:32 by lamasson          #+#    #+#             */
-/*   Updated: 2023/04/27 20:10:18 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/04/28 13:42:29 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,12 @@ int	ft_unset(char *str, t_files *files) //nom variable off //changer losque stru
 	char	*tmp;
 
 	i = 0;
-	if (!str || getenv(str) == NULL)
+	if (!str)
+		return (0);
+	if (getenv(str) == NULL)
 	{
+		if (ft_parse_name(str) == 0)
+			printf("minishell: unset: `%s' : not a valid identifier\n", str);
 		//return un prompt et ne se passe rien
 		return (0);
 	}
