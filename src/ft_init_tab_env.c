@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:12:52 by lamasson          #+#    #+#             */
-/*   Updated: 2023/04/27 20:20:16 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/05/09 15:05:45 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,8 @@ void	ft_init_tab_env(char **env, t_files *files) //envoyer addr,(&) de files dan
 	int		len;
 	int		i;
 
-	len = 0;
 	i = 0;
-	while (env[len] != NULL)
-		len++;
+	len = ft_tablen(env);
 	files->tab_var_env = malloc(sizeof(char *) * (len + 1));
 	while (env[i] != NULL)
 	{
@@ -41,4 +39,14 @@ void	ft_free_tab_env(t_files *files)
 		i++;
 	}
 	free(files->tab_var_env);
+}
+
+int	ft_tablen(char **tab)
+{
+	int	len;
+
+	len = 0;
+	while (tab[len] != NULL)
+		len++;
+	return (len);
 }

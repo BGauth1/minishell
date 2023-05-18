@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:59:02 by lamasson          #+#    #+#             */
-/*   Updated: 2023/04/27 20:21:58 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/05/17 19:16:21 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,9 @@ void	ft_realloc_tab_env(t_files *files, char *str) //envoyer addr & de files dan
 	int		i;
 	char	**buf_tab;
 
-	len = 0;
 	i = 0;
-	while (files->tab_var_env[len] != NULL)
-		len++;
-	buf_tab = malloc(sizeof(char *) * (len + 2));
+	len = ft_tablen(files->tab_var_env);
+	buf_tab = malloc(sizeof(char *) * (len + 2)); //new + NULL
 	while (files->tab_var_env[i] != NULL)
 	{
 		buf_tab[i] = ft_strdup(files->tab_var_env[i]);
@@ -34,6 +32,8 @@ void	ft_realloc_tab_env(t_files *files, char *str) //envoyer addr & de files dan
 	buf_tab[i + 1] = NULL;
 	files->tab_var_env = buf_tab;
 }
+
+/*recupere le NAME malloc de la var_env */
 
 char	*rec_var_env(char *str)
 {
@@ -68,9 +68,11 @@ void	switch_env(t_files *files, char *name, char *str)
 		}
 		i++;
 	}
-	free(name);
+	//free(name);
 }
 
+/* check syntax name de la var_env */
+//refaire
 int	ft_parse_name(char *str)
 {
 	int	i;
@@ -80,6 +82,8 @@ int	ft_parse_name(char *str)
 	{
 		if (str[i] == '=')
 			return (0);
+		if (str[0] == '_' && str[1] == '=')
+			return (1);
 		i++;
 	}
 	return (1);
@@ -91,12 +95,12 @@ int	ft_export(char *str, t_files *files)//nom var off change struct ok
 	int		i;
 
 	i = 0;
-	if (!str) //no free puisque conserve tab_env
+	if (!str)
 	{
-		ft_env(*files);
+		ft_export_no_arg(*files); //in bash, tab is sort in alpha order with "declare -x"
 		return (0);
 	}
-	if (ft_parse_name(str) == 1)
+	if (ft_parse_name(str) == 1) //if 1 NAME not ok 
 		return (0);
 	name = rec_var_env(str);
 	if (name == NULL)
@@ -104,12 +108,39 @@ int	ft_export(char *str, t_files *files)//nom var off change struct ok
 		ft_free_tab_env(files);
 		exit (1);
 	}
-	if (getenv(name) != NULL)
+	if (getenv(name) != NULL) //if name var_env exist, switch old_value by new_value
 	{
 		switch_env(files, name, str);
+		free(name);
 		return (0);
 	}
 	free(name);
-	ft_realloc_tab_env(files, str);
+	ft_realloc_tab_env(files, str); //if name doesn't exist, add new var_env 
+	return (0);
+}
+
+int	main(int argc, char **argv, char **env)
+{
+	t_files	files;
+	int		i;
+	(void) argc;
+
+	ft_init_tab_env(env, &files);
+/*	i = 0;
+	while (files.tab_var_env[i] != NULL)
+	{
+		printf("%s\n", files.tab_var_env[i]);
+		i++;
+	}*/
+	ft_export(argv[2], &files);
+	//ft_unset(argv[2], &files);
+	i = 0;
+	while (files.tab_var_env[i] != NULL)
+	{
+		printf("%s\n", files.tab_var_env[i]);
+		i++;
+	}
+//	ft_export(NULL, &files);
+	ft_free_tab_env(&files);
 	return (0);
 }

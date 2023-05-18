@@ -6,15 +6,17 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:00:32 by lamasson          #+#    #+#             */
-/*   Updated: 2023/04/28 13:42:29 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/05/16 19:27:57 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//unset MY_VAR MY_VAR1 MY_VAR2 //possible boucle pour executer unset a la suite
+//unset MY_VAR MY_VAR1 MY_VAR2 
+////boucle possible dans la fct appelant ft_unset pour executer unset a la suite
+///verif reaction en cas de faux MY_VAR2 et vrai MY_VAR
 
-int	ft_unset(char *str, t_files *files) //nom variable off //changer losque structur ok
+int	ft_unset(char *str, t_files *files)//nom variable off //changer losque structur ok
 {
 	int		i;
 	char	*tmp;
@@ -29,7 +31,7 @@ int	ft_unset(char *str, t_files *files) //nom variable off //changer losque stru
 		//return un prompt et ne se passe rien
 		return (0);
 	}
-	while (ft_strncmp(files->tab_var_env[i], str, ft_strlen(str)) != 0) //if (str)
+	while (ft_strncmp(files->tab_var_env[i], str, ft_strlen(str)) != 0 && ft_strlen(str) != ft_strlen(files->tab_var_env[i]))
 		i++;
 	free(files->tab_var_env[i]);
 	while (files->tab_var_env[i] != NULL)
