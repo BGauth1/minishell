@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:59:02 by lamasson          #+#    #+#             */
-/*   Updated: 2023/05/17 19:16:21 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/05/18 22:04:12 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,11 @@ int	ft_parse_name(char *str)
 	i = 0;
 	while (str[i] != '\0')
 	{
-		if (str[i] == '=')
-			return (0);
 		if (str[0] == '_' && str[1] == '=')
 			return (1);
 		i++;
 	}
-	return (1);
+	return (0);
 }
 
 int	ft_export(char *str, t_files *files)//nom var off change struct ok
@@ -122,7 +120,7 @@ int	ft_export(char *str, t_files *files)//nom var off change struct ok
 int	main(int argc, char **argv, char **env)
 {
 	t_files	files;
-	int		i;
+//	int		i;
 	(void) argc;
 
 	ft_init_tab_env(env, &files);
@@ -133,14 +131,16 @@ int	main(int argc, char **argv, char **env)
 		i++;
 	}*/
 	ft_export(argv[2], &files);
+	ft_export(NULL, &files);
 	//ft_unset(argv[2], &files);
-	i = 0;
+/*	i = 0;
 	while (files.tab_var_env[i] != NULL)
 	{
 		printf("%s\n", files.tab_var_env[i]);
 		i++;
-	}
-//	ft_export(NULL, &files);
+	}*/
+	printf ("\n\n");
+	ft_env(files);
 	ft_free_tab_env(&files);
 	return (0);
 }

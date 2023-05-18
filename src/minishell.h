@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:30:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/05/17 18:42:13 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/05/18 21:43:19 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int		ft_parse_name(char *str);
 
 //		FT_EXPORT_UTILS.C		//
 int		ft_export_no_arg(t_files files);
+void	ft_free_n_tab(char **tab, int n);
 
 //		FT_UNSET.C				//
 int		ft_unset(char *str, t_files *files);
