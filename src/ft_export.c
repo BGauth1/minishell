@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:59:02 by lamasson          #+#    #+#             */
-/*   Updated: 2023/05/18 22:04:12 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/05/19 16:17:54 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,8 @@ int	ft_export(char *str, t_files *files)//nom var off change struct ok
 	ft_realloc_tab_env(files, str); //if name doesn't exist, add new var_env 
 	return (0);
 }
-
+/*
+ *
 int	main(int argc, char **argv, char **env)
 {
 	t_files	files;
@@ -124,23 +125,23 @@ int	main(int argc, char **argv, char **env)
 	(void) argc;
 
 	ft_init_tab_env(env, &files);
-/*	i = 0;
+	i = 0;
 	while (files.tab_var_env[i] != NULL)
 	{
 		printf("%s\n", files.tab_var_env[i]);
 		i++;
-	}*/
+	}
 	ft_export(argv[2], &files);
 	ft_export(NULL, &files);
 	//ft_unset(argv[2], &files);
-/*	i = 0;
+	i = 0;
 	while (files.tab_var_env[i] != NULL)
 	{
 		printf("%s\n", files.tab_var_env[i]);
 		i++;
-	}*/
+	}
 	printf ("\n\n");
 	ft_env(files);
 	ft_free_tab_env(&files);
 	return (0);
-}
+}*/

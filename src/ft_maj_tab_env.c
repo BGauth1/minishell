@@ -6,7 +6,7 @@
 /*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 19:51:11 by lamasson          #+#    #+#             */
-/*   Updated: 2023/05/17 18:44:33 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/05/19 18:35:54 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,14 @@ int	maj_tab_env_pwd(t_files *files)
 }
 
 /* main de test pour cd et maj_tab_env_pwd */
-/*
+
 int	main(int argc, char **argv, char **env)
 {
 	t_files	files;
 	int		i;
 	(void)argc;
 
-	ft_init_tab_env(env, &files)
+	ft_init_tab_env(env, &files);
 	i = 0;
 	while (files.tab_var_env[i] != NULL)
 	{
@@ -66,9 +66,7 @@ int	main(int argc, char **argv, char **env)
 		i++;
 	}
 	i = 0;
-	ft_cd(argv);
-	maj_tab_env_oldpwd(&files);
-	maj_tab_env_pwd(&files);
+	ft_cd(argv, &files);
 	printf("\n\n\n");
 	while (files.tab_var_env[i] != NULL)
 	{
@@ -78,4 +76,4 @@ int	main(int argc, char **argv, char **env)
 	}
 	ft_free_tab_env(&files);
 	return (0);
-}*/
+}

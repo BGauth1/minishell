@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:30:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/05/18 21:43:19 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/05/19 18:36:51 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,7 @@ int		ft_unset(char *str, t_files *files);
 int		ft_pwd(char *cmd);
 
 //		FT_CD.C					//
-int		ft_cd(char **c);
-int		ft_chdir(char **c, char *path);
-char	*rec_parent_file(void);
-char	*ft_parsing_cd(char **c);
+int		ft_cd(char **c, t_files *files);
 
 //		FT_UTILS.C				//
 int		ft_iswhitespace(char c);
