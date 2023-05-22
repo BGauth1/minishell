@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	ft_pwd(char *cmd)
+int	ft_pwd(char **c)
 {
 	char	*pwd;
 
@@ -21,7 +21,7 @@ int	ft_pwd(char *cmd)
 		exit (1); //free en cas d'erreur de la fct malloc
 	if (getcwd(pwd, 1024) == NULL) //obtien path pos
 	{
-		printf("minishell: %s: %s\n", cmd, strerror(errno));
+		printf("minishell: %s: %s\n", c[0], strerror(errno));
 		free(pwd);
 		return (1);
 	}
