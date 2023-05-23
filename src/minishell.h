@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:30:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/05/22 15:12:04 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/05/23 19:31:20 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int		ft_env(t_files files);
 //		FT_EXPORT.C				//
 int		ft_export(char **c, t_files *files);
 void	switch_env(t_files *files, char *name, char *str);
+char	*rec_var_env(char *str);
 int		ft_parse_name(char *str);
 
 //		FT_EXPORT_UTILS.C		//
