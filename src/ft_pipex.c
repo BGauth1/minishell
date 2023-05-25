@@ -6,7 +6,7 @@
 /*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 13:47:51 by lamasson          #+#    #+#             */
-/*   Updated: 2023/05/25 18:52:36 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/05/25 20:54:20 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int	ft_open_fd_out(t_mishell mish, t_files files)
 	if (files.out == 1)
 		op = open(files.fd_out, O_RDWR | O_CREAT | O_APPEND, 0644);
 	else
-		op = open(files.fd_out, O_RDWR | O_CREAT | O_TRUNC, 0644);
-	
+		op = open(files.fd_out, O_RDWR | O_CREAT | O_TRUNC, 0644);	
+	return (op);
 }
 
 static void		ft_dup(int fd_in, int *fd, t_files files, t_mishell mish)
@@ -80,7 +80,7 @@ static int	ft_pipe(t_mishell mish, t_files files, int fd_in)
 	if (files.fd_in == NULL && fd_in == -1)
 		fd_in = fd[0];
 	//gestion close here_doc voir si implementer
-	ft_fork_exec(mish, files, fd_in, fd);
+	ft_fork(mish, files, fd_in, fd);
 	close(fd[1]);
 	close(fd_in);
 	return (fd[0]);
@@ -94,7 +94,8 @@ int	ft_call_pipex(t_mishell mish, t_files *files)
 	fd_in = ft_open_fd_in(mish, *files);
 	while (files->pos_cmd < mish.nb_cmds - 1)
 	{
-		fd_in = ft_pipe(mish, *files, fd_in);
+		if (check_built_no_fork(mish.cmds[files->pos_cmd].c, files) == 0)
+			fd_in = ft_pipe(mish, *files, fd_in);
 		files->pos_cmd++;
 	}
 	ft_pipe(mish, *files, fd_in);
@@ -117,16 +118,21 @@ int	main(void)
 	get_cmds(&mish);
 	files = parsing_fd(str);
 
-//nvx init necesssaire pour pipe //
+//nvx init necesssaire pour pipe // verif builtin here
 	files.tab_path = ft_get_tab_path(files);
-	ft_init_path_cmd(&mish, files);
+	while (j < mish.nb_cmds)
+	{
+		if (check_if_cmd_built(mish.cmds[j]) == 0)
+			ft_init_path_cmd(&mish, files, j);
+		else
+			mish.cmds[j].path = NULL;
+		j++;
+	}
 
 //pipex en test //
 	ft_call_pipex(mish, &files);
 
-
-
-
+	j = 0;
 	while (mish.cmds[j].c)
 	{
 		i = 0;

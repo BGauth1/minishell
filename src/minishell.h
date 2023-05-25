@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:30:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/05/25 17:03:58 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/05/25 20:48:09 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,11 @@ int		ft_cd(char **c, t_files *files);
 void	ft_echo_arg(char *s);
 int		ft_echo(char **cmd);
 
+
+//		FT_CHECK_BUILTINS.C		//
+int		check_built_no_fork(char **c, t_files *files);
+int		check_built_fork(char **c, t_files *files);
+
 //		FT_UTILS.C				//
 int		ft_iswhitespace(char c);
 int		ft_betweenquotes(char *s, int pos);
@@ -132,15 +137,14 @@ int		maj_tab_env_pwd(t_files *files);
 
 //		FT_EXEC.C				//
 char	**ft_get_tab_path(t_files files);
-char	*ft_parse_tab_c(char **c);
-int		ft_exec_cmd(t_mishell mish, t_files files);
+void	ft_init_path_cmd(t_mishell *mish, t_files files, int j);
 
 //		FT_PIPEX.C				//
 int	ft_call_pipex(t_mishell mish, t_files *files); //appel pipe -> fork -> dup et exec_cmd
 int	ft_open_fd_out(t_mishell mish, t_files files);
 int	ft_open_fd_in(t_mishell mish, t_files files);
 
-
-
+//		FT_STRJOIN_PATH.C		//
+char	*ft_strjoin_path(char *path, char *cmd);
 
 #endif
