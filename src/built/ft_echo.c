@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	ft_echo_arg(char *s)
 {
@@ -58,7 +58,7 @@ int ft_echo(char **cmd)
 		write(1, "\n", 1);
 	return (0);
 }
-
+/*
 int	main(int ac, char **av, char **ev)
 {
 	// char str[3][10] = {"echo", "-n", NULL};
@@ -87,4 +87,4 @@ int	main(int ac, char **av, char **ev)
 	// *av++;
 	// av[ac] = NULL;
 	// ft_echo(str);
-}
+}*/

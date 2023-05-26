@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 //ft_readline en test
 
 int	ft_cd(char **c, t_files *files)

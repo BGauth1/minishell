@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	ft_realloc_tab_env(t_files *files, char *str) //envoyer addr & de files dans proto
 {

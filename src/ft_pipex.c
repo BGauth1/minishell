@@ -6,7 +6,7 @@
 /*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 13:47:51 by lamasson          #+#    #+#             */
-/*   Updated: 2023/05/26 18:01:35 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/05/26 20:10:20 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,16 +111,14 @@ int	main(int argc, char **argv, char **env)
 	char	*str;
 	int	j = 0;
 	(void)argc;
-	(void)argv;
 
 	str = "ls -l | grep .txt";
-
 //parsing et init pour test //
-	
+	mish.av = argv;
 	mish.full_cmd = normalize_str(str);
 	get_cmds(&mish);
 	ft_init_tab_env(env, &files);
-	parsing_fd(str, &files);
+	parsing_fd(mish.av, &files);
 
 //nvx init necesssaire pour pipe // verif builtin here
 	

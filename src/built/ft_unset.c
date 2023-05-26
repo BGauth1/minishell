@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 //unset MY_VAR MY_VAR1 MY_VAR2 
 ////boucle possible dans la fct appelant ft_unset pour executer unset a la suite

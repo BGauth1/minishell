@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:09:03 by lamasson          #+#    #+#             */
-/*   Updated: 2023/05/26 19:52:17 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/05/26 20:14:30 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,6 @@ void	set_fd(char **fdins, char **fdouts, t_files *fd)
 
 void	parsing_fd(char **str, t_files *fd)
 {
-	int		i;
 	char	**fdins;
 	char	**fdouts;
 
@@ -175,6 +174,7 @@ void	parsing_fd(char **str, t_files *fd)
 
 /* main_test parsing_redirection.c et parsing_right_file.c
  */
+/*
 int main(void)
 {
 	char **str;
@@ -200,4 +200,4 @@ int main(void)
 		free(fd.fd_in);
 	if (fd.fd_out)
 		free(fd.fd_out);
-}
+}*/
