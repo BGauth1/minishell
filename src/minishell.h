@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:30:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/05/26 17:46:10 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/05/26 18:10:12 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_mishell
 typedef struct	s_cmd			//tableau de struct
 {
 	char	**c;				//tableau cmd avc opt et arg pour chaque
+	char	*path;				//path correspondant a la cmd ou NULL si builtin 
 	int		here_doc;
 }				t_cmd;
 
@@ -51,10 +52,16 @@ typedef struct s_files{
 	char	*fd_in;			//string malloc de fd_in "test.c" if NULL no in
 	char	*fd_out;		//string malloc de fd_out "test/test1.c" if NULL no out
 	int		out;			// -1 = no fichier out / 0 redirection simple / 1 redirection append mode
-	int		nb_pipe;		//nb_pipe def ordre de verif (defini manuellement)(a revoir)
+	int		nb_pipe;		//defini ordre de verif (defini manuellement)(a revoir)(nb_cmds - 1 = nb_pipe)
 	int		err;
 	char	**tab_var_env;	//notre tableau de variables d'environnements
+	char	**tab_path;		//PATH val split, tableau de tous les paths ':'
+	int		pos_cmd;		//position dans le tab des cmds pendant son execution
 }t_files;
+
+
+//		MAIN.C					//
+void	get_cmds(t_mishell *m);
 
 //		FT_ENV.C				//
 int		ft_env(t_files files);
@@ -62,6 +69,7 @@ int		ft_env(t_files files);
 //		FT_EXPORT.C				//
 int		ft_export(char **c, t_files *files);
 void	switch_env(t_files *files, char *name, char *str);
+char	*rec_var_env(char *str);
 int		ft_parse_name(char *str);
 
 //		FT_EXPORT_UTILS.C		//
@@ -76,6 +84,15 @@ int		ft_pwd(char **c);
 
 //		FT_CD.C					//
 int		ft_cd(char **c, t_files *files);
+
+//		FT_ECHO.C				//
+void	ft_echo_arg(char *s);
+int		ft_echo(char **cmd);
+
+
+//		FT_CHECK_BUILTINS.C		//
+int		check_built_no_fork(char **c, t_files *files);
+int		check_built_fork(char **c, t_files *files);
 
 //		FT_UTILS.C				//
 int		ft_iswhitespace(char c);
@@ -118,5 +135,17 @@ int		ft_tablen(char **tab);
 //		FT_MAJ_TAB_ENV.C		//HOME, USER, _ :pas fait  
 int		maj_tab_env_oldpwd(t_files *files); //appel en 1er recup pwd pour ca maj
 int		maj_tab_env_pwd(t_files *files);
+
+//		FT_EXEC.C				//
+char	**ft_get_tab_path(t_files files);
+void	ft_init_path_cmd(t_mishell *mish, t_files files, int j);
+
+//		FT_PIPEX.C				//
+int	ft_call_pipex(t_mishell mish, t_files *files); //appel pipe -> fork -> dup et exec_cmd
+int	ft_open_fd_out(t_mishell mish, t_files files);
+int	ft_open_fd_in(t_mishell mish, t_files files);
+
+//		FT_STRJOIN_PATH.C		//
+char	*ft_strjoin_path(char *path, char *cmd);
 
 #endif

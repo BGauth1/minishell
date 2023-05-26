@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:59:02 by lamasson          #+#    #+#             */
-/*   Updated: 2023/05/22 15:35:07 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/05/23 19:42:18 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ft_realloc_tab_env(t_files *files, char *str) //envoyer addr & de files dan
 	files->tab_var_env = buf_tab;
 }
 
-/*recupere le NAME malloc de la var_env */
+/*recupere le NAME malloc de la var_env //fix */
 
 char	*rec_var_env(char *str)
 {
@@ -42,7 +42,11 @@ char	*rec_var_env(char *str)
 
 	i = 0;
 	while (str[i] != '=')
+	{
+		if (str[i] == '\0')
+			break ;
 		i++;
+	}
 	name = ft_substr(str, 0, i);
 	return (name);
 }
@@ -68,7 +72,7 @@ void	switch_env(t_files *files, char *name, char *str)
 		}
 		i++;
 	}
-	//free(name);
+	free(name);
 }
 
 /* check syntax name de la var_env */
@@ -111,7 +115,6 @@ int	ft_export(char **c, t_files *files)//nom var off change struct ok
 	if (getenv(name) != NULL) //if name var_env exist, switch old_value by new_value
 	{
 		switch_env(files, name, arg);
-		free(name);
 		return (0);
 	}
 	free(name);
