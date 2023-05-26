@@ -6,7 +6,7 @@
 /*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:45:48 by lamasson          #+#    #+#             */
-/*   Updated: 2023/05/22 16:41:59 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/05/26 13:16:30 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,29 @@ int	check_built_fork(char **c, t_files *files)
 	else 
 		return (0);
 	return (1);
+}
+
+int	check_if_cmd_built(t_cmd cmds)
+{
+	size_t	len;
+	char *c;
+
+	c = cmds.c[0];
+	len = ft_strlen(c);
+	if (ft_strncmp(c, "cd", len) == 0 && len == 2)
+		return (1);
+	else if (ft_strncmp(c, "exit", len) == 0 && len == 4)
+		return (1);
+	else if (ft_strncmp(c, "export", len) == 0 && len == 6)
+		return (1);
+	else if (ft_strncmp(c, "unset", len) == 0 && len == 5)
+		return (1);
+	else if (ft_strncmp(c, "pwd", len) == 0 && len == 3)
+		return (1);
+	else if (ft_strncmp(c, "env", len) == 0 && len == 3)
+		return (1);
+	else if (ft_strncmp(c, "echo", len) == 0 && len == 4)
+		return (1);
+	else
+		return (0);
 }

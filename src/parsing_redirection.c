@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:09:03 by lamasson          #+#    #+#             */
-/*   Updated: 2023/05/26 17:52:48 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/05/26 19:52:17 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,26 +153,24 @@ void	set_fd(char **fdins, char **fdouts, t_files *fd)
  * et recuperation du nom des fichiers fd_in et fd_out
  * dans struct files*/
 
-t_files	parsing_fd(char **str)
+void	parsing_fd(char **str, t_files *fd)
 {
-	t_files	fd;
 	int		i;
 	char	**fdins;
 	char	**fdouts;
 
 	fdins = find_redirect_left(str);
-	fdouts = find_redirect_right(str, &fd);
+	fdouts = find_redirect_right(str, fd);
 	if (!ft_check_fd(fdins, fdouts, ft_strstrlen(str) - 1))
-		set_fd(fdins, fdouts, &fd);
+		set_fd(fdins, fdouts, fd);
 	else
 	{
-		fd.fd_in = NULL;
-		fd.fd_out = NULL;
-		fd.err = 1;
+		fd->fd_in = NULL;
+		fd->fd_out = NULL;
+		fd->err = 1;
 	}
 	ft_free_str(fdins);
 	ft_free_str(fdouts);
-	return (fd);
 }
 
 /* main_test parsing_redirection.c et parsing_right_file.c
@@ -193,7 +191,7 @@ int main(void)
 	str[6] = ft_strdup("ah");
 	str[7] = ft_strdup(">");
 	str[8] = ft_strdup("bh");
-	fd = parsing_fd(str);
+	parsing_fd(str, &fd);
 	printf("%s\n", fd.fd_in);
 	printf("%s\n", fd.fd_out);
 	printf("%d\n", fd.out);

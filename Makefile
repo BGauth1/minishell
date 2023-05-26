@@ -6,7 +6,7 @@
 #    By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/24 17:11:07 by lamasson          #+#    #+#              #
-#    Updated: 2023/04/27 18:46:40 by gbertet          ###   ########.fr        #
+#    Updated: 2023/05/26 15:37:24 by lamasson         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,10 +31,33 @@ OBJ_DIR		= obj
 BIN_DIR		= bin
 
 MAKEFLAGS	+= --no-print-directory
-SRC			= src/
+SRC			= src/ft_check_builtins.c \
+			src/ft_exec.c \
+			src/ft_find_val_env.c \
+			src/ft_get_path_cmd.c \
+			src/ft_init_tab_env.c \
+			src/ft_maj_tab_env.c \
+			src/ft_normalize_line.c \
+			src/ft_parsing_cmd.c \
+			src/ft_pipex.c \
+			src/ft_readline.c \
+			src/ft_split_minishell.c \
+			src/ft_strjoin_path.c \
+			src/ft_utils.c \
+			src/main.c \
+			src/parsing_redirection.c \
+			src/parsing_right_file.c \
+			src/built/ft_cd.c \
+			src/built/ft_echo.c \
+			src/built/ft_env.c \
+			src/built/ft_exit.c \
+			src/built/ft_export.c \
+			src/built/ft_export_utils.c \
+			src/built/ft_pwd.c \
+			src/built/ft_unset.c
 
 OBJ			= $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
-LIBFT		= src/libft
+LIBFT		= libft
 INC			= -Iinc
 
 ########## RULES ##########

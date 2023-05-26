@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:30:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/05/26 18:10:12 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/05/26 19:54:27 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,9 @@ int		ft_echo(char **cmd);
 
 
 //		FT_CHECK_BUILTINS.C		//
-int		check_built_no_fork(char **c, t_files *files);
-int		check_built_fork(char **c, t_files *files);
+int		check_built_no_fork(char **c, t_files *files); //exec built
+int		check_built_fork(char **c, t_files *files); //exec built
+int		check_if_cmd_built(t_cmd cmds); //return (0) si no built ou (1) si built
 
 //		FT_UTILS.C				//
 int		ft_iswhitespace(char c);
@@ -108,7 +109,7 @@ char	*ft_read_here_doc(char *prompt, char *eof);
 char	*normalize_str(char *s);
 
 //		PARSING_REDIRECTION.C	//
-t_files parsing_fd(char **str);
+void	parsing_fd(char **str, t_files *files);
 
 //		PARSING_RIGHT_FILE.C	//
 int		ft_check_fd(char **fdins, char **fdouts, int nb_pipes);
@@ -136,16 +137,19 @@ int		ft_tablen(char **tab);
 int		maj_tab_env_oldpwd(t_files *files); //appel en 1er recup pwd pour ca maj
 int		maj_tab_env_pwd(t_files *files);
 
-//		FT_EXEC.C				//
+//		FT_GET_PATH_CMD.C		//
 char	**ft_get_tab_path(t_files files);
 void	ft_init_path_cmd(t_mishell *mish, t_files files, int j);
 
 //		FT_PIPEX.C				//
-int	ft_call_pipex(t_mishell mish, t_files *files); //appel pipe -> fork -> dup et exec_cmd
-int	ft_open_fd_out(t_mishell mish, t_files files);
-int	ft_open_fd_in(t_mishell mish, t_files files);
+int		ft_call_pipex(t_mishell mish, t_files *files); //appel pipe -> fork -> dup et exec_cmd
+int		ft_open_fd_out(t_files files);
+int		ft_open_fd_in(t_files files); //revoir pour integrer here_doc
 
 //		FT_STRJOIN_PATH.C		//
 char	*ft_strjoin_path(char *path, char *cmd);
+
+//		FT_EXEC.C				//
+int		ft_exec_cmd(t_mishell mish, t_files files);
 
 #endif

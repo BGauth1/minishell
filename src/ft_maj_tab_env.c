@@ -50,7 +50,7 @@ int	maj_tab_env_pwd(t_files *files)
 }
 
 /* main de test pour cd et maj_tab_env_pwd */
-
+/*
 int	main(int argc, char **argv, char **env)
 {
 	t_files	files;
@@ -76,4 +76,4 @@ int	main(int argc, char **argv, char **env)
 	}
 	ft_free_tab_env(&files);
 	return (0);
-}
+}*/
