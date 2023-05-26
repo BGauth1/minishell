@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:30:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/05/22 15:12:04 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/05/26 17:46:10 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_files{
 	char	*fd_out;		//string malloc de fd_out "test/test1.c" if NULL no out
 	int		out;			// -1 = no fichier out / 0 redirection simple / 1 redirection append mode
 	int		nb_pipe;		//nb_pipe def ordre de verif (defini manuellement)(a revoir)
+	int		err;
 	char	**tab_var_env;	//notre tableau de variables d'environnements
 }t_files;
 
@@ -79,6 +80,7 @@ int		ft_cd(char **c, t_files *files);
 //		FT_UTILS.C				//
 int		ft_iswhitespace(char c);
 int		ft_betweenquotes(char *s, int pos);
+int		ft_strstrlen(char **s);
 
 //		FT_READLINE.C			//
 char	*ft_readline(char *str);
@@ -89,11 +91,10 @@ char	*ft_read_here_doc(char *prompt, char *eof);
 char	*normalize_str(char *s);
 
 //		PARSING_REDIRECTION.C	//
-t_files parsing_fd(char *str);
+t_files parsing_fd(char **str);
 
 //		PARSING_RIGHT_FILE.C	//
-int		ft_check_fdin(t_files fd);
-int		ft_check_fdout(t_files fd);
+int		ft_check_fd(char **fdins, char **fdouts, int nb_pipes);
 
 //		PARSING_
 

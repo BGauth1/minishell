@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 16:52:20 by gbertet           #+#    #+#             */
-/*   Updated: 2023/04/27 18:46:40 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/05/25 15:29:17 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,35 @@ int	check_here_doc(char *s)
 	return (1);
 }
 
+int	check_quotes(char *s)
+{
+	int i;
+	int sq;
+	int	dq;
+
+	i = -1;
+	sq = 0;
+	dq = 0;
+	while (s[++i])
+	{
+		if (s[i] == '\"')
+			dq++;
+		else if (s[i] == '\'')
+			sq++;
+	}
+	if (dq % 2 == 1)
+	{
+		printf("Synthax error near unexpected token '\"'.\n");
+		return (0);
+	}
+	else if (sq % 2 == 1)
+	{
+		printf("Synthax error near unexpected token '\''.\n");
+		return (0);
+	}
+	return (1);
+}
+
 int synthax_check(char *s)
 {
 	if (!check_pipe(s) || s[0] == '|')
@@ -76,6 +105,10 @@ int synthax_check(char *s)
 		printf("Synthax error near unexpected token '<'.\n");
 		return (0);
 	}
-	// if ()
+	if (!check_quotes(s))
+	{
+		free(s);
+		return (0);
+	}
 	return (1);
 }

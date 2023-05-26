@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:09:03 by lamasson          #+#    #+#             */
-/*   Updated: 2023/05/16 19:25:55 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/05/26 17:52:48 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,20 @@
 /* return une string malloc avec le nom
  * du fichier d'entrer ou de sortit*/
 
-char	*rec_file(char *str, int i)
-{
-	int		y;
-	char	*file;
+// char	*rec_file(char *str)
+// {
+// 	// int		y;
+// 	char	*file;
 
-	y = i;
-	while (ft_iswhitespace(str[y]) == 0)
-		y++;
-	file = ft_substr(str, i, y - i);
-	if (file == NULL)
-		exit (1); //fct de free necessaire suivant pos dans cod
-	return (file);
-}
+// 	// y = i;
+// 	// while (ft_iswhitespace(str[y]) == 0)
+// 	// 	y++;
+// 	// file = ft_substr(str, i, y - i);
+// 	file = ft_strdup(str);
+// 	if (file == NULL)
+// 		exit (1); //fct de free necessaire suivant pos dans cod
+// 	return (file);
+// }
 
 /* check redirection out
  * if classic or append mode:
@@ -37,23 +38,19 @@ char	*rec_file(char *str, int i)
  * si 2 out = 1 (output append mode)
  * si 3 exit print error*/
 
-int	redirect_out(char *str, int *i)
+int	redirect_out(char *str)
 {
 	int	out;
 
-	(*i)++;
-	if (str[*i] == '>')
-	{
-		out = 1;
-		(*i)++;
-		if (str[*i] == '>')
-		{
-			printf("minsihell: syntax error near unexpected token `>'\n");
-			exit (1);
-		}
-	}
-	else
+	if (!ft_strncmp(str, ">", 2))
 		out = 0;
+	else if (!ft_strncmp(str, ">>", 3))
+		out = 1;
+	else
+	{
+		printf("minsihell: syntax error near unexpected token `>'\n");
+		exit (1);
+	}
 	return (out);
 }
 
@@ -68,51 +65,87 @@ int	redirect_out(char *str, int *i)
  * if fd_in trouvé malloc puis placé dans struct files
  * else fd_in = NULL*/
 
-int	find_redirect_left(char *str, t_files *fd)
+char	**find_redirect_left(char **str)
 {
 	int		i;
+	int		j;
+	char	**fdins;
 
 	i = 0;
+	j = 0;
 	while (str[i])
 	{
-		if (str[i] == '<')
-		{
-			i++;
-			while (ft_iswhitespace(str[i]) == 1)
-				i++;
-			fd->fd_in = rec_file(str, i);
-			return (0);
-		}
+		if (!ft_strncmp(str[i], "<", 2))
+			j++;
 		i++;
 	}
-	fd->fd_in = NULL;
-	return (1);
+	i = 0;
+	fdins = malloc((j + 1) * sizeof(char *));
+	fdins[j] = NULL;
+	j = 0;
+	while (str[i])
+	{
+		if (!ft_strncmp(str[i], "<", 2))
+			fdins[j++] = ft_strdup(str[++i]);
+		i++;
+	}
+	return (fdins);
 }
 
 /* same left-right exept for int out;
  * mis a -1 if no redirection de sortit
  * et fd_out = NULL*/
 
-int	find_redirect_right(char *str, t_files *fd)
+char	**find_redirect_right(char **str, t_files *fd)
+{
+	int		i;
+	int		j;
+	char	**fdouts;
+
+	i = -1;
+	j = 0;
+	while (str[++i])
+	{
+		if (!ft_strncmp(str[i], ">", 1))
+			j++;
+	}
+	i = -1;
+	fdouts = malloc((j + 1) * sizeof(char *));
+	fdouts[j] = NULL;
+	j = 0;
+	while (str[++i])
+	{
+		if (!ft_strncmp(str[i], ">", 1))
+		{
+			fd->out = redirect_out(str[i]);
+			fdouts[j++] = ft_strdup(str[++i]);
+		}
+	}
+	return (fdouts);
+}
+
+void	set_fd(char **fdins, char **fdouts, t_files *fd)
 {
 	int	i;
 
 	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '>')
-		{
-			fd->out = redirect_out(str, &i);
-			while (ft_iswhitespace(str[i]) == 1)
-				i++;
-			fd->fd_out = rec_file(str, i);
-			return (0);
-		}
+	while (fdins[i])
 		i++;
+	if (i)
+		fd->fd_in = ft_strdup(fdins[--i]);
+	else
+		fd->fd_in = NULL;
+	i = 0;
+	while (fdouts[i])
+		i++;
+	if (i)
+		fd->fd_out = ft_strdup(fdouts[--i]);
+	else
+	{
+		fd->fd_out = NULL;
+		fd->out = -1;
 	}
-	fd->out = -1;
-	fd->fd_out = NULL;
-	return (1);
+	fd->err = 0;
 }
 
 /* fct regroupe parsing redirection in-out,
@@ -120,35 +153,53 @@ int	find_redirect_right(char *str, t_files *fd)
  * et recuperation du nom des fichiers fd_in et fd_out
  * dans struct files*/
 
-t_files	parsing_fd(char *str)
+t_files	parsing_fd(char **str)
 {
 	t_files	fd;
+	int		i;
+	char	**fdins;
+	char	**fdouts;
 
-	find_redirect_left(str, &fd);
-	find_redirect_right(str, &fd);
-	fd.nb_pipe = 0; //nb_pipe = besoin d'une fct compte le nb de pipre
-	if (fd.nb_pipe > 0)
-	{
-		ft_check_fdout(fd);
-		ft_check_fdin(fd);
-	}
+	fdins = find_redirect_left(str);
+	fdouts = find_redirect_right(str, &fd);
+	if (!ft_check_fd(fdins, fdouts, ft_strstrlen(str) - 1))
+		set_fd(fdins, fdouts, &fd);
 	else
 	{
-		ft_check_fdin(fd);
-		ft_check_fdout(fd);
+		fd.fd_in = NULL;
+		fd.fd_out = NULL;
+		fd.err = 1;
 	}
+	ft_free_str(fdins);
+	ft_free_str(fdouts);
 	return (fd);
 }
+
 /* main_test parsing_redirection.c et parsing_right_file.c
- *
+ */
 int main(void)
 {
-	char *str = "<<< test/test.c cat | cat >> test1.c";
-	t_files fd;	
+	char **str;
+	t_files fd;
 
+	str = malloc(10 * sizeof(char *));
+	str[9] = NULL;
+	str[0] = ft_strdup("<");
+	str[1] = ft_strdup("out");
+	str[2] = ft_strdup("<");
+	str[3] = ft_strdup("out2");
+	str[4] = ft_strdup("commande");
+	str[5] = ft_strdup(">");
+	str[6] = ft_strdup("ah");
+	str[7] = ft_strdup(">");
+	str[8] = ft_strdup("bh");
 	fd = parsing_fd(str);
 	printf("%s\n", fd.fd_in);
 	printf("%s\n", fd.fd_out);
 	printf("%d\n", fd.out);
-
-}*/
+	ft_free_str(str);
+	if (fd.fd_in)
+		free(fd.fd_in);
+	if (fd.fd_out)
+		free(fd.fd_out);
+}

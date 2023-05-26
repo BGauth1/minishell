@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:53:32 by gbertet           #+#    #+#             */
-/*   Updated: 2023/05/12 15:10:10 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/05/25 17:24:35 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,32 @@ int ft_betweenquotes(char *s, int pos)
 			quote = 0;
 	}
 	return (0);
+}
+
+int	ft_strstrlen(char **s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
+
+int	ft_str_nb_redir(char **s, char *redir, int end_char)
+{
+	int	i;
+	int	n;
+
+	i = 0;
+	n = 0;
+	while (s[i])
+	{
+		if (!ft_strncmp(s[i], redir, ft_strlen(redir) + end_char))
+			n++;
+		i++;
+	}
+	return (n);
 }
 
 int ft_iswhitespace(char c)
