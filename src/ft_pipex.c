@@ -6,7 +6,7 @@
 /*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 13:47:51 by lamasson          #+#    #+#             */
-/*   Updated: 2023/05/26 20:10:20 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/05/26 20:47:56 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ static void		ft_dup(int fd_in, int *fd, t_files files, t_mishell mish)
 	}
 	dup2(fd[1], 1);
 	close(fd[1]);
+
 }
 
 //ft_exec_cmd en cours 
@@ -65,7 +66,7 @@ static int		ft_fork(t_mishell mish, t_files files, int fd_in, int *fd)
 		ft_exec_cmd(mish, files);
 	}
 	if (files.pos_cmd == mish.nb_cmds - 1) //a verif si dernier cmd pipe si oui close
-		close (fd[0]);
+		close(fd[0]);
 	waitpid(pid, NULL, 0);
 	return (0);
 }
@@ -73,6 +74,7 @@ static int		ft_fork(t_mishell mish, t_files files, int fd_in, int *fd)
 static int	ft_pipe(t_mishell mish, t_files files, int fd_in)
 {
 	int	fd[2];
+	
 	if (pipe(fd) == -1)
 	{
 		perror("pipe"); //erreur de fct
@@ -109,19 +111,28 @@ int	main(int argc, char **argv, char **env)
 	t_mishell	mish;
 	t_files	files;
 	char	*str;
+	char	**tab_str = NULL;
 	int	j = 0;
 	(void)argc;
+	(void)argv;
 
+	tab_str = malloc(8 * sizeof(char *));
+	tab_str[0] = "ls";
+	tab_str[1] = "-l";
+	tab_str[2] = "|";
+	tab_str[3] = "grep";
+	tab_str[4] = ".txt";
+	tab_str[5] = ">";
+	tab_str[6] = "TEST.c";
+	tab_str[7] = NULL;
 	str = "ls -l | grep .txt";
 //parsing et init pour test //
-	mish.av = argv;
 	mish.full_cmd = normalize_str(str);
 	get_cmds(&mish);
 	ft_init_tab_env(env, &files);
-	parsing_fd(mish.av, &files);
+	parsing_fd(tab_str, &files);
 
 //nvx init necesssaire pour pipe // verif builtin here
-	
 	files.tab_path = ft_get_tab_path(files);
 	while (j < mish.nb_cmds)
 	{
@@ -150,6 +161,7 @@ int	main(int argc, char **argv, char **env)
 	}
 	printf("%d\n", mish.nb_cmds);
 	return (0);*/
+	free(tab_str);	
 	ft_free_tab_env(&files);
 	ft_free_tab(files.tab_path);
 	ft_free_cmds(&mish);
