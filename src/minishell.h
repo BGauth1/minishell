@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:30:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/05/26 19:54:27 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/05/30 14:38:09 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ int		ft_check_fd(char **fdins, char **fdouts, int nb_pipes);
 //		FT_EXIT.C				//
 void	ft_free_str(char **s);
 void	ft_free_cmds(t_mishell *m);
+void	ft_free_files(t_files *files);
 void	ft_exit(t_mishell *m);
 
 //		FT_SPLIT_MINISHELL.C	//
@@ -143,8 +144,8 @@ void	ft_init_path_cmd(t_mishell *mish, t_files files, int j);
 
 //		FT_PIPEX.C				//
 int		ft_call_pipex(t_mishell mish, t_files *files); //appel pipe -> fork -> dup et exec_cmd
-int		ft_open_fd_out(t_files files);
-int		ft_open_fd_in(t_files files); //revoir pour integrer here_doc
+int		open_fdout(t_files files);
+int		open_fdin(t_files files); //revoir pour integrer here_doc
 
 //		FT_STRJOIN_PATH.C		//
 char	*ft_strjoin_path(char *path, char *cmd);

@@ -6,14 +6,14 @@
 /*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 13:47:51 by lamasson          #+#    #+#             */
-/*   Updated: 2023/05/26 20:47:56 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/05/30 17:39:14 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <sys/wait.h>
 
-int	ft_open_fd_in(t_files files)
+int	open_fdin(t_files files)
 {
 	int	op;
 
@@ -25,7 +25,7 @@ int	ft_open_fd_in(t_files files)
 	return (op);
 }
 
-int	ft_open_fd_out(t_files files)
+int	open_fdout(t_files files)
 {
 	int	op;
 
@@ -36,23 +36,70 @@ int	ft_open_fd_out(t_files files)
 		op = open(files.fd_out, O_RDWR | O_CREAT | O_TRUNC, 0644);	
 	return (op);
 }
-
+/*
 static void		ft_dup(int fd_in, int *fd, t_files files, t_mishell mish)
 {
-	dup2(fd_in, 0);
-	close(fd_in);
-	close(fd[0]);
+	if (files.fd_in == NULL && files.pos_cmd == 0)
+	{
+	//	dup2(fd[0], 0);
+	//	close(fd[0]);
+		close(fd[0]);
+		dup2(fd[1], 1);
+		close(fd[1]);
+	}
+	else
+	{
+		dup2(fd_in, 0);
+		close(fd_in);
+		close(fd[0]);
+	}
 	if (files.pos_cmd == mish.nb_cmds - 1 && files.fd_out != NULL)
 	{
 		close(fd[1]);
 		fd[1] = ft_open_fd_out(files);
 	}
-	dup2(fd[1], 1);
-	close(fd[1]);
+	else 
+	{
+		close(fd[1]);
+		dup2(fd[0], 0);
+		close(fd[0]);
+	}
+	//dup2(fd[1], 1);
+	//close(fd[1]);
 
+}*/
+
+static void	ft_dup(int fd_in , int *fd, t_files files, t_mishell mish)
+{
+	int	out;
+
+	if (files.fd_out != NULL && files.pos_cmd == mish.nb_cmds - 1)
+	{
+		close(fd[0]);
+		out = open_fdout(files);
+		dup2(out, 1);
+		close(out);
+	}
+	else if (files.pos_cmd != mish.nb_cmds - 1)
+	{
+		close(fd[0]);
+		dup2(fd[1], 1);
+		close(fd[1]);
+	}
+	if (files.fd_in == NULL && files.pos_cmd == 0 && mish.nb_cmds > 1)
+	{
+		close(fd[1]);
+		dup2(fd[0], 0);
+		close(fd[0]);
+	}
+	else
+	{
+		close(fd[1]);
+		dup2(fd_in, 0);
+		close(fd_in);
+	}
 }
 
-//ft_exec_cmd en cours 
 static int		ft_fork(t_mishell mish, t_files files, int fd_in, int *fd)
 {
 	int	pid;
@@ -65,27 +112,30 @@ static int		ft_fork(t_mishell mish, t_files files, int fd_in, int *fd)
 		ft_dup(fd_in, fd, files, mish);
 		ft_exec_cmd(mish, files);
 	}
-	if (files.pos_cmd == mish.nb_cmds - 1) //a verif si dernier cmd pipe si oui close
+	if (files.pos_cmd == mish.nb_cmds - 1)
+	{	
 		close(fd[0]);
+		if (files.fd_out != NULL)
+			close(fd[1]);
+	}
 	waitpid(pid, NULL, 0);
 	return (0);
 }
 
+//gestion close here_doc voir si implementer
 static int	ft_pipe(t_mishell mish, t_files files, int fd_in)
 {
 	int	fd[2];
 	
 	if (pipe(fd) == -1)
 	{
-		perror("pipe"); //erreur de fct
+		perror("pipe");
 		exit (1);
 	}
-	if (files.fd_in == NULL && fd_in == -1)
-		fd_in = fd[0];
-	//gestion close here_doc voir si implementer
 	ft_fork(mish, files, fd_in, fd);
 	close(fd[1]);
-	close(fd_in);
+	if (fd_in > 0)
+		close(fd_in);
 	return (fd[0]);
 }
 
@@ -94,15 +144,15 @@ int	ft_call_pipex(t_mishell mish, t_files *files)
 	int	fd_in;
 
 	files->pos_cmd = 0;
-	fd_in = ft_open_fd_in(*files);
-	while (files->pos_cmd < mish.nb_cmds - 1)
+	fd_in = open_fdin(*files);
+	while (files->pos_cmd < mish.nb_cmds)
 	{
 		if (check_built_no_fork(mish.cmds[files->pos_cmd].c, files) == 0)
 			fd_in = ft_pipe(mish, *files, fd_in);
 		files->pos_cmd++;
 	}
-	ft_pipe(mish, *files, fd_in);
-	close(fd_in);
+	if (fd_in > 0)
+		close(fd_in);
 	return (0);
 }
 
@@ -116,16 +166,18 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 
-	tab_str = malloc(8 * sizeof(char *));
-	tab_str[0] = "ls";
-	tab_str[1] = "-l";
-	tab_str[2] = "|";
-	tab_str[3] = "grep";
-	tab_str[4] = ".txt";
-	tab_str[5] = ">";
-	tab_str[6] = "TEST.c";
-	tab_str[7] = NULL;
-	str = "ls -l | grep .txt";
+	tab_str = malloc(6 * sizeof(char *));
+	tab_str[0] = "export";
+/*	tab_str[1] = "NOM_VARIABLE=0";
+	tab_str[2] = "NOM_VARIABLE1=1";
+	tab_str[3] = "NOM_VARIABLE2=2";
+	tab_str[4] = "PAGER=SAUCISSE";
+	tab_str[5] = "wc";
+	tab_str[6] =  "-l";
+	tab_str[7] = ">";
+	tab_str[8] = "test";*/
+	tab_str[1] = NULL;
+	str = "export"; // NOM_VARIABLE=0 NOM_VARIABLE1=1 NOM_VARIABLE2=2 PAGER=SAUCISSE";
 //parsing et init pour test //
 	mish.full_cmd = normalize_str(str);
 	get_cmds(&mish);
@@ -147,35 +199,16 @@ int	main(int argc, char **argv, char **env)
 	
 	ft_call_pipex(mish, &files);
 /*
-	j = 0;
-	while (mish.cmds[j].c)
+	printf("\n\n");
+	int	i = 0;
+	while (files.tab_var_env[i])
 	{
-		i = 0;
-		while (mish.cmds[j].c[i])
-		{
-			printf("\"%s\" ", mish.cmds[j].c[i]);
-			i++;
-		}
-		printf("\n");
-		j++;
-	}
-	printf("%d\n", mish.nb_cmds);
-	return (0);*/
+		printf("%s\n", files.tab_var_env[i]);
+		i++;
+	}*/
 	free(tab_str);	
-	ft_free_tab_env(&files);
-	ft_free_tab(files.tab_path);
+
+	ft_free_files(&files);
 	ft_free_cmds(&mish);
 	return (0);
 }
-/*
-
-"ls" "-l" 
-"grep" ".txt" 
-"cat" ">" "saucisse" 
-"cat" 
-"cat" 
-"grep" "ls" 
-
-6
-
-*/
