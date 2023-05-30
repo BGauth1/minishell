@@ -96,7 +96,7 @@ int	ft_export(char **c, t_files *files)//nom var off change struct ok
 	char	*name;
 	int		i;
 
-	i = 1;
+	i = 1; //test c[2] vrai c[1]
 	if (!c[i])
 	{
 		ft_export_no_arg(*files); //in bash, tab is sort in alpha order with "declare -x"
