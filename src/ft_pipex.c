@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 13:47:51 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/02 14:41:39 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/06/02 15:59:03 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,16 +184,25 @@ int	ft_call_pipex(t_mishell mish, t_files *files)
 // 	ft_init_tab_env(env, &files);
 // 	parsing_fd(tab_str, &files);
 
-// //nvx init necesssaire pour pipe // verif builtin here
-// 	files.tab_path = ft_get_tab_path(files);
-// 	while (j < mish.nb_cmds)
-// 	{
-// 		if (check_if_cmd_built(mish.cmds[j]) == 0)
-// 			ft_init_path_cmd(&mish, files, j);
-// 		else
-// 			mish.cmds[j].path = NULL;
-// 		j++;
-// 	}
+	tab_str = malloc(3 * sizeof(char *));
+	tab_str[0] = "export";
+	tab_str[1] = "TEST";
+/*	tab_str[2] = "saucii6se=2";
+	tab_str[3] = "my-var=3";
+	tab_str[4] = "PAGER=4";
+	tab_str[5] = "var$=5";
+	tab_str[6] =  "-l";
+	tab_str[7] = ">";
+	tab_str[8] = "test";*/
+	tab_str[2] = NULL;
+	str = "export TEST";
+	//1SAUCISSE=1 saucii6se=2 my-var=3 PAGER=4 var$=5"; // NOM_VARIABLE=0 NOM_VARIABLE1=1 NOM_VARIABLE2=2 PAGER=SAUCISSE";
+
+//parsing et init pour test //
+	mish.full_cmd = normalize_str(str);
+	get_cmds(&mish);
+	ft_init_tab_env(env, &files);
+	parsing_fd(tab_str, &files);
 
 // //pipex en test //
 	
@@ -208,7 +217,17 @@ int	ft_call_pipex(t_mishell mish, t_files *files)
 // 	}
 // 	free(tab_str);	
 
-// 	ft_free_files(&files);
-// 	ft_free_cmds(&mish);
-// 	return (0);
-// }
+	printf("\n\n");
+	int	i = 0;
+	while (files.tab_var_env[i])
+	{
+		//if (ft_strncmp(files.tab_var_env[i], "PWD", 3) == 0 || ft_strncmp(files.tab_var_env[i], "OLDPWD", 6) == 0)
+		printf("%s\n\n", files.tab_var_env[i]);
+		i++;
+	}
+	free(tab_str);	
+
+	ft_free_files(&files);
+	ft_free_cmds(&mish);
+	return (0);
+}
