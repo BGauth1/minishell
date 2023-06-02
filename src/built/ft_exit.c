@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:54:31 by gbertet           #+#    #+#             */
-/*   Updated: 2023/05/27 16:15:37 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/02 15:43:28 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,15 @@ void	ft_free_cmds(t_mishell *m)
 	int	i;
 
 	i = 0;
-	free(m->full_cmd);
+	if (m->full_cmd)
+		free(m->full_cmd);
 	while (m->cmds[i].c)
 	{
 		ft_free_str(m->cmds[i].c);
 		free(m->cmds[i].path);
+		free(m->cmds[i].fds->fd_in);
+		free(m->cmds[i].fds->fd_out);
+		free(m->cmds[i].fds);
 		i++;
 	}
 	free(m->cmds);

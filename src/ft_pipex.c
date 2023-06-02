@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipex.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 13:47:51 by lamasson          #+#    #+#             */
-/*   Updated: 2023/05/30 19:02:25 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/02 14:41:39 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,59 +156,59 @@ int	ft_call_pipex(t_mishell mish, t_files *files)
 	return (0);
 }
 
-int	main(int argc, char **argv, char **env)
-{
-	t_mishell	mish;
-	t_files	files;
-	char	*str;
-	char	**tab_str = NULL;
-	int	j = 0;
-	(void)argc;
-	(void)argv;
+// int	main(int argc, char **argv, char **env)
+// {
+// 	t_mishell	mish;
+// 	t_files	files;
+// 	char	*str;
+// 	char	**tab_str = NULL;
+// 	int	j = 0;
+// 	(void)argc;
+// 	(void)argv;
 
-	tab_str = malloc(5 * sizeof(char *));
-	tab_str[0] = "unset";
-	tab_str[1] = "LESS";
-	tab_str[2] = "PAGER";
-	tab_str[3] = "DISPLAY";
-/*	tab_str[4] = "PAGER=SAUCISSE";
-	tab_str[5] = "wc";
-	tab_str[6] =  "-l";
-	tab_str[7] = ">";
-	tab_str[8] = "test";*/
-	tab_str[4] = NULL;
-	str = "unset LESS PAGER DISPLAY"; // NOM_VARIABLE=0 NOM_VARIABLE1=1 NOM_VARIABLE2=2 PAGER=SAUCISSE";
-//parsing et init pour test //
-	mish.full_cmd = normalize_str(str);
-	get_cmds(&mish);
-	ft_init_tab_env(env, &files);
-	parsing_fd(tab_str, &files);
+// 	tab_str = malloc(5 * sizeof(char *));
+// 	tab_str[0] = "unset";
+// 	tab_str[1] = "LESS";
+// 	tab_str[2] = "PAGER";
+// 	tab_str[3] = "DISPLAY";
+// /*	tab_str[4] = "PAGER=SAUCISSE";
+// 	tab_str[5] = "wc";
+// 	tab_str[6] =  "-l";
+// 	tab_str[7] = ">";
+// 	tab_str[8] = "test";*/
+// 	tab_str[4] = NULL;
+// 	str = "unset LESS PAGER DISPLAY"; // NOM_VARIABLE=0 NOM_VARIABLE1=1 NOM_VARIABLE2=2 PAGER=SAUCISSE";
+// //parsing et init pour test //
+// 	mish.full_cmd = normalize_str(str);
+// 	get_cmds(&mish);
+// 	ft_init_tab_env(env, &files);
+// 	parsing_fd(tab_str, &files);
 
-//nvx init necesssaire pour pipe // verif builtin here
-	files.tab_path = ft_get_tab_path(files);
-	while (j < mish.nb_cmds)
-	{
-		if (check_if_cmd_built(mish.cmds[j]) == 0)
-			ft_init_path_cmd(&mish, files, j);
-		else
-			mish.cmds[j].path = NULL;
-		j++;
-	}
+// //nvx init necesssaire pour pipe // verif builtin here
+// 	files.tab_path = ft_get_tab_path(files);
+// 	while (j < mish.nb_cmds)
+// 	{
+// 		if (check_if_cmd_built(mish.cmds[j]) == 0)
+// 			ft_init_path_cmd(&mish, files, j);
+// 		else
+// 			mish.cmds[j].path = NULL;
+// 		j++;
+// 	}
 
-//pipex en test //
+// //pipex en test //
 	
-	ft_call_pipex(mish, &files);
+// 	ft_call_pipex(mish, &files);
 
-	printf("\n\n");
-	int	i = 0;
-	while (files.tab_var_env[i])
-	{
-		printf("%s\n\n", files.tab_var_env[i]);
-		i++;
-	}
-	free(tab_str);	
+// 	printf("\n\n");
+// 	int	i = 0;
+// 	while (files.tab_var_env[i])
+// 	{
+// 		printf("%s\n\n", files.tab_var_env[i]);
+// 		i++;
+// 	}
+// 	free(tab_str);	
 
-	ft_free_files(&files);
-	ft_free_cmds(&mish);
-	return (0);
-}
+// 	ft_free_files(&files);
+// 	ft_free_cmds(&mish);
+// 	return (0);
+// }

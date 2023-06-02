@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 18:54:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/05/26 17:10:31 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/06/02 15:33:49 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	ft_check_fd(char **fdins, char **fdouts, int nb_pipes)
 	i = 0;
 	err = 0;
 	if (nb_pipes > 0)
-	{	
+	{
 		while (fdouts[i] && !err)
 			err = ft_check_fdout(fdouts[i++]);
 		i = 0;
@@ -84,4 +84,30 @@ int	ft_check_fd(char **fdins, char **fdouts, int nb_pipes)
 			err = ft_check_fdout(fdouts[i++]);
 	}
 	return (err);
+}
+
+void	set_fd(char **fdins, char **fdouts, t_fds *fds)
+{
+	int	i;
+
+	i = 0;
+	while (fdins[i])
+		i++;
+	if (i)
+		fds->fd_in = ft_strdup(fdins[--i]);
+	else
+	{
+		fds->fd_in = NULL;
+		fds->in = -1;
+	}
+	i = 0;
+	while (fdouts[i])
+		i++;
+	if (i)
+		fds->fd_out = ft_strdup(fdouts[--i]);
+	else
+	{
+		fds->fd_out = NULL;
+		fds->out = -1;
+	}
 }

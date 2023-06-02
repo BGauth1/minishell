@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:30:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/05/30 14:38:09 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/02 15:54:51 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,21 @@ typedef struct s_mishell
 
 typedef struct	s_cmd			//tableau de struct
 {
-	char	**c;				//tableau cmd avc opt et arg pour chaque
-	char	*path;				//path correspondant a la cmd ou NULL si builtin 
-	int		here_doc;
+	struct s_fds	*fds;
+	char			**c;				//tableau cmd avc opt et arg pour chaque
+	char			*path;				//path correspondant a la cmd ou NULL si builtin 
+	int				here_doc;
 }				t_cmd;
+
+typedef struct 	s_fds
+{
+	char	*fd_in;
+	char	*fd_out;
+	int		in;
+	int		out;
+	int		err;
+}				t_fds;
+
 
 typedef struct s_files{
 	char	*fd_in;			//string malloc de fd_in "test.c" if NULL no in
@@ -107,12 +118,14 @@ char	*ft_read_here_doc(char *prompt, char *eof);
 
 //		FT_NORMALIZE_LINE.C		//
 char	*normalize_str(char *s);
+char	**ft_remove_redirections(char **cmd);
 
 //		PARSING_REDIRECTION.C	//
-void	parsing_fd(char **str, t_files *files);
+t_fds	*parsing_fd(char **str);
 
 //		PARSING_RIGHT_FILE.C	//
 int		ft_check_fd(char **fdins, char **fdouts, int nb_pipes);
+void	set_fd(char **fdins, char **fdouts, t_fds *fds);
 
 //		PARSING_
 

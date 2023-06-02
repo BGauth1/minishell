@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:27:42 by gbertet           #+#    #+#             */
-/*   Updated: 2023/05/26 20:13:39 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/02 15:53:34 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	get_cmds(t_mishell *m)
 {
 	int	i;
 	char	**tmp;
+	char	**tmp2;
 
 	i = 0;
 	tmp = ft_split_minishell(m->full_cmd, '|');
@@ -58,7 +59,10 @@ void	get_cmds(t_mishell *m)
 	while (++i < m->nb_cmds)
 	{
 		m->cmds[i].here_doc = m->here_doc[i];
-		m->cmds[i].c = ft_split_minishell(tmp[i], ' ');
+		tmp2 = ft_split_minishell(tmp[i], ' ');
+		m->cmds[i].fds = parsing_fd(tmp2);
+		m->cmds[i].c = ft_remove_redirections(tmp2);
+		m->cmds[i].path = NULL;
 	}
 	ft_free_str(tmp);
 	free(m->here_doc);
@@ -112,4 +116,4 @@ int main(int ac, char **av, char **ev)
 	free(tmp);
 	free(prompt);
 	free(mish.full_cmd);
-}*/
+} */

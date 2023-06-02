@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 17:59:08 by gbertet           #+#    #+#             */
-/*   Updated: 2023/05/26 20:03:47 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/02 14:35:32 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,37 @@ char	*normalize_str(char *s)
 	res = ft_less_whitespace(tmp);
 	res = format_str_spaces(res);
 	free(tmp);
+	return (res);
+}
+
+char	**ft_remove_redirections(char **cmd)
+{
+	int		i;
+	int		j;
+	int		size;
+	char	**res;
+
+	i = -1;
+	size = ft_strstrlen(cmd);
+	while (cmd[++i])
+	{
+		if (!ft_strncmp(cmd[i], "<", 1) || !ft_strncmp(cmd[i], ">", 1))
+		{
+			i++;
+			size -= 2;
+		}
+	}
+	i = -1;
+	res = malloc((size + 1) * sizeof(char *));
+	res[size] = NULL;
+	j = 0;
+	while (cmd[++i])
+	{
+		if (ft_strncmp(cmd[i], "<", 1) && ft_strncmp(cmd[i], ">", 1))
+			res[j++] = ft_strdup(cmd[i]);
+		else
+			i++;
+	}
+	ft_free_str(cmd);
 	return (res);
 }
