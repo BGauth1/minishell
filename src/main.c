@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:27:42 by gbertet           #+#    #+#             */
-/*   Updated: 2023/06/02 15:53:34 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/06/06 14:08:51 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	get_cmds(t_mishell *m)
 	free(m->here_doc);
 }
 
-/*
+
 int main(int ac, char **av, char **ev)
 {
 	t_mishell	mish;
@@ -116,4 +116,4 @@ int main(int ac, char **av, char **ev)
 	free(tmp);
 	free(prompt);
 	free(mish.full_cmd);
-} */
+} 

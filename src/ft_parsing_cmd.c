@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 16:52:20 by gbertet           #+#    #+#             */
-/*   Updated: 2023/05/25 15:29:17 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/06/06 14:50:25 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,9 @@ int	check_quotes(char *s)
 	dq = 0;
 	while (s[++i])
 	{
-		if (s[i] == '\"')
+		if (s[i] == '\"' && !ft_betweenquotes(s, i))
 			dq++;
-		else if (s[i] == '\'')
+		else if (s[i] == '\'' && !ft_betweenquotes(s, i))
 			sq++;
 	}
 	if (dq % 2 == 1)

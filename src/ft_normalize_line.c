@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 17:59:08 by gbertet           #+#    #+#             */
-/*   Updated: 2023/06/02 14:35:32 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/06/06 18:09:05 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,17 @@ char	*ft_less_whitespace(char *s)
 	return (res);
 }
 
+char	*remove_char(char *s, int pos)
+{
+	while (s[pos])
+	{
+		s[pos] = s[pos + 1];
+        pos++;
+	}
+	s[ft_strlen(s) - 1] = '\0';
+	return (s);
+}
+
 char	*add_char_right(char *s, int pos)
 {
 	int	i;
@@ -60,25 +71,26 @@ char	*format_str_spaces(char *s)
 {
 	int	i;
 
-	i = 0;
-	while (s[i])
+	i = -1;
+	while (s[++i])
 	{
 		if (!ft_betweenquotes(s, i))
 		{
 			if (s[i] != '|' && s[i] != '<' && s[i] != '>' && s[i] != ' ')
 			{
-				if ((s[i + 1] == '|' || s[i + 1] == '<' || s[i + 1] == '>') && !ft_betweenquotes(s, i + 1))
+				if ((s[i + 1] == '|' || s[i + 1] == '<' || s[i + 1] == '>')
+					&& !ft_betweenquotes(s, i + 1))
 					s = add_char_right(s, i + 1);
 			}
 			else if (s[i] == '|' && s[i + 1] != ' ')
 				s = add_char_right(s, i + 1);
 			else if (s[i] == '<' || s[i] == '>')
 			{
-				if (s[i + 1] != '<' && s[i + 1] != '>' && s[i + 1] != ' ' && s[i + 1])
+				if (s[i + 1] != '<' && s[i + 1] != '>' && s[i + 1] != ' '
+					&& s[i + 1])
 					s = add_char_right(s, i + 1);
 			}
 		}
-		i++;
 	}
 	return (s);
 }
@@ -107,12 +119,10 @@ char	*normalize_str(char *s)
 	return (res);
 }
 
-char	**ft_remove_redirections(char **cmd)
+int	ft_nb_redir(char **cmd)
 {
 	int		i;
-	int		j;
 	int		size;
-	char	**res;
 
 	i = -1;
 	size = ft_strstrlen(cmd);
@@ -124,7 +134,43 @@ char	**ft_remove_redirections(char **cmd)
 			size -= 2;
 		}
 	}
+	return (size);
+}
+
+char	*ft_remove_quotes(char *s)
+{
+	int		i;
+	char	c;
+
+	i = 0;
+	c = '\0';
+	while (s[i])
+	{
+		if (!c && (s[i] == '\'' || s[i] == '\"'))
+		{
+			c = s[i];
+			remove_char(s, i);
+		}
+		else if (c == s[i])
+		{
+			c = '\0';
+			remove_char(s, i);
+		}
+		else
+			i++;
+	}
+	return (s);
+}
+
+char	**ft_remove_redirections(char **cmd)
+{
+	int		i;
+	int		j;
+	int		size;
+	char	**res;
+
 	i = -1;
+	size = ft_nb_redir(cmd);
 	res = malloc((size + 1) * sizeof(char *));
 	res[size] = NULL;
 	j = 0;
