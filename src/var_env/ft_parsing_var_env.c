@@ -6,11 +6,11 @@
 /*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 15:00:23 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/06 17:09:56 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/06 17:23:35 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static int	ft_wheel_tab_var_env(t_files files, t_var_env *data, int j)
 {
@@ -98,7 +98,7 @@ char	*ft_handle_var_env(char *str, t_files files)
 	ft_free_data_var_env(&data, data.nb_dol);
 	return (new_str);
 }
-
+/*
 int	main(int argc, char **argv, char **env)
 {
 	(void)argc;
@@ -117,4 +117,4 @@ int	main(int argc, char **argv, char **env)
 	ft_free_tab(files.tab_var_env);
 	free(new);
 	return (0);
-}
+}*/

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 #include <errno.h>
 
 int	ft_exec_cmd(t_mishell mish, t_files files)

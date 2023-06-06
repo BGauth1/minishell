@@ -32,16 +32,16 @@ BIN_DIR		= bin
 
 MAKEFLAGS	+= --no-print-directory
 SRC			= src/ft_check_builtins.c \
-			src/ft_exec.c \
+			src/pipex/ft_exec.c \
 			src/ft_get_path_cmd.c \
-			src/ft_init_tab_env.c \
-			src/ft_maj_tab_env.c \
+			src/var_env/ft_init_tab_env.c \
+			src/var_env/ft_maj_tab_env.c \
 			src/ft_normalize_line.c \
 			src/ft_parsing_cmd.c \
-			src/ft_pipex.c \
+			src/pipex/ft_pipex.c \
 			src/ft_readline.c \
 			src/ft_split_minishell.c \
-			src/ft_strjoin_path.c \
+			src/pipex/ft_strjoin_path.c \
 			src/ft_utils.c \
 			src/main.c \
 			src/parsing_redirection.c \
@@ -54,9 +54,9 @@ SRC			= src/ft_check_builtins.c \
 			src/built/ft_export_utils.c \
 			src/built/ft_pwd.c \
 			src/built/ft_unset.c \
-			src/ft_parsing_var_env.c \
-			src/ft_parsing_var_env_utils.c \
-			src/ft_join_var_env_str.c
+			src/var_env/ft_parsing_var_env.c \
+			src/var_env/ft_parsing_var_env_utils.c \
+			src/var_env/ft_join_var_env_str.c
 
 OBJ			= $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 LIBFT		= libft

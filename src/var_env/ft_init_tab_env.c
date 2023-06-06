@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	ft_init_tab_env(char **env, t_files *files) //envoyer addr,(&) de files dans proto
 {
