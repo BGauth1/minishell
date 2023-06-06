@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 17:59:08 by gbertet           #+#    #+#             */
-/*   Updated: 2023/06/06 18:09:05 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/06/06 18:18:39 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*remove_char(char *s, int pos)
 		s[pos] = s[pos + 1];
         pos++;
 	}
-	s[ft_strlen(s) - 1] = '\0';
+	s[ft_strlen(s)] = '\0';
 	return (s);
 }
 
@@ -149,15 +149,16 @@ char	*ft_remove_quotes(char *s)
 		if (!c && (s[i] == '\'' || s[i] == '\"'))
 		{
 			c = s[i];
-			remove_char(s, i);
+			s = remove_char(s, i);
 		}
 		else if (c == s[i])
 		{
 			c = '\0';
-			remove_char(s, i);
+			s = remove_char(s, i);
 		}
 		else
 			i++;
+		printf("%s\n", s);
 	}
 	return (s);
 }
@@ -177,7 +178,7 @@ char	**ft_remove_redirections(char **cmd)
 	while (cmd[++i])
 	{
 		if (ft_strncmp(cmd[i], "<", 1) && ft_strncmp(cmd[i], ">", 1))
-			res[j++] = ft_strdup(cmd[i]);
+			res[j++] = ft_strdup(ft_remove_quotes(cmd[i]));
 		else
 			i++;
 	}
