@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:30:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/02 15:57:55 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/06/06 16:52:30 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,22 @@ typedef struct s_files{
 	int		pos_cmd;		//position dans le tab des cmds pendant son execution
 }t_files;
 
+typedef struct s_var_env{
+	int					nb_dol;
+	char				*str;
+	int					len;
+	int					pos;
+	char				*tmp;
+	struct s_new_str	*val;
+}t_var_env;
+
+typedef struct s_new_str{
+	int		start;
+	char	*name;
+	int		len_n;
+	char	*val;
+	int		len_v;
+}t_new_str;
 
 //		MAIN.C					//
 void	get_cmds(t_mishell *m);
@@ -168,5 +184,17 @@ char	*ft_strjoin_path(char *path, char *cmd);
 
 //		FT_EXEC.C				//
 int		ft_exec_cmd(t_mishell mish, t_files files);
+
+//		FT_PARSING_VAR_ENV.C	//
+char	*ft_handle_var_env(char *str, t_files files);
+
+//		FT_PARSING_VAR_ENV_UTILS.C	//
+int		ft_check_dollar(char *str, int i);
+int		ft_check_end_name(char *str, int i);
+void	ft_free_data_var_env(t_var_env *data, int n);
+char	*rec_name_var_env(char *str);
+
+//		FT_JOIN_VAR_ENV_STR.C	//
+void	ft_join_all_str(t_var_env *data);
 
 #endif

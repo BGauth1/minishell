@@ -33,7 +33,6 @@ BIN_DIR		= bin
 MAKEFLAGS	+= --no-print-directory
 SRC			= src/ft_check_builtins.c \
 			src/ft_exec.c \
-			src/ft_find_val_env.c \
 			src/ft_get_path_cmd.c \
 			src/ft_init_tab_env.c \
 			src/ft_maj_tab_env.c \
@@ -54,7 +53,10 @@ SRC			= src/ft_check_builtins.c \
 			src/built/ft_export.c \
 			src/built/ft_export_utils.c \
 			src/built/ft_pwd.c \
-			src/built/ft_unset.c
+			src/built/ft_unset.c \
+			src/ft_parsing_var_env.c \
+			src/ft_parsing_var_env_utils.c \
+			src/ft_join_var_env_str.c
 
 OBJ			= $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 LIBFT		= libft

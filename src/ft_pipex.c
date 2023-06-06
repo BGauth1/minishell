@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 13:47:51 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/02 15:59:03 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/06/06 16:28:20 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ int	ft_call_pipex(t_mishell mish, t_files *files)
 		close(fd_in);
 	return (0);
 }
-
+/*
 // int	main(int argc, char **argv, char **env)
 // {
 // 	t_mishell	mish;
@@ -171,11 +171,11 @@ int	ft_call_pipex(t_mishell mish, t_files *files)
 // 	tab_str[1] = "LESS";
 // 	tab_str[2] = "PAGER";
 // 	tab_str[3] = "DISPLAY";
-// /*	tab_str[4] = "PAGER=SAUCISSE";
+//	tab_str[4] = "PAGER=SAUCISSE";
 // 	tab_str[5] = "wc";
 // 	tab_str[6] =  "-l";
 // 	tab_str[7] = ">";
-// 	tab_str[8] = "test";*/
+// 	tab_str[8] = "test";
 // 	tab_str[4] = NULL;
 // 	str = "unset LESS PAGER DISPLAY"; // NOM_VARIABLE=0 NOM_VARIABLE1=1 NOM_VARIABLE2=2 PAGER=SAUCISSE";
 // //parsing et init pour test //
@@ -187,13 +187,13 @@ int	ft_call_pipex(t_mishell mish, t_files *files)
 	tab_str = malloc(3 * sizeof(char *));
 	tab_str[0] = "export";
 	tab_str[1] = "TEST";
-/*	tab_str[2] = "saucii6se=2";
+	tab_str[2] = "saucii6se=2";
 	tab_str[3] = "my-var=3";
 	tab_str[4] = "PAGER=4";
 	tab_str[5] = "var$=5";
 	tab_str[6] =  "-l";
 	tab_str[7] = ">";
-	tab_str[8] = "test";*/
+	tab_str[8] = "test";
 	tab_str[2] = NULL;
 	str = "export TEST";
 	//1SAUCISSE=1 saucii6se=2 my-var=3 PAGER=4 var$=5"; // NOM_VARIABLE=0 NOM_VARIABLE1=1 NOM_VARIABLE2=2 PAGER=SAUCISSE";
@@ -230,4 +230,4 @@ int	ft_call_pipex(t_mishell mish, t_files *files)
 	ft_free_files(&files);
 	ft_free_cmds(&mish);
 	return (0);
-}
+}*/
