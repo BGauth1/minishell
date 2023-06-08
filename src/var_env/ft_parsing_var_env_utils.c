@@ -6,7 +6,7 @@
 /*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 17:29:51 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/06 17:02:42 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/07 21:34:33 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_check_dollar(char *str, int i)
 	{
 		if (str[i] == '$')
 			return (i + 1);
-		i++;
+	i++;
 	}
 	return (-1);
 }
@@ -40,6 +40,19 @@ int	ft_check_end_name(char *str, int i)
 		i++;
 	}
 	return (i);
+}
+
+void	ft_str_data(char *str, t_var_env *data)
+{
+	while (str[data->len] != '\0')
+	{
+		if (str[data->len] == '$')
+		{
+			if (ft_betweenchar(str, data->len, '\'') == 0)
+				data->nb_dol++;
+		}
+		data->len++;
+	}
 }
 
 char	*rec_name_var_env(char *str)

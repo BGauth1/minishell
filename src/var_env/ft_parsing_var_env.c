@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/01 15:00:23 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/06 17:23:35 by lamasson         ###   ########.fr       */
+/*   Created: 2023/06/08 12:51:30 by lamasson          #+#    #+#             */
+/*   Updated: 2023/06/08 14:04:34 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,18 +59,14 @@ static void	ft_parse_struct_var_env(char *str, t_var_env *data)
 	int	i;
 
 	i = 0;
-	while (str[data->len] != '\0')
-	{
-		if (str[data->len] == '$')
-			data->nb_dol++;
-		data->len++;
-	}
 	data->val = malloc(sizeof(t_new_str) * (data->nb_dol + 1));
 	data->val[data->nb_dol].name = NULL;
 	while (i < data->nb_dol)
 	{
 		data->val[i].start = ft_check_dollar(str, data->pos);
 		data->pos = data->val[i].start;
+		if (ft_betweenchar(str, data->pos, '\'') == 1)
+			continue ;
 		data->val[i].len_n = ft_check_end_name(str, data->pos);
 		data->val[i].len_n = data->val[i].len_n - data->val[i].start;
 		data->val[i].name = ft_substr(str, data->val[i].start, \
@@ -92,29 +88,47 @@ char	*ft_handle_var_env(char *str, t_files files)
 	data.pos = 0;
 	if (ft_check_dollar(str, 0) == -1)
 		return (str);
+	ft_str_data(str, &data);
+	if (data.nb_dol < 1)
+	{
+		data.str = ft_strdup(str); ////
+		return (data.str);
+	}
 	ft_parse_struct_var_env(str, &data);
 	ft_init_new_str(files, &data);
 	new_str = ft_strdup(data.tmp);
 	ft_free_data_var_env(&data, data.nb_dol);
 	return (new_str);
 }
-/*
+
 int	main(int argc, char **argv, char **env)
 {
 	(void)argc;
 	(void)argv;
-	char	*str;
-	char	*new;
 
-	str = "lol$USER$USER$USERSS.LDL.shh"; // = lamasson.SDSS $USER$USER = lamassonlamasson $USERldl = ""
+	char	*str;
+
+
+
+	str = " lol$USER\"$USERXBX\"'$USER'"; // = lamasson.SDSS $USER$USER = lamassonlamasson $USERldl = ""
+
 	t_files	files;
 	ft_init_tab_env(env, &files);
 
+
+	char	*new;
 	new = ft_handle_var_env(str, files);
-	
+	new = ft_remove_quotes(new);
 	printf("%s\n", new);
 
 	ft_free_tab(files.tab_var_env);
 	free(new);
 	return (0);
-}*/
+}
+
+//GESTION D'ERREUR 2/?
+// "$DSHDHD" => PREND ENTRE DOUBLEQUOTE COMME ARGUMENT DE COMMANDE ET RETURN COMMAND NOT FOUND AVEC ARG VIDE 
+
+//TRAITEMENT DE LA VARIABLE ERREUR A AFFICHER 1/?
+//  $?.CCCCC$? => 127.CCCCC127  colle la valeur error partout ou il y a $? peut importe ou
+// "$?" TRAITEMENT AVEC VARIABLE GLOBAL NUM ERROR 

@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:30:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/06 16:52:30 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/07 21:39:45 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,11 @@ typedef struct 	s_fds
 	char	*fd_in;
 	char	*fd_out;
 	int		in;
-	int		out;
+	int		out; // -1 = no fichier out / 0 redirection simple / 1 redirection append mode
 	int		err;
 }				t_fds;
 
-
 typedef struct s_files{
-	char	*fd_in;			//string malloc de fd_in "test.c" if NULL no in
-	char	*fd_out;		//string malloc de fd_out "test/test1.c" if NULL no out
-	int		out;			// -1 = no fichier out / 0 redirection simple / 1 redirection append mode
-	int		nb_pipe;		//defini ordre de verif (defini manuellement)(a revoir)(nb_cmds - 1 = nb_pipe)
-	int		err;
 	char	**tab_var_env;	//notre tableau de variables d'environnements
 	char	**tab_path;		//PATH val split, tableau de tous les paths ':'
 	int		pos_cmd;		//position dans le tab des cmds pendant son execution
@@ -127,6 +121,7 @@ int		check_if_cmd_built(t_cmd cmds); //return (0) si no built ou (1) si built
 
 //		FT_UTILS.C				//
 int		ft_iswhitespace(char c);
+int		ft_betweenchar(char *s, int pos, char cquote);
 int		ft_betweenquotes(char *s, int pos);
 int		ft_strstrlen(char **s);
 
@@ -138,6 +133,7 @@ char	*ft_read_here_doc(char *prompt, char *eof);
 //		FT_NORMALIZE_LINE.C		//
 char	*normalize_str(char *s);
 char	**ft_remove_redirections(char **cmd);
+char	*ft_remove_quotes(char *s);
 
 //		PARSING_REDIRECTION.C	//
 t_fds	*parsing_fd(char **str);
@@ -191,6 +187,7 @@ char	*ft_handle_var_env(char *str, t_files files);
 //		FT_PARSING_VAR_ENV_UTILS.C	//
 int		ft_check_dollar(char *str, int i);
 int		ft_check_end_name(char *str, int i);
+void	ft_str_data(char *str, t_var_env *data);
 void	ft_free_data_var_env(t_var_env *data, int n);
 char	*rec_name_var_env(char *str);
 
