@@ -6,7 +6,7 @@
 /*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 12:51:30 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/08 14:04:34 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/08 14:30:12 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ char	*ft_handle_var_env(char *str, t_files files)
 	ft_free_data_var_env(&data, data.nb_dol);
 	return (new_str);
 }
-
+/*
 int	main(int argc, char **argv, char **env)
 {
 	(void)argc;
@@ -110,7 +110,7 @@ int	main(int argc, char **argv, char **env)
 
 
 
-	str = " lol$USER\"$USERXBX\"'$USER'"; // = lamasson.SDSS $USER$USER = lamassonlamasson $USERldl = ""
+	str = "CARAR$USER\'\"$USER\"\'$USER.SHGD"; // = lamasson.SDSS $USER$USER = lamassonlamasson $USERldl = ""
 
 	t_files	files;
 	ft_init_tab_env(env, &files);
@@ -124,7 +124,7 @@ int	main(int argc, char **argv, char **env)
 	ft_free_tab(files.tab_var_env);
 	free(new);
 	return (0);
-}
+}*/
 
 //GESTION D'ERREUR 2/?
 // "$DSHDHD" => PREND ENTRE DOUBLEQUOTE COMME ARGUMENT DE COMMANDE ET RETURN COMMAND NOT FOUND AVEC ARG VIDE 

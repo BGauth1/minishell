@@ -158,7 +158,7 @@ char	*ft_remove_quotes(char *s)
 		}
 		else
 			i++;
-		printf("%s\n", s);
+		//printf("%s\n", s);
 	}
 	return (s);
 }

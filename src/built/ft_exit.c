@@ -48,10 +48,6 @@ void	ft_free_files(t_files *files)
 {
 	ft_free_tab(files->tab_path);
 	ft_free_tab(files->tab_var_env);
-	if (files->fd_in)
-		free(files->fd_in);
-	if (files->fd_out)
-		free(files->fd_out);
 }
 
 void    ft_exit(t_mishell *m)   

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../minishell.h"
-#include <sys/wait.h>
+/*
 
 int	open_fdin(t_files files)
 {
@@ -36,8 +36,8 @@ int	open_fdout(t_files files)
 		op = open(files.fd_out, O_RDWR | O_CREAT | O_TRUNC, 0644);	
 	return (op);
 }
-/*
-static void		ft_dup(int fd_in, int *fd, t_files files, t_mishell mish)
+
+//static void		ft_dup(int fd_in, int *fd, t_files files, t_mishell mish)
 {
 	if (files.fd_in == NULL && files.pos_cmd == 0)
 	{
@@ -67,7 +67,7 @@ static void		ft_dup(int fd_in, int *fd, t_files files, t_mishell mish)
 	//dup2(fd[1], 1);
 	//close(fd[1]);
 
-}*/
+}//
 
 static void	ft_dup(int fd_in , int *fd, t_files files, t_mishell mish)
 {
@@ -154,7 +154,7 @@ int	ft_call_pipex(t_mishell mish, t_files *files)
 	if (fd_in > 0)
 		close(fd_in);
 	return (0);
-}
+}*/
 /*
 // int	main(int argc, char **argv, char **env)
 // {

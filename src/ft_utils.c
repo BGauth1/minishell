@@ -17,13 +17,15 @@ int	ft_betweenchar(char *s, int pos, char cquote)
 	int		i;
 	int		quote;
 	char	c;
+	int	len;
 
 	i = -1;
 	quote = 0;
 	c = '\0';
 	if (!s[pos])
 		return (0);
-	if (ft_strlen(s) <= pos)
+	len = ft_strlen(s); //laura pb compil pdt comparaison entre strlen et pos
+	if (len <= pos)
 		return (0);
 	while (s[++i])
 	{
