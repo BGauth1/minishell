@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:30:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/07 21:39:45 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/08 16:39:33 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,11 @@ typedef struct s_mishell
 	char			*full_cmd;	//ligne de cmd du terminal
 	char			path[1024];
 	int				nb_cmds;	//nombre de commande dans la ligne
+	int				pos_cmd;	//pos dans tab de cmds pdt execution des pipes
 	int				type;
 	int				*here_doc;
 	char			**env;		//variable d'environnements du main 
+	struct s_files	*files;
 }               t_mishell;
 
 typedef struct	s_cmd			//tableau de struct
@@ -61,7 +63,6 @@ typedef struct 	s_fds
 typedef struct s_files{
 	char	**tab_var_env;	//notre tableau de variables d'environnements
 	char	**tab_path;		//PATH val split, tableau de tous les paths ':'
-	int		pos_cmd;		//position dans le tab des cmds pendant son execution
 }t_files;
 
 typedef struct s_var_env{
@@ -158,7 +159,7 @@ int		empty_str(const char *s);
 int		synthax_check(char *s);
 
 //		FT_INIT_TAB_ENV.C		//
-void	ft_init_tab_env(char **env, t_files *files);
+void	ft_init_tab_env(char **env, t_mishell *mish);
 void	ft_free_tab_env(t_files *files);
 int		ft_tablen(char **tab);
 
@@ -171,9 +172,9 @@ char	**ft_get_tab_path(t_files files);
 void	ft_init_path_cmd(t_mishell *mish, t_files files, int j);
 
 //		FT_PIPEX.C				//
-int		ft_call_pipex(t_mishell mish, t_files *files); //appel pipe -> fork -> dup et exec_cmd
-int		open_fdout(t_files files);
-int		open_fdin(t_files files); //revoir pour integrer here_doc
+int		ft_call_pipex(t_mishell *mish); //appel pipe -> fork -> dup et exec_cmd
+int		open_fdout(t_fds fds);
+int		open_fdin(t_fds fds); //revoir pour integrer here_doc
 
 //		FT_STRJOIN_PATH.C		//
 char	*ft_strjoin_path(char *path, char *cmd);

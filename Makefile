@@ -6,7 +6,7 @@
 #    By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/24 17:11:07 by lamasson          #+#    #+#              #
-#    Updated: 2023/05/26 15:37:24 by lamasson         ###   ########.fr        #
+#    Updated: 2023/06/08 16:18:48 by lamasson         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ BIN_DIR		= bin
 MAKEFLAGS	+= --no-print-directory
 SRC			= src/ft_check_builtins.c \
 			src/pipex/ft_exec.c \
-			src/ft_get_path_cmd.c \
+			src/pipex/ft_get_path_cmd.c \
 			src/var_env/ft_init_tab_env.c \
 			src/var_env/ft_maj_tab_env.c \
 			src/ft_normalize_line.c \

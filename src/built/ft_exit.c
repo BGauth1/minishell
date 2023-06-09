@@ -41,6 +41,7 @@ void	ft_free_cmds(t_mishell *m)
 		free(m->cmds[i].fds);
 		i++;
 	}
+	free(m->files);
 	free(m->cmds);
 }
 

@@ -12,8 +12,6 @@
 
 #include "minishell.h"
 
-/* return une string malloc avec le nom
- * du fichier d'entrer ou de sortit*/
 
 // char	*rec_file(char *str)
 // {
@@ -46,14 +44,6 @@ int	ft_count_char(char **str, char c)
 	return (j);
 }
 
-/* check redirection in
- * if classic or heredoc mode:
- * '<' '<<'
- * return int in; in struct files
- * si 1 out = 0
- * si 2 out = 1 (output append mode)
-*/
-
 int	redirect_type(char *str)
 {
 	if (!ft_strncmp(str, "<", 2) || !ft_strncmp(str, ">", 2))
@@ -67,17 +57,6 @@ int	redirect_type(char *str)
 	}
 	return (-1);
 }
-
-/* cherche redirection in dans str:
- * str est la string passé dans le terminal,
- * t_files *fd est la struct ou sont stockés
- * le fd du fichier in et du fichier out
- *
- * fct ne check pas d'erreur pour le moment
- * puisque check du here doc dans ft_parsing_cmd.c
- *
- * if fd_in trouvé malloc puis placé dans struct files
- * else fd_in = NULL*/
 
 char	**find_redirect_left(char **str, t_fds *fds)
 {
@@ -104,10 +83,6 @@ char	**find_redirect_left(char **str, t_fds *fds)
 	return (fdins);
 }
 
-/* same left-right exept for int out;
- * mis a -1 if no redirection de sortit
- * et fd_out = NULL*/
-
 char	**find_redirect_right(char **str, t_fds *fds)
 {
 	int		i;
@@ -129,11 +104,6 @@ char	**find_redirect_right(char **str, t_fds *fds)
 	}
 	return (fdouts);
 }
-
-/* fct regroupe parsing redirection in-out,
- * check int et out chmod
- * et recuperation du nom des fichiers fd_in et fd_out
- * dans struct files*/
 
 t_fds	*parsing_fd(char **str)
 {

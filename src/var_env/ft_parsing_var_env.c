@@ -6,7 +6,7 @@
 /*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 12:51:30 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/08 14:30:12 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/08 14:04:34 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int	main(int argc, char **argv, char **env)
 
 
 
-	str = "CARAR$USER\'\"$USER\"\'$USER.SHGD"; // = lamasson.SDSS $USER$USER = lamassonlamasson $USERldl = ""
+	str = " lol$USER\"$USERXBX\"'$USER'"; // = lamasson.SDSS $USER$USER = lamassonlamasson $USERldl = ""
 
 	t_files	files;
 	ft_init_tab_env(env, &files);

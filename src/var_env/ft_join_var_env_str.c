@@ -6,7 +6,7 @@
 /*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 17:29:51 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/06 17:12:10 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/07 12:47:07 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static char	*ft_strjoin_loop(char *tmp, char *buf)
 	len = ft_strlen(tmp) + ft_strlen(buf);
 	s3 = malloc(sizeof(char) * (len + 1));
 	if (!s3)
-		return (NULL);
+		return (NULL); //ft_exit
 	ft_join(tmp, buf, s3);
 	if (tmp)
 		free(tmp);
@@ -56,6 +56,8 @@ void	ft_choose_loop(t_var_env *data, int new_start)
 	if (new_start != data->pos)
 	{
 		buf = ft_substr(data->str, data->pos, new_start - data->pos);
+		if (!buf)
+			exit (1);
 		data->tmp = ft_strjoin_loop(data->tmp, buf);
 		data->pos += ft_strlen(buf);
 		free(buf);
