@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:30:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/08 16:39:33 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/12 19:06:08 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 # include <termios.h> //tcsetattr, tcgetattr, isatty, ttyname, ttyslot, ioctl
 # include "../libft/libft.h"
 
+extern int	g_status;
+
 typedef struct s_mishell
 {
 	struct s_cmd	*cmds;		//tableau de structure des commandes
@@ -41,6 +43,7 @@ typedef struct s_mishell
 	int				*here_doc;
 	char			**env;		//variable d'environnements du main 
 	struct s_files	*files;
+	pid_t			*pid;
 }               t_mishell;
 
 typedef struct	s_cmd			//tableau de struct
@@ -132,7 +135,7 @@ int		ft_path_pos_prompt(void);
 char	*ft_read_here_doc(char *prompt, char *eof);
 
 //		FT_NORMALIZE_LINE.C		//
-char	*normalize_str(char *s);
+char	*normalize_str(char *s, t_files *files);
 char	**ft_remove_redirections(char **cmd);
 char	*ft_remove_quotes(char *s);
 
@@ -148,7 +151,7 @@ void	set_fd(char **fdins, char **fdouts, t_fds *fds);
 //		FT_EXIT.C				//
 void	ft_free_str(char **s);
 void	ft_free_cmds(t_mishell *m);
-void	ft_free_files(t_files *files);
+void	ft_free_files(t_mishell *mish);
 void	ft_exit(t_mishell *m);
 
 //		FT_SPLIT_MINISHELL.C	//
@@ -170,6 +173,7 @@ int		maj_tab_env_pwd(t_files *files);
 //		FT_GET_PATH_CMD.C		//
 char	**ft_get_tab_path(t_files files);
 void	ft_init_path_cmd(t_mishell *mish, t_files files, int j);
+void	ft_cmd_path_ready(t_mishell *mish);
 
 //		FT_PIPEX.C				//
 int		ft_call_pipex(t_mishell *mish); //appel pipe -> fork -> dup et exec_cmd
@@ -194,5 +198,9 @@ char	*rec_name_var_env(char *str);
 
 //		FT_JOIN_VAR_ENV_STR.C	//
 void	ft_join_all_str(t_var_env *data);
+
+//		SIGNAL.C				//
+void	sigint_outfork(int signum);
+void	sigquit_fork(int signum);
 
 #endif

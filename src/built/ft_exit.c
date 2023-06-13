@@ -41,14 +41,14 @@ void	ft_free_cmds(t_mishell *m)
 		free(m->cmds[i].fds);
 		i++;
 	}
-	free(m->files);
 	free(m->cmds);
 }
 
-void	ft_free_files(t_files *files)
+void	ft_free_files(t_mishell *mish)
 {
-	ft_free_tab(files->tab_path);
-	ft_free_tab(files->tab_var_env);
+	ft_free_tab(mish->files->tab_path);
+	ft_free_tab(mish->files->tab_var_env);
+	free(mish->files);
 }
 
 void    ft_exit(t_mishell *m)   

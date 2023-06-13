@@ -6,7 +6,7 @@
 #    By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/24 17:11:07 by lamasson          #+#    #+#              #
-#    Updated: 2023/06/08 16:18:48 by lamasson         ###   ########.fr        #
+#    Updated: 2023/06/11 13:51:09 by lamasson         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,9 @@ SRC			= src/ft_check_builtins.c \
 			src/built/ft_unset.c \
 			src/var_env/ft_parsing_var_env.c \
 			src/var_env/ft_parsing_var_env_utils.c \
-			src/var_env/ft_join_var_env_str.c
+			src/var_env/ft_join_var_env_str.c \
+			src/signal/signal.c \
+			src/signal/main_signal_test.c
 
 OBJ			= $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 LIBFT		= libft
@@ -95,3 +97,4 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
+

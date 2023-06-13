@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 17:59:08 by gbertet           #+#    #+#             */
-/*   Updated: 2023/06/06 18:18:39 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/06/12 19:07:08 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*remove_char(char *s, int pos)
 	while (s[pos])
 	{
 		s[pos] = s[pos + 1];
-        pos++;
+        	pos++;
 	}
 	s[ft_strlen(s)] = '\0';
 	return (s);
@@ -95,7 +95,7 @@ char	*format_str_spaces(char *s)
 	return (s);
 }
 
-char	*normalize_str(char *s)
+char	*normalize_str(char *s, t_files *files)
 {
 	int	i;
 	int	j;
@@ -116,6 +116,8 @@ char	*normalize_str(char *s)
 	res = ft_less_whitespace(tmp);
 	res = format_str_spaces(res);
 	free(tmp);
+	res = ft_handle_var_env(res, *files);
+	res = ft_remove_quotes(res);
 	return (res);
 }
 

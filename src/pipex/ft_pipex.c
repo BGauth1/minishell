@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 13:47:51 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/08 17:16:14 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/12 18:34:43 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void	ft_dup(int fd_in , int *fd, t_mishell mish)
 {
 	int	out;
 
-	if (mish.cmds[mish.pos_cmd].fds->fd_out != NULL && mish.pos_cmd == mish.nb_cmds - 1)
+	if (mish.cmds[mish.pos_cmd].fds->fd_out != NULL)
 	{
 		close(fd[0]);
 		out = open_fdout(*mish.cmds[mish.pos_cmd].fds);
@@ -84,7 +84,7 @@ static void	ft_dup(int fd_in , int *fd, t_mishell mish)
 		dup2(fd[1], 1);
 		close(fd[1]);
 	}
-	if (mish.cmds[mish.pos_cmd].fds->fd_in == NULL && mish.pos_cmd == 0 && mish.nb_cmds > 1)
+	if (mish.cmds[mish.pos_cmd].fds->fd_in == NULL && fd_in < 0)
 	{
 		close(fd[1]);
 		dup2(fd[0], 0);
@@ -100,12 +100,10 @@ static void	ft_dup(int fd_in , int *fd, t_mishell mish)
 
 static int		ft_fork(t_mishell mish, int fd_in, int *fd)
 {
-	int	pid;
-
-	pid = fork();
-	if (pid < 0)
+	mish.pid[mish.pos_cmd] = fork();
+	if (mish.pid[mish.pos_cmd] < 0)
 		perror("fork");
-	if (pid == 0)
+	if (mish.pid[mish.pos_cmd] == 0)
 	{
 		ft_dup(fd_in, fd, mish);
 		ft_exec_cmd(mish, *mish.files);
@@ -116,7 +114,6 @@ static int		ft_fork(t_mishell mish, int fd_in, int *fd)
 		if (mish.cmds[mish.pos_cmd].fds->fd_out != NULL)
 			close(fd[1]);
 	}
-	waitpid(pid, NULL, 0);
 	return (0);
 }
 
@@ -137,25 +134,45 @@ static int	ft_pipe(t_mishell mish, int fd_in)
 	return (fd[0]);
 }
 
+void	waitpid_tab(t_mishell *m)
+{
+	int	i;
+	int	status; //error nb
+
+	i = 0;
+	while (i < m->nb_cmds)
+	{
+		if (m->pid[i] > 0)
+			waitpid(m->pid[i], &status, 0);
+		i++;
+	}
+}
+
 int	ft_call_pipex(t_mishell *mish)
 {
 	int	fd_in;
 
 	mish->pos_cmd = 0;
 	fd_in = -1;
+	mish->pid = malloc(sizeof(pid_t) * mish->nb_cmds);
+	ft_cmd_path_ready(mish);
 	while (mish->pos_cmd < mish->nb_cmds)
 	{
 		if (mish->cmds[mish->pos_cmd].fds->fd_in != NULL)
 			fd_in = open_fdin(*mish->cmds[mish->pos_cmd].fds);
 		if (check_built_no_fork(mish->cmds[mish->pos_cmd].c, mish->files) == 0)
 			fd_in = ft_pipe(*mish, fd_in);
+		else
+			mish->pid[mish->pos_cmd] = -1;
 		mish->pos_cmd++;
 	}
+	waitpid_tab(mish);
 	if (fd_in > 0)
 		close(fd_in);
 	return (0);
 }
 
+/*
 int	main(int argc, char **argv, char **env)
 {
  	t_mishell	mish;
@@ -188,16 +205,16 @@ int	main(int argc, char **argv, char **env)
 	
  	ft_call_pipex(&mish);
 
-/*	printf("\n\n");
-	int	i = 0;
-	while (files.tab_var_env[i])
-	{
-		//if (ft_strncmp(files.tab_var_env[i], "PWD", 3) == 0 || ft_strncmp(files.tab_var_env[i], "OLDPWD", 6) == 0)
-		printf("%s\n\n", files.tab_var_env[i]);
-		i++;
-	}*/
+//	printf("\n\n");
+//	int	i = 0;
+//	while (files.tab_var_env[i])
+//	{
+//		//if (ft_strncmp(files.tab_var_env[i], "PWD", 3) == 0 || ft_strncmp(files.tab_var_env[i], "OLDPWD", 6) == 0)
+//		printf("%s\n\n", files.tab_var_env[i]);
+//		i++;
+//	} retest bultin avec nvx pipex ////////
 
 	ft_free_files(mish.files);
 	ft_free_cmds(&mish);
 	return (0);
-}
+}*/
