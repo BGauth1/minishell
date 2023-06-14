@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:27:42 by gbertet           #+#    #+#             */
-/*   Updated: 2023/06/06 14:08:51 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/06/14 18:32:48 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	get_cmds(t_mishell *m)
 	{
 		m->cmds[i].here_doc = m->here_doc[i];
 		tmp2 = ft_split_minishell(tmp[i], ' ');
+		ft_heredoc(tmp2);
 		m->cmds[i].fds = parsing_fd(tmp2);
 		m->cmds[i].c = ft_remove_redirections(tmp2);
 		m->cmds[i].path = NULL;
