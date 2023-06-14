@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 13:47:51 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/14 18:11:02 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/06/14 19:48:14 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,39 +34,6 @@ int	open_fdout(t_fds fds)
 	return (op);
 }
 
-/*
-static void		ft_dup(int fd_in, int *fd, t_files files, t_mishell mish)
-{
-	if (files.fd_in == NULL && files.pos_cmd == 0)
-	{
-	//	dup2(fd[0], 0);
-	//	close(fd[0]);
-		close(fd[0]);
-		dup2(fd[1], 1);
-		close(fd[1]);
-	}
-	else
-	{
-		dup2(fd_in, 0);
-		close(fd_in);
-		close(fd[0]);
-	}
-	if (files.pos_cmd == mish.nb_cmds - 1 && files.fd_out != NULL)
-	{
-		close(fd[1]);
-		fd[1] = ft_open_fd_out(files);
-	}
-	else 
-	{
-		close(fd[1]);
-		dup2(fd[0], 0);
-		close(fd[0]);
-	}
-	//dup2(fd[1], 1);
-	//close(fd[1]);
-
-}*/
-
 static void	ft_dup(int fd_in , int *fd, t_mishell m)
 {
 	int	out;
@@ -84,22 +51,22 @@ static void	ft_dup(int fd_in , int *fd, t_mishell m)
 		dup2(fd[1], 1);
 		close(fd[1]);
 	}
-	if (!m.cmds[m.pos_cmd].fds->fd_in && check_if_cmd_built(m.cmds[m.pos_cmd]) != 2)
+/*	if (!m.cmds[m.pos_cmd].fds->fd_in && check_if_cmd_built(m.cmds[m.pos_cmd]) != 2)
 	{
 		close(fd[1]);
 		dup2(fd[0], 0);
 		close(fd[0]);
-	}
-	else if (fd_in > -1)
+	}*/
+	if (fd_in > -1)
 	{
 		close(fd[1]);
 		dup2(fd_in, 0);
 		close(fd_in);
 	}
-	else {
+//	else {
 		close(fd[0]);
 		close(fd[1]);
-	}
+//	}
 }
 
 static int		ft_fork(t_mishell *mish, int fd_in, int *fd)
@@ -167,7 +134,10 @@ int	ft_call_pipex(t_mishell *m)
 	while (m->pos_cmd < m->nb_cmds)
 	{
 		if (m->cmds[m->pos_cmd].fds->fd_in != NULL)
+		{
+			close(fd_in);
 			fd_in = open_fdin(*m->cmds[m->pos_cmd].fds);
+		}
 		if (check_built_no_fork(m->cmds[m->pos_cmd].c, m->files, m) == 0)
 			fd_in = ft_pipe(m, fd_in);
 		else
