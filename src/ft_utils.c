@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:53:32 by gbertet           #+#    #+#             */
-/*   Updated: 2023/06/06 17:48:55 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/06/14 18:23:16 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,23 @@ int ft_iswhitespace(char c)
 		|| c == '\v' || c == '\f' || c == '\r')
 		return (1);
 	return (0);
+}
+
+char	**ft_strstrdup(char **s)
+{
+	int	i;
+	char	**res;
+
+	i = 0;
+	while (s[i])
+		i++;
+	res = malloc((i + 1) * sizeof (char *));
+	i = 0;
+	while (s[i])
+	{
+		res[i] = ft_strdup(s[i]);
+		i++;
+	}
+	res[i] = NULL;
+	return (res);
 }

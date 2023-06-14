@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_signal_test.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 12:58:15 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/14 16:21:38 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/14 17:35:12 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	main(int argc, char **argv, char **env)
 			if (synthax_check(mish.full_cmd))
 			{
 				get_cmds(&mish);
+				ft_heredoc(mish.cmds->c);
 				ft_call_pipex(&mish);
 				ft_free_cmds(&mish);
 			}

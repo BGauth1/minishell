@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 13:47:51 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/14 16:01:41 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/14 18:11:02 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,27 +102,27 @@ static void	ft_dup(int fd_in , int *fd, t_mishell m)
 	}
 }
 
-static int		ft_fork(t_mishell mish, int fd_in, int *fd)
+static int		ft_fork(t_mishell *mish, int fd_in, int *fd)
 {
-	mish.pid[mish.pos_cmd] = fork();
-	if (mish.pid[mish.pos_cmd] < 0)
+	mish->pid[mish->pos_cmd] = fork();
+	if (mish->pid[mish->pos_cmd] < 0)
 		perror("fork");
-	if (mish.pid[mish.pos_cmd] == 0)
+	if (mish->pid[mish->pos_cmd] == 0)
 	{
-		ft_dup(fd_in, fd, mish);
-		ft_exec_cmd(mish, *mish.files);
+		ft_dup(fd_in, fd, *mish);
+		ft_exec_cmd(mish);
 	}
-	if (mish.pos_cmd == mish.nb_cmds - 1)
+	if (mish->pos_cmd == mish->nb_cmds - 1)
 	{	
 		close(fd[0]);
-		if (mish.cmds[mish.pos_cmd].fds->fd_out != NULL)
+		if (mish->cmds[mish->pos_cmd].fds->fd_out != NULL)
 			close(fd[1]);
 	}
 	return (0);
 }
 
 //gestion close here_doc voir si implementer
-static int	ft_pipe(t_mishell mish, int fd_in)
+static int	ft_pipe(t_mishell *mish, int fd_in)
 {
 	int	fd[2];
 	
@@ -169,7 +169,7 @@ int	ft_call_pipex(t_mishell *m)
 		if (m->cmds[m->pos_cmd].fds->fd_in != NULL)
 			fd_in = open_fdin(*m->cmds[m->pos_cmd].fds);
 		if (check_built_no_fork(m->cmds[m->pos_cmd].c, m->files, m) == 0)
-			fd_in = ft_pipe(*m, fd_in);
+			fd_in = ft_pipe(m, fd_in);
 		else
 			m->pid[m->pos_cmd] = -1;
 		m->pos_cmd++;

@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:30:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/13 17:55:55 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/14 18:15:12 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ int		ft_iswhitespace(char c);
 int		ft_betweenchar(char *s, int pos, char cquote);
 int		ft_betweenquotes(char *s, int pos);
 int		ft_strstrlen(char **s);
+char	**ft_strstrdup(char **s);
 
 //		FT_READLINE.C			//
 char	*ft_readline(char *str);
@@ -184,7 +185,7 @@ int		open_fdin(t_fds fds); //revoir pour integrer here_doc
 char	*ft_strjoin_path(char *path, char *cmd);
 
 //		FT_EXEC.C				//
-int		ft_exec_cmd(t_mishell mish, t_files files);
+int		ft_exec_cmd(t_mishell *mish);
 
 //		FT_PARSING_VAR_ENV.C	//
 char	*ft_handle_var_env(char *str, t_files files);
@@ -202,5 +203,8 @@ void	ft_join_all_str(t_var_env *data);
 //		SIGNAL.C				//
 void	sigint_outfork(int signum);
 void	sigquit_fork(int signum);
+
+//		FT_HEREDOC.C			//
+void    ft_heredoc(char **cmds);
 
 #endif
