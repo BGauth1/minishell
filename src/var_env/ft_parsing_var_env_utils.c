@@ -87,4 +87,5 @@ void	ft_free_data_var_env(t_var_env *data, int n)
 	}
 	free(data->val);
 	free(data->tmp);
+	free(data->str);
 }

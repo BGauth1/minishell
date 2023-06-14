@@ -180,7 +180,7 @@ char	**ft_remove_redirections(char **cmd)
 	while (cmd[++i])
 	{
 		if (ft_strncmp(cmd[i], "<", 1) && ft_strncmp(cmd[i], ">", 1))
-			res[j++] = ft_strdup(ft_remove_quotes(cmd[i]));
+			res[j++] = ft_strdup(cmd[i]); ///(ft_remove_quotes(cmd[i]));
 		else
 			i++;
 	}

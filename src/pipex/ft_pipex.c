@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 13:47:51 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/13 18:40:54 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/14 16:01:41 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static void	ft_dup(int fd_in , int *fd, t_mishell m)
 		dup2(fd[1], 1);
 		close(fd[1]);
 	}
-	if (!m.cmds[m.pos_cmd].fds->fd_in && fd_in < 0 && check_if_cmd_built(m.cmds[m.pos_cmd]) != 2)
+	if (!m.cmds[m.pos_cmd].fds->fd_in && check_if_cmd_built(m.cmds[m.pos_cmd]) != 2)
 	{
 		close(fd[1]);
 		dup2(fd[0], 0);
@@ -150,8 +150,7 @@ void	waitpid_tab(t_mishell *m)
 			waitpid(m->pid[i], &status, 0);
 		i++;
 	}
-	if (m->pid)
-		free(m->pid);
+	free(m->pid);
 }
 
 int	ft_call_pipex(t_mishell *m)

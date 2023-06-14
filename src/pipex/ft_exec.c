@@ -6,7 +6,7 @@
 /*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 13:21:26 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/13 18:04:32 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/14 16:50:12 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_exec_cmd(t_mishell mish, t_files files)
 	b = check_if_cmd_built(mish.cmds[mish.pos_cmd]);
 	if (mish.cmds[mish.pos_cmd].path == NULL && b == 0)
 	{
-		printf("Command '%s' not found\n", mish.cmds[mish.pos_cmd].c[0]);
+		printf("%s: command not found\n", mish.cmds[mish.pos_cmd].c[0]);
 		exit (1);
 	}
 	else if (check_built_fork(mish.cmds[mish.pos_cmd].c, &files) == 0)
