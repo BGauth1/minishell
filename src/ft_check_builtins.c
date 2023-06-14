@@ -14,16 +14,13 @@
 
 //fct en cours parsing built - retour erreur dans parsing ou ici ?
 
-int	check_built_no_fork(char **c, t_files *files)
+int	check_built_no_fork(char **c, t_files *files, t_mishell *m)
 {
 	size_t	len;
 
 	len = ft_strlen(c[0]) + 1;
 	if (ft_strncmp(c[0], "exit", len) == 0)
-	{
-		//ft_exit(); //no option
-		exit (1);
-	}
+		ft_exit(m); //no option
 	else if (ft_strncmp(c[0], "cd", len) == 0)
 		ft_cd(c, files); //with relative or absolute path (est ce que gerer ~ et -)
 	else if (ft_strncmp(c[0], "export", len) == 0)
@@ -67,11 +64,11 @@ int	check_if_cmd_built(t_cmd cmds)
 	else if (ft_strncmp(c, "unset", len) == 0)
 		return (1);
 	else if (ft_strncmp(c, "pwd", len) == 0)
-		return (1);
+		return (2);
 	else if (ft_strncmp(c, "env", len) == 0)
-		return (1);
+		return (2);
 	else if (ft_strncmp(c, "echo", len) == 0)
-		return (1);
+		return (2);
 	else
 		return (0);
 }

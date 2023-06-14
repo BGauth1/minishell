@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:30:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/12 19:06:08 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/13 17:55:55 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int		ft_echo(char **cmd);
 
 
 //		FT_CHECK_BUILTINS.C		//
-int		check_built_no_fork(char **c, t_files *files); //exec built
+int		check_built_no_fork(char **c, t_files *files, t_mishell *m); //exec built
 int		check_built_fork(char **c, t_files *files); //exec built
 int		check_if_cmd_built(t_cmd cmds); //return (0) si no built ou (1) si built
 

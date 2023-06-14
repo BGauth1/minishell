@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 13:47:51 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/12 18:34:43 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/13 18:40:54 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,34 +67,38 @@ static void		ft_dup(int fd_in, int *fd, t_files files, t_mishell mish)
 
 }*/
 
-static void	ft_dup(int fd_in , int *fd, t_mishell mish)
+static void	ft_dup(int fd_in , int *fd, t_mishell m)
 {
 	int	out;
 
-	if (mish.cmds[mish.pos_cmd].fds->fd_out != NULL)
+	if (m.cmds[m.pos_cmd].fds->fd_out != NULL)
 	{
 		close(fd[0]);
-		out = open_fdout(*mish.cmds[mish.pos_cmd].fds);
+		out = open_fdout(*m.cmds[m.pos_cmd].fds);
 		dup2(out, 1);
 		close(out);
 	}
-	else if (mish.pos_cmd != mish.nb_cmds - 1)
+	else if (m.pos_cmd != m.nb_cmds - 1)
 	{
 		close(fd[0]);
 		dup2(fd[1], 1);
 		close(fd[1]);
 	}
-	if (mish.cmds[mish.pos_cmd].fds->fd_in == NULL && fd_in < 0)
+	if (!m.cmds[m.pos_cmd].fds->fd_in && fd_in < 0 && check_if_cmd_built(m.cmds[m.pos_cmd]) != 2)
 	{
 		close(fd[1]);
 		dup2(fd[0], 0);
 		close(fd[0]);
 	}
-	else
+	else if (fd_in > -1)
 	{
 		close(fd[1]);
 		dup2(fd_in, 0);
 		close(fd_in);
+	}
+	else {
+		close(fd[0]);
+		close(fd[1]);
 	}
 }
 
@@ -146,27 +150,32 @@ void	waitpid_tab(t_mishell *m)
 			waitpid(m->pid[i], &status, 0);
 		i++;
 	}
+	if (m->pid)
+		free(m->pid);
 }
 
-int	ft_call_pipex(t_mishell *mish)
+int	ft_call_pipex(t_mishell *m)
 {
 	int	fd_in;
 
-	mish->pos_cmd = 0;
+	m->pos_cmd = 0;
 	fd_in = -1;
-	mish->pid = malloc(sizeof(pid_t) * mish->nb_cmds);
-	ft_cmd_path_ready(mish);
-	while (mish->pos_cmd < mish->nb_cmds)
+	m->pid = NULL; 
+	m->pid = (pid_t *)malloc(sizeof(pid_t) * m->nb_cmds);
+	if (m->pid == NULL)
+		exit (1);
+	ft_cmd_path_ready(m);
+	while (m->pos_cmd < m->nb_cmds)
 	{
-		if (mish->cmds[mish->pos_cmd].fds->fd_in != NULL)
-			fd_in = open_fdin(*mish->cmds[mish->pos_cmd].fds);
-		if (check_built_no_fork(mish->cmds[mish->pos_cmd].c, mish->files) == 0)
-			fd_in = ft_pipe(*mish, fd_in);
+		if (m->cmds[m->pos_cmd].fds->fd_in != NULL)
+			fd_in = open_fdin(*m->cmds[m->pos_cmd].fds);
+		if (check_built_no_fork(m->cmds[m->pos_cmd].c, m->files, m) == 0)
+			fd_in = ft_pipe(*m, fd_in);
 		else
-			mish->pid[mish->pos_cmd] = -1;
-		mish->pos_cmd++;
+			m->pid[m->pos_cmd] = -1;
+		m->pos_cmd++;
 	}
-	waitpid_tab(mish);
+	waitpid_tab(m);
 	if (fd_in > 0)
 		close(fd_in);
 	return (0);

@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../minishell.h"
-//ft_readline en test
 
 int	ft_cd(char **c, t_files *files)
 {
@@ -35,7 +34,6 @@ int	ft_cd(char **c, t_files *files)
 	}
 	maj_tab_env_oldpwd(files);
 	maj_tab_env_pwd(files);
-	//ft_path_pos_prompt();
 	return (0);
 }
 

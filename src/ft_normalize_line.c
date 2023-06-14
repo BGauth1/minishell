@@ -114,8 +114,8 @@ char	*normalize_str(char *s, t_files *files)
 	}
 	tmp = ft_substr(s, i, j - i + 1);
 	res = ft_less_whitespace(tmp);
-	res = format_str_spaces(res);
 	free(tmp);
+	res = format_str_spaces(res);
 	res = ft_handle_var_env(res, *files);
 	res = ft_remove_quotes(res);
 	return (res);

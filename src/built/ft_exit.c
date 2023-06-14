@@ -54,6 +54,10 @@ void	ft_free_files(t_mishell *mish)
 void    ft_exit(t_mishell *m)   
 {
 	if (m)
+	{
 		ft_free_cmds(m);
+		ft_free_files(m);
+		free(m->pid);
+	}
 	exit (1);
 }
