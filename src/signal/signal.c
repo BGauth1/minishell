@@ -12,15 +12,12 @@
 
 #include "../minishell.h"
 
-int	g_status;
 
-void	sigint_outfork(int signum)
+void	sigint_fork(int signum)
 {
 	if (signum == SIGINT)
 	{
-		// print "^C" auto pas sur \n
 		ft_putstr_fd("\n", 2);
-		//return prompt readline
 		g_status = 130;
 	}
 	return ;
@@ -31,7 +28,25 @@ void	sigquit_fork(int signum)
 	(void)signum;
 	printf("Quit (core dumped)\n");
 	g_status = 131;
-	exit (131);
+}
+
+void	sigint_outfork(int signum)
+{
+	if (signum == SIGINT)
+	{
+		g_status = 130;
+		ft_putstr_fd("\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 1);
+		rl_redisplay();
+	}
+}
+
+void	signal_maj_outfork(void)
+{
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGINT, sigint_outfork);
 }
 
 int	ft_fork(void)

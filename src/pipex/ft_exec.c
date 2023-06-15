@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 13:21:26 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/14 18:22:34 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/06/15 18:42:06 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_exec_cmd(t_mishell *mish)
 		printf("%s: command not found\n", cmd[0]);
 		ft_free_str(cmd);
 		ft_free_str(env);
-		exit (1);
+		exit (127);
 	}
 	else if (check_built_fork(mish->cmds[mish->pos_cmd].c, mish->files) == 0)
 	{
