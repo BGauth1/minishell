@@ -6,7 +6,7 @@
 /*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 17:29:51 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/07 21:34:33 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/15 15:59:54 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@ int	ft_check_end_name(char *str, int i)
 {
 	while (str[i] != '\0')
 	{
+		if (str[i - 1] == '$' && str[i] == '?')
+		{
+			i++;
+			break ;
+		}
 		if (str[i] == '$')
 			break ;
 		if (str[i] >= 32 && str[i] <= 47)

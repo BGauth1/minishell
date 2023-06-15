@@ -6,7 +6,7 @@
 /*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 12:51:30 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/08 14:04:34 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/15 13:05:49 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,10 @@ static void	ft_init_new_str(t_files files, t_var_env *data)
 	i = 0;
 	while (i < data->nb_dol)
 	{
-		ft_wheel_tab_var_env(files, data, i);
+		if (data->val[i].name[0] == '?')
+			ft_val_g_status(data, i);
+		else
+			ft_wheel_tab_var_env(files, data, i);
 		i++;
 	}
 	data->val[i].val = NULL;
@@ -90,10 +93,7 @@ char	*ft_handle_var_env(char *str, t_files files)
 		return (str);
 	ft_str_data(str, &data);
 	if (data.nb_dol < 1)
-	{
-		data.str = ft_strdup(str); ////
 		return (data.str);
-	}
 	ft_parse_struct_var_env(str, &data);
 	ft_init_new_str(files, &data);
 	new_str = ft_strdup(data.tmp);

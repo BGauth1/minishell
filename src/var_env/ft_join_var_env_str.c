@@ -6,11 +6,17 @@
 /*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 17:29:51 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/07 12:47:07 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/15 13:04:41 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	ft_val_g_status(t_var_env *data, int j)
+{
+	data->val[j].val = ft_itoa(g_status);
+	data->val[j].len_v = ft_strlen(data->val[j].val);
+}
 
 static void	ft_join(char *tmp, char *buf, char *s3)
 {
