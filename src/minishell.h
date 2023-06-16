@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:30:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/16 16:34:10 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/06/16 17:52:24 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,8 +150,6 @@ t_fds	*parsing_fd(char **str);
 int		ft_check_fd(char **fdins, char **fdouts, int nb_pipes);
 void	set_fd(char **fdins, char **fdouts, t_fds *fds);
 
-//		PARSING_
-
 //		FT_EXIT.C				//
 void	ft_free_str(char **s);
 void	ft_free_cmds(t_mishell *m);
@@ -183,7 +181,10 @@ void	ft_cmd_path_ready(t_mishell *mish);
 //		FT_PIPEX.C				//
 int		ft_call_pipex(t_mishell *mish); //appel pipe -> fork -> dup et exec_cmd
 int		open_fdout(t_fds fds);
-int		open_fdin(t_fds fds); //revoir pour integrer here_doc
+int		open_fdin(t_mishell *m, int fd_in);
+
+//		FT_PIPEX_UTILS.C		//
+void	ft_check_status_exec(t_mishell *m);
 
 //		FT_STRJOIN_PATH.C		//
 char	*ft_strjoin_path(char *path, char *cmd);
@@ -203,10 +204,13 @@ char	*rec_name_var_env(char *str);
 
 //		FT_JOIN_VAR_ENV_STR.C	//
 void	ft_join_all_str(t_var_env *data);
+void	ft_val_g_status(t_var_env *data, int j);
 
 //		SIGNAL.C				//
-void	sigint_outfork(int signum);
+void	sigint_fork(int signum);
 void	sigquit_fork(int signum);
+void	sigint_outfork(int signum);
+void	signal_maj_outfork(void);
 
 //		FT_HEREDOC.C			//
 void    ft_heredoc(char **cmds);

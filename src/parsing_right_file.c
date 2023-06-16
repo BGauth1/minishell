@@ -25,6 +25,7 @@ int	ft_check_fdin(char *in)
 	if (fd_in == -1)
 	{
 		printf("minishell: %s: %s\n", in, strerror(errno));
+		g_status = 1;
 		return (1);
 	}
 	else
@@ -50,6 +51,7 @@ int	ft_check_fdout(char *out)
 		if (fd_out == -1)
 		{
 			printf("minishell: %s: %s\n", out, strerror(errno));
+			g_status = 1;
 			return (1);
 		}
 		else

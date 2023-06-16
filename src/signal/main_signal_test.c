@@ -6,12 +6,13 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 12:58:15 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/14 20:05:57 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/06/15 18:31:33 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+int	g_status;
 
 int	main(int argc, char **argv, char **env)
 {
@@ -21,8 +22,8 @@ int	main(int argc, char **argv, char **env)
 	char *prompt;
 	char *tmp;
 
+	g_status = 0;
 	ft_init_tab_env(env, &mish);
-	mish.files->tab_path = ft_get_tab_path(*mish.files);
 	signal(SIGINT, sigint_outfork);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
@@ -44,10 +45,14 @@ int	main(int argc, char **argv, char **env)
 			if (synthax_check(mish.full_cmd))
 			{
 				get_cmds(&mish);
+				mish.files->tab_path = ft_get_tab_path(*mish.files);
 				ft_call_pipex(&mish);
 				ft_free_cmds(&mish);
+				ft_free_tab(mish.files->tab_path);
 			}
 		}
+		signal_maj_outfork();
+		//ft_free_tab(mish.files->tab_path);
 		unlink(".heredoc");
 	}
 	free(tmp);

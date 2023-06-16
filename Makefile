@@ -6,7 +6,7 @@
 #    By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/24 17:11:07 by lamasson          #+#    #+#              #
-#    Updated: 2023/06/14 17:36:03 by gbertet          ###   ########.fr        #
+#    Updated: 2023/06/15 19:00:55 by lamasson         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,8 @@ SRC			= src/ft_check_builtins.c \
 			src/var_env/ft_join_var_env_str.c \
 			src/signal/signal.c \
 			src/signal/main_signal_test.c \
-			src/ft_heredoc.c
+			src/ft_heredoc.c \
+			src/pipex/ft_pipex_utils.c
 
 OBJ			= $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 LIBFT		= libft

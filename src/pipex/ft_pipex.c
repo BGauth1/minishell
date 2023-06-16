@@ -6,19 +6,20 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 13:47:51 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/14 19:48:14 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/15 20:05:50 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	open_fdin(t_fds fds)
+int	open_fdin(t_mishell *m, int fd_in)
 {
 	int	op;
 
 	op = -1;
-	if (fds.fd_in)
-		op = open(fds.fd_in, O_RDONLY);
+	close(fd_in);
+	if (m->cmds[m->pos_cmd].fds->fd_in)
+		op = open(m->cmds[m->pos_cmd].fds->fd_in, O_RDONLY);
 	return (op);
 }
 
@@ -71,6 +72,9 @@ static void	ft_dup(int fd_in , int *fd, t_mishell m)
 
 static int		ft_fork(t_mishell *mish, int fd_in, int *fd)
 {
+	g_status = 0;
+	signal(SIGINT, sigint_fork);
+	signal(SIGQUIT, sigquit_fork);
 	mish->pid[mish->pos_cmd] = fork();
 	if (mish->pid[mish->pos_cmd] < 0)
 		perror("fork");
@@ -99,6 +103,7 @@ static int	ft_pipe(t_mishell *mish, int fd_in)
 		exit (1);
 	}
 	ft_fork(mish, fd_in, fd);
+	ft_check_status_exec(mish);
 	close(fd[1]);
 	if (fd_in > 0)
 		close(fd_in);
@@ -134,11 +139,9 @@ int	ft_call_pipex(t_mishell *m)
 	while (m->pos_cmd < m->nb_cmds)
 	{
 		if (m->cmds[m->pos_cmd].fds->fd_in != NULL)
-		{
-			close(fd_in);
-			fd_in = open_fdin(*m->cmds[m->pos_cmd].fds);
-		}
-		if (check_built_no_fork(m->cmds[m->pos_cmd].c, m->files, m) == 0)
+			fd_in = open_fdin(m, fd_in);
+		if (check_built_no_fork(m->cmds[m->pos_cmd].c, m->files, m) == 0 \
+			&& m->cmds[m->pos_cmd].fds->err != 1)
 			fd_in = ft_pipe(m, fd_in);
 		else
 			m->pid[m->pos_cmd] = -1;
