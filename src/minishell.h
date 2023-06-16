@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:30:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/14 18:15:12 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/06/16 16:34:10 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ int		ft_parse_name(char *str);
 //		FT_EXPORT_UTILS.C		//
 int		ft_export_no_arg(t_files files);
 void	ft_free_n_tab(char **tab, int n);
+char	*concat_export(char *env_var, char *str);
+int		env_var_found(char **tab, char *name);
 
 //		FT_UNSET.C				//
 int		ft_unset(char **c, t_files *files);
@@ -139,6 +141,7 @@ char	*ft_read_here_doc(char *prompt, char *eof);
 char	*normalize_str(char *s, t_files *files);
 char	**ft_remove_redirections(char **cmd);
 char	*ft_remove_quotes(char *s);
+char	*remove_char(char *s, int pos);
 
 //		PARSING_REDIRECTION.C	//
 t_fds	*parsing_fd(char **str);
@@ -154,6 +157,7 @@ void	ft_free_str(char **s);
 void	ft_free_cmds(t_mishell *m);
 void	ft_free_files(t_mishell *mish);
 void	ft_exit(t_mishell *m);
+void	ft_free_n_tab(char **tab, int n);
 
 //		FT_SPLIT_MINISHELL.C	//
 char	**ft_split_minishell(char const *s, char c);

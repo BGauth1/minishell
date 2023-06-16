@@ -6,11 +6,24 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:54:31 by gbertet           #+#    #+#             */
-/*   Updated: 2023/06/14 14:41:25 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/15 15:32:47 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+/* free le nb de ligne choisi ds le cas
+ * d'une erreur de malloc*/
+
+void	ft_free_n_tab(char **tab, int n)
+{
+	while (n >= 0)
+	{
+		free(tab[n]);
+		n--;
+	}
+	free(tab);
+}
 
 void	ft_free_str(char **s)
 {

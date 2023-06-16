@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:59:02 by lamasson          #+#    #+#             */
-/*   Updated: 2023/05/31 19:07:04 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/16 16:36:07 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	ft_realloc_tab_env(t_files *files, char *str) //envoyer addr & de files dan
 {
 	int		len;
 	int		i;
+	int		j;
 	char	**buf_tab;
 
 	i = 0;
@@ -28,6 +29,13 @@ void	ft_realloc_tab_env(t_files *files, char *str) //envoyer addr & de files dan
 		i++;
 	}
 	free(files->tab_var_env);
+	j = 0;
+	while (str[j] != '=')
+	{
+		if (str[j] == '+')
+			str = remove_char(str, j--);
+		j++;
+	}
 	buf_tab[i] = ft_strdup(str);
 	buf_tab[i + 1] = NULL;
 	files->tab_var_env = buf_tab;
@@ -43,7 +51,7 @@ char	*rec_var_env(char *str)
 	i = 0;
 	while (str[i] != '=')
 	{
-		if (str[i] == '\0')
+		if (str[i] == '\0' || str[i] == '+')
 			break ;
 		i++;
 	}
@@ -61,15 +69,18 @@ char	*rec_var_env(char *str)
 
 void	switch_env(t_files *files, char *name, char *str)
 {
-	int	i;
+	int		i;
+	char	*tmp;
 
 	i = 0;
 	while (files->tab_var_env[i] != NULL)
 	{
 		if (ft_strncmp(files->tab_var_env[i], name, ft_strlen(name)) == 0)
 		{
+			tmp = concat_export(files->tab_var_env[i], str);
 			free(files->tab_var_env[i]);
-			files->tab_var_env[i] = ft_strdup(str);
+			files->tab_var_env[i] = ft_strdup(tmp);
+			free(tmp);
 			if (files->tab_var_env[i] == NULL)
 			{
 				ft_free_tab_env(files);
@@ -93,7 +104,7 @@ int	ft_parse_name(char *str)
 		return (1);
 	while (str[i])
 	{
-		if (str[i] == '=')
+		if (str[i] == '=' || (str[i] == '+' && str[i + 1] == '='))
 			break ;
 		if (ft_isalnum(str[i]) != 1 && str[i] != '_' && str[i] != '-')
 			return (1);
@@ -120,7 +131,7 @@ int	ft_export(char **c, t_files *files)
 		name = rec_var_env(c[i]);
 		if (!name)  //si NULL tentative de modifier une var_env essentiel au fct du program
 			return (1);
-		if (getenv(name) != NULL)
+		if (env_var_found(files->tab_var_env, name))
 			switch_env(files, name, c[i]);
 		else
 		{

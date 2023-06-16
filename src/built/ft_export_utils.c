@@ -3,14 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 21:09:56 by lamasson          #+#    #+#             */
-/*   Updated: 2023/05/18 22:08:11 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/16 16:33:37 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	env_var_found(char **tab, char *name)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		if (!ft_strncmp(tab[i], name, ft_strlen(name)))
+		{
+			if (tab[i][ft_strlen(name)] == '=')
+				return (1);
+		}
+		i++;
+	}
+	return (0);
+}
 
 int	ft_one_by_one(char **tab, int i)
 {
@@ -117,17 +134,32 @@ int	ft_export_no_arg(t_files files)
 	ft_sort_tab(tab, len);
 	ft_free_tab(tab);
 	return (0);
-} 
+}
 
-/* free le nb de ligne choisi ds le cas
- * d'une erreur de malloc*/
-
-void	ft_free_n_tab(char **tab, int n)
+char	*concat_export(char *env_var, char *str)
 {
-	while (n >= 0)
+	int	i;
+	int	concat;
+	char	*buff;
+	char	*res;
+
+	i = -1;
+	concat = 0;
+	buff = str;
+	while (*buff != '=')
 	{
-		free(tab[n]);
-		n--;
+		if (*buff == '+')
+			concat = 1;
+		buff++;
 	}
-	free(tab);
+	buff++;
+	if (concat)
+	{
+		res = malloc((ft_strlen(env_var) + ft_strlen(buff) + 1) * sizeof(char));
+		ft_strlcpy(res, env_var, ft_strlen(env_var) + 1);
+		ft_strlcat(res, buff, ft_strlen(res) + ft_strlen(buff) + 1);
+	}
+	else
+		res = ft_strdup(str);
+	return (res);
 }
