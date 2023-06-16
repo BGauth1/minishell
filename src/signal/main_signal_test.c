@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 12:58:15 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/15 18:31:33 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/16 16:42:55 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int	main(int argc, char **argv, char **env)
 			}
 		}
 		signal_maj_outfork();
-		//ft_free_tab(mish.files->tab_path);
 		unlink(".heredoc");
 	}
 	free(tmp);

@@ -72,5 +72,5 @@ void    ft_exit(t_mishell *m)
 		ft_free_files(m);
 		free(m->pid);
 	}
-	exit (1);
+	exit (g_status % 256);
 }

@@ -6,11 +6,18 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 13:21:26 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/15 18:42:06 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/16 16:37:56 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+/*
+void	ft_free_fork(t_mishell *m)
+{
+	ft_free_cmds(m);
+	ft_free_files(m);
+	free(m->pid);
+}*/
 
 int	ft_exec_cmd(t_mishell *mish)
 {

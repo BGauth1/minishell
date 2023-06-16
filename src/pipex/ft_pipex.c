@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 13:47:51 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/15 20:05:50 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/16 18:42:07 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 int	open_fdin(t_mishell *m, int fd_in)
 {
 	int	op;
-
+	(void)fd_in;
 	op = -1;
-	close(fd_in);
+	if (fd_in > 0)
+		close(fd_in);
 	if (m->cmds[m->pos_cmd].fds->fd_in)
 		op = open(m->cmds[m->pos_cmd].fds->fd_in, O_RDONLY);
 	return (op);
@@ -64,10 +65,8 @@ static void	ft_dup(int fd_in , int *fd, t_mishell m)
 		dup2(fd_in, 0);
 		close(fd_in);
 	}
-//	else {
-		close(fd[0]);
-		close(fd[1]);
-//	}
+	close(fd[1]);
+	close(fd[0]);
 }
 
 static int		ft_fork(t_mishell *mish, int fd_in, int *fd)
@@ -93,7 +92,7 @@ static int		ft_fork(t_mishell *mish, int fd_in, int *fd)
 }
 
 //gestion close here_doc voir si implementer
-static int	ft_pipe(t_mishell *mish, int fd_in)
+static int	ft_pipe(t_mishell *m, int fd_in)
 {
 	int	fd[2];
 	
@@ -102,8 +101,8 @@ static int	ft_pipe(t_mishell *mish, int fd_in)
 		perror("pipe");
 		exit (1);
 	}
-	ft_fork(mish, fd_in, fd);
-	ft_check_status_exec(mish);
+	ft_fork(m, fd_in, fd);
+	ft_check_status_exec(m);
 	close(fd[1]);
 	if (fd_in > 0)
 		close(fd_in);
@@ -120,6 +119,8 @@ void	waitpid_tab(t_mishell *m)
 	{
 		if (m->pid[i] > 0)
 			waitpid(m->pid[i], &status, 0);
+		if (WIFEXITED(status)) //erreur avec heredoc 
+			g_status = WEXITSTATUS(status);
 		i++;
 	}
 	free(m->pid);
