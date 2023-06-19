@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:09:03 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/02 15:34:45 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/06/19 19:14:24 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,29 +58,36 @@ int	redirect_type(char *str)
 	return (-1);
 }
 
-char	**find_redirect_left(char **str, t_fds *fds)
+char	**find_redirect_left(char **str, t_fds *fds, int **type)
 {
 	int		i;
 	int		j;
-	char	**fdins;
+	char	**tmp_fds;
 
 	i = -1;
-	j = ft_count_char(str, '<');
-	fdins = malloc((j + 1) * sizeof(char *));
-	fdins[j] = NULL;
+	j = ft_count_char(str, '<') + ft_count_char(str, '>');
+	tmp_fds = malloc((j + 1) * sizeof(char *));
+	tmp_fds[j] = NULL;
 	j = 0;
 	while (str[++i])
 	{
-		if (!ft_strncmp(str[i], "<", 1))
+		if (str[i][0] == '<')
 		{
 			fds->in = redirect_type(str[i]);
 			if (fds->in == 1)
-				fdins[j++] = ft_strdup(".heredoc");
+				tmp_fds[j] = ft_strdup(".heredoc");
 			else
-				fdins[j++] = ft_strdup(str[++i]);
+				tmp_fds[j] = ft_strdup(str[++i]);
+			(*type)[j++] = 1;
+		}
+		else if (str[i][0] == '>')
+		{
+			fds->out = redirect_type(str[i]);
+			tmp_fds[j] = ft_strdup(str[++i]);
+			(*type)[j++] = 2;
 		}
 	}
-	return (fdins);
+	return (tmp_fds);
 }
 
 char	**find_redirect_right(char **str, t_fds *fds)
@@ -96,7 +103,7 @@ char	**find_redirect_right(char **str, t_fds *fds)
 	j = 0;
 	while (str[++i])
 	{
-		if (!ft_strncmp(str[i], ">", 1))
+		if (str[i][0] == '>')
 		{
 			fds->out = redirect_type(str[i]);
 			fdouts[j++] = ft_strdup(str[++i]);
@@ -107,23 +114,23 @@ char	**find_redirect_right(char **str, t_fds *fds)
 
 t_fds	*parsing_fd(char **str)
 {
-	char	**fdins;
-	char	**fdouts;
+	char	**tmp_fds;
+	int		*type;
 	t_fds	*fds;
 
 	fds = malloc(sizeof(t_fds));
-	fdins = find_redirect_left(str, fds);
-	fdouts = find_redirect_right(str, fds);
-	fds->err = ft_check_fd(fdins, fdouts, ft_strstrlen(str) - 1);
+	type = malloc((ft_count_char(str, '<') + ft_count_char(str, '>') + 1) * sizeof(int));
+	tmp_fds = find_redirect_left(str, fds, &type);
+	fds->err = ft_check_fd(tmp_fds, type);
 	if (fds->err == 0)
-		set_fd(fdins, fdouts, fds);
+		set_fd(tmp_fds, fds, type);
 	else
 	{
 		fds->fd_in = NULL;
 		fds->fd_out = NULL;
 	}
-	ft_free_str(fdins);
-	ft_free_str(fdouts);
+	free(type);
+	ft_free_str(tmp_fds);
 	return (fds);
 }
 

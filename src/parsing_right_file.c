@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 18:54:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/02 15:33:49 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/06/19 18:54:30 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,16 @@ int	ft_check_fdin(char *in)
  * fichier de sortit si necessaire
  * et si possible*/
 
-int	ft_check_fdout(char *out)
+int	ft_check_fdout(char *out, int err)
 {
 	int	fd_out;
 
 	if (out == NULL)
 		return (1);
 	fd_out = open(out, O_RDWR);
-	if (fd_out == -1)
+	if (fd_out == -1 && !err)
 	{
+		printf("Creating %s !\n", out);
 		fd_out = open(out, O_CREAT | O_TRUNC, 0644);
 		if (fd_out == -1)
 		{
@@ -62,54 +63,49 @@ int	ft_check_fdout(char *out)
 	return (0);
 }
 
-int	ft_check_fd(char **fdins, char **fdouts, int nb_pipes)
+int	ft_check_fd(char **tmp_fds, int *type)
 {
 	int	i;
 	int	err;
 
 	i = 0;
 	err = 0;
-	if (nb_pipes > 0)
+	while (tmp_fds[i])
 	{
-		while (fdouts[i] && !err)
-			err = ft_check_fdout(fdouts[i++]);
-		i = 0;
-		while (fdins[i] && !err)
-			err = ft_check_fdin(fdins[i++]);
-	}
-	else
-	{
-		while (fdins[i] && !err)
-			err = ft_check_fdin(fdins[i++]);
-		i = 0;
-		while (fdouts[i] && !err)
-			err = ft_check_fdout(fdouts[i++]);
+		if (type[i] == 1)
+			err += ft_check_fdin(tmp_fds[i]);
+		else
+			err += ft_check_fdout(tmp_fds[i], err);
+		i++;
 	}
 	return (err);
 }
 
-void	set_fd(char **fdins, char **fdouts, t_fds *fds)
+void	set_fd(char **tmp_fds, t_fds *fds, int *type)
 {
 	int	i;
 
 	i = 0;
-	while (fdins[i])
-		i++;
-	if (i)
-		fds->fd_in = ft_strdup(fdins[--i]);
-	else
+	fds->fd_in = NULL;
+	fds->fd_out = NULL;
+	while (tmp_fds[i])
 	{
-		fds->fd_in = NULL;
+		if (type[i] == 1)
+		{
+			if (fds->fd_in != NULL)
+				free(fds->fd_in);
+			fds->fd_in = ft_strdup(tmp_fds[i]);
+		}
+		else
+		{
+			if (fds->fd_out != NULL)
+				free(fds->fd_out);
+			fds->fd_out = ft_strdup(tmp_fds[i]);
+		}
+		i++;
+	}
+	if (fds->fd_in == NULL)
 		fds->in = -1;
-	}
-	i = 0;
-	while (fdouts[i])
-		i++;
-	if (i)
-		fds->fd_out = ft_strdup(fdouts[--i]);
-	else
-	{
-		fds->fd_out = NULL;
+	if (fds->fd_out == NULL)
 		fds->out = -1;
-	}
 }

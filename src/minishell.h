@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:30:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/16 17:52:24 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/06/19 18:54:55 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,8 +147,8 @@ char	*remove_char(char *s, int pos);
 t_fds	*parsing_fd(char **str);
 
 //		PARSING_RIGHT_FILE.C	//
-int		ft_check_fd(char **fdins, char **fdouts, int nb_pipes);
-void	set_fd(char **fdins, char **fdouts, t_fds *fds);
+int		ft_check_fd(char **tmp_fds, int *type);
+void	set_fd(char **tmp_fds, t_fds *fds, int *type);
 
 //		FT_EXIT.C				//
 void	ft_free_str(char **s);
