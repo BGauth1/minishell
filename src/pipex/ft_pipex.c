@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 13:47:51 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/16 18:42:07 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/19 23:55:06 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,11 +115,12 @@ void	waitpid_tab(t_mishell *m)
 	int	status; //error nb
 
 	i = 0;
+	status = 0;
 	while (i < m->nb_cmds)
 	{
 		if (m->pid[i] > 0)
 			waitpid(m->pid[i], &status, 0);
-		if (WIFEXITED(status)) //erreur avec heredoc 
+		if (m->pid[i] > -1 && WIFEXITED(status)) //erreur avec heredoc 
 			g_status = WEXITSTATUS(status);
 		i++;
 	}

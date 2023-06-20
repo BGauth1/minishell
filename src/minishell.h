@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:30:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/19 18:54:55 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/06/19 23:19:29 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ void	set_fd(char **tmp_fds, t_fds *fds, int *type);
 void	ft_free_str(char **s);
 void	ft_free_cmds(t_mishell *m);
 void	ft_free_files(t_mishell *mish);
-void	ft_exit(t_mishell *m);
+int		ft_exit(t_mishell *m);
 void	ft_free_n_tab(char **tab, int n);
 
 //		FT_SPLIT_MINISHELL.C	//
