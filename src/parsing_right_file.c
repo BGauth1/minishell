@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 18:54:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/19 18:54:30 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/06/21 18:19:13 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int	ft_check_fdout(char *out, int err)
 	fd_out = open(out, O_RDWR);
 	if (fd_out == -1 && !err)
 	{
-		printf("Creating %s !\n", out);
 		fd_out = open(out, O_CREAT | O_TRUNC, 0644);
 		if (fd_out == -1)
 		{
