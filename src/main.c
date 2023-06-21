@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:27:42 by gbertet           #+#    #+#             */
-/*   Updated: 2023/06/14 18:32:48 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/06/21 18:48:38 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int		*has_here_doc(char *s, int nb_cmds)
 void	get_cmds(t_mishell *m)
 {
 	int	i;
+	int	j;
 	char	**tmp;
 	char	**tmp2;
 
@@ -60,6 +61,9 @@ void	get_cmds(t_mishell *m)
 	{
 		m->cmds[i].here_doc = m->here_doc[i];
 		tmp2 = ft_split_minishell(tmp[i], ' ');
+		j = -1;
+		while (tmp2[++j])
+			tmp2[j] = ft_remove_quotes(tmp2[j]);
 		ft_heredoc(tmp2);
 		m->cmds[i].fds = parsing_fd(tmp2);
 		m->cmds[i].c = ft_remove_redirections(tmp2);

@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:09:03 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/19 19:14:24 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/06/21 18:18:15 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ int	ft_count_char(char **str, char c)
 	while (str[i])
 	{
 		if (!ft_strncmp(str[i], &c, 1))
+		{
+			i++;
 			j++;
+		}
 		i++;
 	}
 	return (j);
@@ -73,11 +76,11 @@ char	**find_redirect_left(char **str, t_fds *fds, int **type)
 	{
 		if (str[i][0] == '<')
 		{
-			fds->in = redirect_type(str[i]);
+			fds->in = redirect_type(str[i++]);
 			if (fds->in == 1)
 				tmp_fds[j] = ft_strdup(".heredoc");
 			else
-				tmp_fds[j] = ft_strdup(str[++i]);
+				tmp_fds[j] = ft_strdup(str[i]);
 			(*type)[j++] = 1;
 		}
 		else if (str[i][0] == '>')

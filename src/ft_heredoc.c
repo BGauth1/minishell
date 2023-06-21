@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:33:28 by gbertet           #+#    #+#             */
-/*   Updated: 2023/06/02 13:59:30 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/06/21 18:24:53 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,23 @@ void    ft_fill_heredoc(char *eof, int fd)
 
 	line = ft_read_here_doc("> ", eof);
 	eof_len = ft_strlen(eof);
-	while (ft_strncmp(line, eof, eof_len + 1))
+	if (eof)
 	{
-		ft_putstr_fd(line, fd);
-		free(line);
-		line = ft_read_here_doc("> ", eof);
+		while (ft_strncmp(line, eof, eof_len + 1))
+		{
+			ft_putstr_fd(line, fd);
+			free(line);
+			line = ft_read_here_doc("> ", eof);
+		}
+	}
+	else
+	{
+		while (line[0])
+		{
+			ft_putstr_fd(line, fd);
+			free(line);
+			line = ft_read_here_doc("> ", eof);
+		}
 	}
 	close(fd);
 }
