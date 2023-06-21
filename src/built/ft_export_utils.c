@@ -6,22 +6,26 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 21:09:56 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/16 16:33:37 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/06/21 15:53:49 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	env_var_found(char **tab, char *name)
+int	env_var_found(char **tab, char *name, char *c)
 {
 	int	i;
+	int	len;
 
 	i = 0;
+	len = ft_strlen(name);
 	while (tab[i])
 	{
-		if (!ft_strncmp(tab[i], name, ft_strlen(name)))
+		if (!ft_strncmp(tab[i], name, len))
 		{
-			if (tab[i][ft_strlen(name)] == '=')
+			if (tab[i][len] == '=' && !check_egal(c))
+				return (2);
+			if (tab[i][len] == '=')
 				return (1);
 		}
 		i++;
@@ -146,7 +150,7 @@ char	*concat_export(char *env_var, char *str)
 	i = -1;
 	concat = 0;
 	buff = str;
-	while (*buff != '=')
+	while (*buff && *buff != '=' )
 	{
 		if (*buff == '+')
 			concat = 1;

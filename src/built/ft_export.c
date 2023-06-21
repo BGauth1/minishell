@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:59:02 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/16 16:36:07 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/06/21 16:53:44 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_realloc_tab_env(t_files *files, char *str) //envoyer addr & de files dan
 	}
 	free(files->tab_var_env);
 	j = 0;
-	while (str[j] != '=')
+	while (str[j] && str[j] != '=')
 	{
 		if (str[j] == '+')
 			str = remove_char(str, j--);
@@ -40,8 +40,6 @@ void	ft_realloc_tab_env(t_files *files, char *str) //envoyer addr & de files dan
 	buf_tab[i + 1] = NULL;
 	files->tab_var_env = buf_tab;
 }
-
-/*recupere le NAME malloc de la var_env //fix */
 
 char	*rec_var_env(char *str)
 {
@@ -58,12 +56,6 @@ char	*rec_var_env(char *str)
 	name = ft_substr(str, 0, i);
 	if (!name)
 		exit (1);
-	if (ft_strncmp(name, "PWD", 3) == 0 || ft_strncmp(name, "OLDPWD", 6) == 0 \
-		|| ft_strncmp(name, "HOME", 4) == 0 || ft_strncmp(name, "USER", 4) == 0)
-	{
-		free(name);
-		return (NULL);
-	}
 	return (name);
 }
 
@@ -93,8 +85,7 @@ void	switch_env(t_files *files, char *name, char *str)
 	}
 	free(name);
 }
-
-/* check syntax name de la var_env */
+//utiliser dans unset void si necessaire ou move in unset.c
 int	ft_parse_name(char *str)
 {
 	int	i;
@@ -119,20 +110,19 @@ int	ft_export(char **c, t_files *files)
 	int		i;
 
 	i = 0;
-	if (!c[1])
-	{
-		ft_export_no_arg(*files);
+	if (ft_parse_len(c, files) == 0)
 		return (0);
-	}
 	while (c[++i])
 	{
-		if (ft_parse_name(c[i]) == 1) 
+		if (ft_parse_name_export(c, i))
 			continue ;
 		name = rec_var_env(c[i]);
-		if (!name)  //si NULL tentative de modifier une var_env essentiel au fct du program
+		if (!name)
 			return (1);
-		if (env_var_found(files->tab_var_env, name))
+		if (env_var_found(files->tab_var_env, name, c[i]) == 1)
 			switch_env(files, name, c[i]);
+		else if (env_var_found(files->tab_var_env, name, c[i]) == 2)
+			return (0);
 		else
 		{
 			free(name);
@@ -141,32 +131,3 @@ int	ft_export(char **c, t_files *files)
 	}
 	return (0);
 }
-/*
-int	main(int argc, char **argv, char **env)
-{
-	t_files	files;
-	int		i;
-	(void) argc;
-
-	ft_init_tab_env(env, &files);
-//	i = 0;
-//	while (files.tab_var_env[i] != NULL)
-//	{
-//		printf("%s\n", files.tab_var_env[i]);
-//		i++;
-//	}
-	ft_export(argv, &files);
-//	ft_export(NULL, &files);
-//	ft_unset(argv[2], &files);
-	i = 0;
-	while (files.tab_var_env[i] != NULL)
-	{
-		printf("%s\n", files.tab_var_env[i]);
-		i++;
-	}
-	printf ("\n\n");
-
-	ft_env(files);
-	ft_free_tab_env(&files);
-	return (0);
-}*/

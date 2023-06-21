@@ -112,6 +112,7 @@ int	ft_exit(t_mishell *m)
 		ft_free_cmds(m);
 		ft_free_files(m);
 		free(m->pid);
-	} 
+	}
+	printf("exit\n");
 	exit (g_status % 256);
 }

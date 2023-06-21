@@ -6,7 +6,7 @@
 /*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 15:55:00 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/16 14:56:53 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/16 20:29:44 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	ft_cmd_path_ready(t_mishell *mish)
 			ft_init_path_cmd(mish, *mish->files, j);
 			if (mish->cmds[j].path == NULL)
 			{
-				if (access(mish->cmds[j].c[0], X_OK) == 0)
+				if (access(mish->cmds[j].c[0], F_OK) == 0)
 					mish->cmds[j].path = ft_strdup (mish->cmds[j].c[0]);
 			}
 		}

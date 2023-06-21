@@ -6,34 +6,49 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:00:32 by lamasson          #+#    #+#             */
-/*   Updated: 2023/05/30 19:01:18 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/21 17:18:13 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-///verif reaction en cas de faux MY_VAR2 et vrai MY_VAR
+static int	check_var_env_unset(char **tab, char *name)
+{
+	int	i;
+	int	len;
 
-int	ft_unset(char **c, t_files *files)//nom variable off //changer losque structur ok
+	i = 0;
+	len = ft_strlen(name);
+	while (tab[i])
+	{
+		if (ft_strncmp(tab[i], name, len) == 0)
+		{
+			if (tab[i][len] == '=' || tab[i][len] == '\0')
+				return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
+int	ft_unset(char **c, t_files *files)
 {
 	int		i;
 	int		j;
 	char	*tmp;
 
-	j = 1;
-	if (!c[j])
+	j = 0;
+	if (!c[1])
 		return (0);
-	while (c[j])
+	while (c[++j])
 	{
 		i = 0;
-		if (getenv(c[j]) == NULL)
-		{
-			if (ft_parse_name(c[j]) == 0)
-				printf("minishell: unset: `%s' : not a valid identifier\n", c[j]);
-			//return un prompt et ne se passe rien
-			return (0);
-		}
-		while (ft_strncmp(files->tab_var_env[i], c[j], ft_strlen(c[j])) != 0 && ft_strlen(c[j]) != ft_strlen(files->tab_var_env[i]))
+		if (ft_parse_name_export(c, j))
+			continue ;
+		if (check_var_env_unset(files->tab_var_env, c[j]) == 0)
+			continue ;
+		while (ft_strncmp(files->tab_var_env[i], c[j], ft_strlen(c[j])) != 0 \
+			&& ft_strlen(c[j]) != ft_strlen(files->tab_var_env[i]))
 			i++;
 		free(files->tab_var_env[i]);
 		while (files->tab_var_env[i] != NULL)
@@ -42,7 +57,6 @@ int	ft_unset(char **c, t_files *files)//nom variable off //changer losque struct
 			files->tab_var_env[i] = tmp;
 			i++;
 		}
-		j++;
 	}
 	return (0);
 }

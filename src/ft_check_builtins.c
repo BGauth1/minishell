@@ -6,7 +6,7 @@
 /*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:45:48 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/19 23:42:46 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/21 17:21:29 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	check_built_fork(char **c, t_files *files)
 	if (ft_strncmp(c[0], "pwd", len) == 0)
 		ft_pwd(c);
 	else if (ft_strncmp(c[0], "env", len) == 0)
-		ft_env(*files);
+		ft_env(*files, c);
 	else if (ft_strncmp(c[0], "echo", len) == 0)
 		ft_echo(c);
 	else 
