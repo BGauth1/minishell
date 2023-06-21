@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:30:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/21 17:21:41 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/21 17:50:38 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,7 @@ char	**ft_split_minishell(char const *s, char c);
 //		FT_PARSING_CMD.C		//
 int		empty_str(const char *s);
 int		synthax_check(char *s);
+int		check_pipe(char *s);
 
 //		FT_INIT_TAB_ENV.C		//
 void	ft_init_tab_env(char **env, t_mishell *mish);

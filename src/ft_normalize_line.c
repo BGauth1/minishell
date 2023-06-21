@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 17:59:08 by gbertet           #+#    #+#             */
-/*   Updated: 2023/06/12 19:07:08 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/20 15:44:41 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	*format_str_spaces(char *s)
 		{
 			if (s[i] != '|' && s[i] != '<' && s[i] != '>' && s[i] != ' ')
 			{
-				if ((s[i + 1] == '|' || s[i + 1] == '<' || s[i + 1] == '>')
+				if ((s[i + 1] == '|')
 					&& !ft_betweenquotes(s, i + 1))
 					s = add_char_right(s, i + 1);
 			}
@@ -116,6 +116,11 @@ char	*normalize_str(char *s, t_files *files)
 	res = ft_less_whitespace(tmp);
 	free(tmp);
 	res = format_str_spaces(res);
+	if (check_pipe(s))
+	{
+		free(res);
+		return (NULL);
+	}
 	res = ft_handle_var_env(res, *files);
 	res = ft_remove_quotes(res);
 	return (res);
@@ -160,7 +165,6 @@ char	*ft_remove_quotes(char *s)
 		}
 		else
 			i++;
-		//printf("%s\n", s);
 	}
 	return (s);
 }
