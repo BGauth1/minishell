@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:16:03 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/21 18:36:54 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/06/27 15:11:44 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ char	*ft_read_here_doc(char *prompt, char *eof)
 	}
 	else
 	{
+		printf("\n");
 		free(line);
 		return (eof);
 	}

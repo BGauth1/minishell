@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 16:52:20 by gbertet           #+#    #+#             */
-/*   Updated: 2023/06/20 15:45:46 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/06/27 15:30:13 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,16 @@ int	check_redir(char *s)
 	i = 0;
 	while (s[i])
 	{
-		if (s[i] == '<' && s[i + 1] == '<' && !ft_betweenquotes(s, i))
+		if ((s[i] == '<' || s[i] == '>') && (s[i + 1] == '<' ||
+			s[i + 1] == '>') && !ft_betweenquotes(s, i))
 		{
-			if (s[i + 2] == '<' || !s[i + 2])
+			if (s[i + 2] == '<' || s[i + 2] == '>' || !s[i + 2])
 				return (s[i]);
 		}
 		else if (!ft_iswhitespace(s[i]))
 		{
-			if (s[i] != '<' && s[i] != '>' && (s[i + 1] == '<' || s[i + 1] == '>'))
+			if (s[i] != '<' && s[i] != '>' &&
+				(s[i + 1] == '<' || s[i + 1] == '>') && !ft_betweenquotes(s, i + 1))
 				return (s[i]);
 		}
 		i++;
