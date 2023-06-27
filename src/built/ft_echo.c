@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:50:18 by gbertet           #+#    #+#             */
-/*   Updated: 2023/06/14 17:22:17 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/06/27 15:06:02 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,27 @@
 // 	}
 // }
 
+int	is_newline(char *s)
+{
+	int	res;
+	int	i;
+
+	res = 0;
+	i = 0;
+	if (s[i++] == '-')
+	{
+		while (s[i] == 'n')
+		{
+			i++;
+			res = 1;
+		}
+		if (s[i])
+			return (0);
+		return (res);
+	}
+	return (0);
+}
+
 int ft_echo(char **cmd)
 {
 	int i;
@@ -41,7 +62,7 @@ int ft_echo(char **cmd)
 		printf("\n");
 		return (0);
 	}
-	while (!ft_strncmp(cmd[i], "-n", 3))
+	while (is_newline(cmd[i]))
 	{
 		nl = 0;
 		if (!cmd[++i])
