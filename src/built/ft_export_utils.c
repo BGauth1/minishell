@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 21:09:56 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/27 18:49:03 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/28 12:59:35 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,6 @@ void	ft_print_tab_export(char **tab, int len, int c)
 	j = 0;
 	while (i < len)
 	{
-		if (tab[i][j] == '_')
-			i++;
 		ft_putstr_fd("declare -x ", 1);
 		while (tab[i][j] != '\0')
 		{
@@ -85,6 +83,8 @@ void	ft_print_tab_export(char **tab, int len, int c)
 		j = 0;
 		c = 0;
 		i++;
+		if (tab[i] && tab[i][j] == '_')
+			i++;
 	}
 }
 
