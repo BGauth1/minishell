@@ -6,35 +6,11 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 13:47:51 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/19 23:55:06 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/27 19:12:51 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int	open_fdin(t_mishell *m, int fd_in)
-{
-	int	op;
-	(void)fd_in;
-	op = -1;
-	if (fd_in > 0)
-		close(fd_in);
-	if (m->cmds[m->pos_cmd].fds->fd_in)
-		op = open(m->cmds[m->pos_cmd].fds->fd_in, O_RDONLY);
-	return (op);
-}
-
-int	open_fdout(t_fds fds)
-{
-	int	op;
-
-	op = -1;
-	if (fds.out == 1)
-		op = open(fds.fd_out, O_RDWR | O_CREAT | O_APPEND, 0644);
-	else if (fds.out == 0)
-		op = open(fds.fd_out, O_RDWR | O_CREAT | O_TRUNC, 0644);	
-	return (op);
-}
 
 static void	ft_dup(int fd_in , int *fd, t_mishell m)
 {
@@ -59,12 +35,14 @@ static void	ft_dup(int fd_in , int *fd, t_mishell m)
 		dup2(fd[0], 0);
 		close(fd[0]);
 	}*/
-	if (fd_in > -1)
+	if (fd_in > -1 && check_if_cmd_built(m.cmds[m.pos_cmd]) == 0)
 	{
 		close(fd[1]);
 		dup2(fd_in, 0);
 		close(fd_in);
 	}
+	if (fd_in > 1 && check_if_cmd_built(m.cmds[m.pos_cmd]) != 0)
+		close(fd_in);
 	close(fd[1]);
 	close(fd[0]);
 }
@@ -133,6 +111,8 @@ int	ft_call_pipex(t_mishell *m)
 
 	m->pos_cmd = 0;
 	fd_in = -1;
+	if (ft_check_pipe_and_exit(m) == 1)
+		return (0);
 	m->pid = NULL; 
 	m->pid = (pid_t *)malloc(sizeof(pid_t) * m->nb_cmds);
 	if (m->pid == NULL)

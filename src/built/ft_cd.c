@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:08:33 by lamasson          #+#    #+#             */
-/*   Updated: 2023/05/31 15:58:45 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/26 12:02:49 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	ft_cd(char **c, t_files *files)
 	else if (chdir(path) != 0)
 	{
 		printf("minishell: %s: %s: %s\n", c[0], c[1], strerror(errno));
+		g_status = 1;
 		return (1);
 	}
 	maj_tab_env_oldpwd(files);
@@ -42,8 +43,11 @@ int	parsing_cd(char **c)
 	int	len;
 
 	len = ft_tablen(c);
-	if (len > 3)
+	if (len > 2)
+	{
 		printf("minishell: %s: too many arguments\n", c[0]);
+		g_status = 1;
+	}
 	else
 		return (0);
 	return (1);
@@ -67,6 +71,7 @@ int	ft_user_path(char **c)
 	if (chdir(path) != 0)
 	{
 		printf("minishell: %s: %s: %s\n", c[0], path, strerror(errno));
+		g_status = 1;
 		free(path);
 		return (1);
 	}

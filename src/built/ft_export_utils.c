@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 21:09:56 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/21 15:53:49 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/27 18:49:03 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	env_var_found(char **tab, char *name, char *c)
 		{
 			if (tab[i][len] == '=' && !check_egal(c))
 				return (2);
-			if (tab[i][len] == '=')
+			if (tab[i][len] == '=' || tab[i][len] == '\0')
 				return (1);
 		}
 		i++;
@@ -40,14 +40,14 @@ int	ft_one_by_one(char **tab, int i)
 	c = 0;
 	while (tab[i][c] && tab[i + 1][c])
 	{
-		if (tab[i + 1][c] == '=')
-			return (0);
-		if (tab[i][c] == '=')
-			return (1);
 		if (ft_strncmp(tab[i], tab[i + 1], c) > 0)
 			return (0);
 		if (ft_strncmp(tab[i], tab[i + 1], c) < 0)
 			return (1);
+		if (tab[i][c] == '=')
+			return (1);
+		if (tab[i + 1][c] == '=')
+			return (0);
 		if (ft_strncmp(tab[i], tab[i + 1], c) == 0)
 			c++;
 	}
@@ -62,10 +62,12 @@ void	ft_print_tab_export(char **tab, int len, int c)
 	int	i;
 	int	j;
 
-	i = 1;
+	i = 0;
 	j = 0;
 	while (i < len)
 	{
+		if (tab[i][j] == '_')
+			i++;
 		ft_putstr_fd("declare -x ", 1);
 		while (tab[i][j] != '\0')
 		{

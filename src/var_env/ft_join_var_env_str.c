@@ -39,7 +39,7 @@ static void	ft_join(char *tmp, char *buf, char *s3)
 	s3[i] = '\0';
 }
 
-static char	*ft_strjoin_loop(char *tmp, char *buf)
+char	*ft_strjoin_loop(char *tmp, char *buf)
 {
 	char	*s3;
 	int		len;
@@ -47,7 +47,7 @@ static char	*ft_strjoin_loop(char *tmp, char *buf)
 	len = ft_strlen(tmp) + ft_strlen(buf);
 	s3 = malloc(sizeof(char) * (len + 1));
 	if (!s3)
-		return (NULL); //ft_exit
+		exit (1);
 	ft_join(tmp, buf, s3);
 	if (tmp)
 		free(tmp);

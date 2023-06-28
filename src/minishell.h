@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:30:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/21 17:50:38 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/06/27 19:10:56 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int		ft_env(t_files files, char **c);
 //		FT_EXPORT.C				//
 int		ft_export(char **c, t_files *files);
 void	switch_env(t_files *files, char *name, char *str);
+void	ft_realloc_tab_env(t_files *files, char *str);
 char	*rec_var_env(char *str);
 int		ft_parse_name(char *str);
 
@@ -187,11 +188,12 @@ void	ft_cmd_path_ready(t_mishell *mish);
 
 //		FT_PIPEX.C				//
 int		ft_call_pipex(t_mishell *mish); //appel pipe -> fork -> dup et exec_cmd
-int		open_fdout(t_fds fds);
-int		open_fdin(t_mishell *m, int fd_in);
 
 //		FT_PIPEX_UTILS.C		//
 void	ft_check_status_exec(t_mishell *m);
+int		open_fdout(t_fds fds);
+int		open_fdin(t_mishell *m, int fd_in);
+int		ft_check_pipe_and_exit(t_mishell *m);
 
 //		FT_STRJOIN_PATH.C		//
 char	*ft_strjoin_path(char *path, char *cmd);
@@ -211,6 +213,7 @@ char	*rec_name_var_env(char *str);
 
 //		FT_JOIN_VAR_ENV_STR.C	//
 void	ft_join_all_str(t_var_env *data);
+char	*ft_strjoin_loop(char *tmp, char *buf);
 void	ft_val_g_status(t_var_env *data, int j);
 
 //		SIGNAL.C				//

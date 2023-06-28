@@ -6,24 +6,49 @@
 /*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 19:51:11 by lamasson          #+#    #+#             */
-/*   Updated: 2023/05/30 18:04:01 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/27 12:50:25 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+static char *find_new_old_pwd(t_files *files, char *name)
+{
+	int		i;
+	int		len;
+	char	*val;
+
+	i = 0;
+	while (files->tab_var_env[i])
+	{
+		if (ft_strncmp(files->tab_var_env[i], name, 4) == 0)
+		{
+			len = ft_strlen(files->tab_var_env[i]);
+			val = ft_substr(files->tab_var_env[i], 4, len - 4);
+			return (val);
+		}
+		i++;
+	}
+	return (NULL);
+}
+
 int	maj_tab_env_oldpwd(t_files *files)
 {
 	char	*buf;
+	char 	*val;
+	char	*tmp;
 	char	*name;
 
-	buf = getenv("PWD");
-	if (buf == NULL) //secu
+	val = find_new_old_pwd(files, "PWD=");
+	tmp = ft_strdup("OLDPWD=");
+	if (!tmp)
 		exit (1);
-	buf = ft_strjoin("OLDPWD=", buf);
-	if (buf == NULL) //secu
-		exit (1);
+	buf = ft_strjoin_loop(tmp, val);
+	if (val)
+		free(val);
 	name = ft_strdup("OLDPWD");
+	if (!name)
+		exit (1);
 	switch_env(files, name, buf);
 	free(buf);
 	return (0);
@@ -48,36 +73,13 @@ int	maj_tab_env_pwd(t_files *files)
 	if (tmp == NULL) //secu
 		exit (1);
 	name = ft_strdup("PWD");
-	switch_env(files, name, tmp);
+	if (env_var_found(files->tab_var_env, name, name) == 0)
+	{
+		free(name);
+		ft_realloc_tab_env(files, tmp);
+	}
+	else 
+		switch_env(files, name, tmp);
 	free(tmp);
 	return (0);
 }
-
-/* main de test pour cd et maj_tab_env_pwd */
-/*
-int	main(int argc, char **argv, char **env)
-{
-	t_files	files;
-	int		i;
-	(void)argc;
-
-	ft_init_tab_env(env, &files);
-	i = 0;
-	while (files.tab_var_env[i] != NULL)
-	{
-		if (ft_strncmp(files.tab_var_env[i], "PWD", 3) == 0 || ft_strncmp(files.tab_var_env[i], "OLDPWD", 6) == 0)
-			printf("%s\n", files.tab_var_env[i]);
-		i++;
-	}
-	i = 0;
-	ft_cd(argv, &files);
-	printf("\n\n\n");
-	while (files.tab_var_env[i] != NULL)
-	{
-		if (ft_strncmp(files.tab_var_env[i], "PWD", 3) == 0 || ft_strncmp(files.tab_var_env[i], "OLDPWD", 6) == 0)
-			printf("%s\n", files.tab_var_env[i]);
-		i++;
-	}
-	ft_free_tab_env(&files);
-	return (0);
-}*/
