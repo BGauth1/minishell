@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 16:52:20 by gbertet           #+#    #+#             */
-/*   Updated: 2023/06/27 15:30:13 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/06/28 16:04:59 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,11 +113,13 @@ int synthax_check(char *s)
 	if (check_redir(s))
 	{
 		printf("Synthax error near unexpected token '%c'.\n", check_redir(s));
+		g_status = 130;
 		free(s);
 		return (0);
 	}
 	if (check_quotes(s))
 	{
+		g_status = 130;
 		free(s);
 		return (0);
 	}
