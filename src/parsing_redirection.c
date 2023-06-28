@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:09:03 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/21 18:18:15 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/06/28 14:30:29 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ int	ft_count_char(char **str, char c)
 			i++;
 			j++;
 		}
-		i++;
+		else
+			i++;
 	}
 	return (j);
 }
