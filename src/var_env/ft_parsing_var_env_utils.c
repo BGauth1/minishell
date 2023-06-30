@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 17:29:51 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/29 19:46:43 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/30 15:12:59 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	ft_check_dollar(char *str, int i)
 					i++;
 					continue ;
 				}
+				return (i + 1);
 			}
 			else
 				return (i + 1);
