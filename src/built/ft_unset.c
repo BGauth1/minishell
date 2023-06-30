@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:00:32 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/21 17:18:13 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/29 18:08:35 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	ft_unset(char **c, t_files *files)
 {
 	int		i;
 	int		j;
+	int		b;
 	char	*tmp;
 
 	j = 0;
@@ -43,7 +44,10 @@ int	ft_unset(char **c, t_files *files)
 	while (c[++j])
 	{
 		i = 0;
-		if (ft_parse_name_export(c, j))
+		b = ft_parse_name_export(c, j);
+		if (b == 2)
+			return (0);
+		else if (b == 1)
 			continue ;
 		if (check_var_env_unset(files->tab_var_env, c[j]) == 0)
 			continue ;

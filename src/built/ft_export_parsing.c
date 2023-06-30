@@ -6,7 +6,7 @@
 /*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:32:04 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/21 16:50:36 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/29 17:25:26 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_error_export(char *c, int g, char *cmd)
 	}
 	else if (g == 2)
 	{
-		printf("minishell: %s: invalid option\n", cmd);
+		printf("minishell: %s: %s: invalid option\n", cmd, c);
 		g_status = 2;
 	}
 }
@@ -58,10 +58,10 @@ int	ft_parse_name_export(char **c, int j)
 	int	i;
 
 	i = 1;
-	if (c[j][0] == '-')
+	if (c[j][0] == '-' && j < 2)
 	{
 		ft_error_export(c[j], 2, c[0]);
-		return (1);
+		return (2);
 	}
 	if (ft_isalpha(c[j][0]) != 1)
 	{

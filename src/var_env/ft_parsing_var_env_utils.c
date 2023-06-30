@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 17:29:51 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/28 15:34:02 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/06/29 19:46:43 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,19 @@ int	ft_check_dollar(char *str, int i)
 	while (str[i] != '\0')
 	{
 		if (str[i] == '$')
-			return (i + 1);
-	i++;
+		{
+			if (i > 2)
+			{
+				if (str[i - 2] == '<' && str[i - 3] == '<')
+				{
+					i++;
+					continue ;
+				}
+			}
+			else
+				return (i + 1);
+		}
+		i++;
 	}
 	return (-1);
 }

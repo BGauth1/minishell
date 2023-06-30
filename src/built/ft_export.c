@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:59:02 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/21 16:53:44 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/29 18:02:27 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,20 +108,24 @@ int	ft_export(char **c, t_files *files)
 {
 	char	*name;
 	int		i;
+	int		b;
 
 	i = 0;
 	if (ft_parse_len(c, files) == 0)
 		return (0);
 	while (c[++i])
 	{
-		if (ft_parse_name_export(c, i))
+		b = ft_parse_name_export(c, i);
+		if (b == 2)
+			return (0);
+		else if (b == 1)
 			continue ;
 		name = rec_var_env(c[i]);
 		if (!name)
 			return (1);
 		if (env_var_found(files->tab_var_env, name, c[i]) == 1)
 			switch_env(files, name, c[i]);
-		else if (env_var_found(files->tab_var_env, name, c[i]) == 2)
+		else if (env_var_found(files->tab_var_env, name, c[i]) == 2) //29/06 verif si name bien free ds ce cas
 			return (0);
 		else
 		{

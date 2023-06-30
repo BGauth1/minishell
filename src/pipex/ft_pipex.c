@@ -6,20 +6,18 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 13:47:51 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/27 19:12:51 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/06/29 15:24:15 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	ft_dup(int fd_in , int *fd, t_mishell m)
+static void	ft_dup(int fd_in , int *fd, t_mishell m, int out)
 {
-	int	out;
-
 	if (m.cmds[m.pos_cmd].fds->fd_out != NULL)
 	{
-		close(fd[0]);
-		out = open_fdout(*m.cmds[m.pos_cmd].fds);
+		//close(fd[0]);
+		//out = open_fdout(*m.cmds[m.pos_cmd].fds);
 		dup2(out, 1);
 		close(out);
 	}
@@ -29,12 +27,6 @@ static void	ft_dup(int fd_in , int *fd, t_mishell m)
 		dup2(fd[1], 1);
 		close(fd[1]);
 	}
-/*	if (!m.cmds[m.pos_cmd].fds->fd_in && check_if_cmd_built(m.cmds[m.pos_cmd]) != 2)
-	{
-		close(fd[1]);
-		dup2(fd[0], 0);
-		close(fd[0]);
-	}*/
 	if (fd_in > -1 && check_if_cmd_built(m.cmds[m.pos_cmd]) == 0)
 	{
 		close(fd[1]);
@@ -49,17 +41,24 @@ static void	ft_dup(int fd_in , int *fd, t_mishell m)
 
 static int		ft_fork(t_mishell *mish, int fd_in, int *fd)
 {
+	int	out;
+
+	out = 0;
 	g_status = 0;
 	signal(SIGINT, sigint_fork);
 	signal(SIGQUIT, sigquit_fork);
+	if (mish->cmds[mish->pos_cmd].fds->fd_out != NULL)
+		out = open_fdout(*mish->cmds[mish->pos_cmd].fds);
 	mish->pid[mish->pos_cmd] = fork();
 	if (mish->pid[mish->pos_cmd] < 0)
 		perror("fork");
 	if (mish->pid[mish->pos_cmd] == 0)
 	{
-		ft_dup(fd_in, fd, *mish);
+		ft_dup(fd_in, fd, *mish, out);
 		ft_exec_cmd(mish);
 	}
+	if (out > 0)
+		close(out);
 	if (mish->pos_cmd == mish->nb_cmds - 1)
 	{	
 		close(fd[0]);
