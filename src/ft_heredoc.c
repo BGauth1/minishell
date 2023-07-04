@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:33:28 by gbertet           #+#    #+#             */
-/*   Updated: 2023/06/21 18:24:53 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/03 15:58:03 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,19 @@ void    ft_fill_heredoc(char *eof, int fd)
 {
 	char	*line;
 	int		eof_len;
+	char	*eof_buff;
 
-	line = ft_read_here_doc("> ", eof);
-	eof_len = ft_strlen(eof);
-	if (eof)
+	eof_buff = ft_strdup(eof);
+	eof_buff = ft_remove_quotes(eof_buff);
+	line = ft_read_here_doc("> ", eof_buff);
+	eof_len = ft_strlen(eof_buff);
+	if (eof_buff)
 	{
-		while (ft_strncmp(line, eof, eof_len + 1))
+		while (ft_strncmp(line, eof_buff, eof_len + 1))
 		{
 			ft_putstr_fd(line, fd);
 			free(line);
-			line = ft_read_here_doc("> ", eof);
+			line = ft_read_here_doc("> ", eof_buff);
 		}
 	}
 	else
@@ -34,9 +37,10 @@ void    ft_fill_heredoc(char *eof, int fd)
 		{
 			ft_putstr_fd(line, fd);
 			free(line);
-			line = ft_read_here_doc("> ", eof);
+			line = ft_read_here_doc("> ", eof_buff);
 		}
 	}
+	free(eof_buff);
 	close(fd);
 }
 

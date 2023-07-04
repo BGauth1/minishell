@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:59:02 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/29 18:02:27 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/03 17:31:02 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,11 +126,15 @@ int	ft_export(char **c, t_files *files)
 		if (env_var_found(files->tab_var_env, name, c[i]) == 1)
 			switch_env(files, name, c[i]);
 		else if (env_var_found(files->tab_var_env, name, c[i]) == 2) //29/06 verif si name bien free ds ce cas
+		{
+			free(name);
 			return (0);
+		}
 		else
 		{
 			free(name);
 			ft_realloc_tab_env(files, c[i]); 
+			return (0);
 		}
 	}
 	return (0);
