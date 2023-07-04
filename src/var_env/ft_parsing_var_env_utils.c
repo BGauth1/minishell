@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 17:29:51 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/30 15:12:59 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/04 17:36:06 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,10 @@ void	ft_str_data(char *str, t_var_env *data)
 	{
 		if (str[data->len] == '$')
 		{
-			if (ft_betweenchar(str, data->len, '\'') == 0 &&
+			if (ft_betweenchar(str, data->len, '\'') == 0 && \
 				!ft_iswhitespace(str[data->len + 1]) && str[data->len + 1])
-				data->nb_dol++;
+				if (!(ft_betweenquotes(str, data->len) && !ft_betweenquotes(str, data->len + 1)))
+					data->nb_dol++;
 		}
 		data->len++;
 	}
