@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:59:02 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/03 17:31:02 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/04 15:55:11 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,6 @@ int	ft_export(char **c, t_files *files)
 		{
 			free(name);
 			ft_realloc_tab_env(files, c[i]); 
-			return (0);
 		}
 	}
 	return (0);
