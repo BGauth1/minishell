@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 18:54:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/21 18:19:13 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/04 15:17:21 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	ft_check_fdout(char *out, int err)
 		else
 			close(fd_out);
 	}
-	else
+	else if (fd_out > 0)
 		close(fd_out);
 	return (0);
 }
