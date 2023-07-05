@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:08:33 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/29 18:13:05 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/05 13:17:50 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_cd(char **c, t_files *files)
 {
 	char	*path;
-	
+
 	path = c[1];
 	if (parsing_cd(c) != 0)
 		return (1);
@@ -83,7 +83,7 @@ int	ft_user_path(char **c)
 
 char	*ft_home_directory(void)
 {
-	char *path;
+	char	*path;
 
 	path = getenv("HOME");
 	if (!path)

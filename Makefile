@@ -6,7 +6,7 @@
 #    By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/24 17:11:07 by lamasson          #+#    #+#              #
-#    Updated: 2023/06/21 15:03:00 by lamasson         ###   ########.fr        #
+#    Updated: 2023/07/05 15:27:13 by gbertet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ SRC			= src/ft_check_builtins.c \
 			src/pipex/ft_strjoin_path.c \
 			src/ft_utils.c \
 			src/main.c \
+			src/ft_free.c \
 			src/parsing_redirection.c \
 			src/parsing_right_file.c \
 			src/built/ft_cd.c \

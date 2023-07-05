@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:42:56 by gbertet           #+#    #+#             */
-/*   Updated: 2023/06/21 17:33:57 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/05 13:18:51 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	ft_parse_env(char **c)
 			ft_error_env(c[1], 125);
 			return (1);
 		}
-		else 
+		else
 		{
 			ft_error_env(c[1], 127);
 			return (1);

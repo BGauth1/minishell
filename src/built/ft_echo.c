@@ -6,28 +6,11 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:50:18 by gbertet           #+#    #+#             */
-/*   Updated: 2023/06/27 15:06:02 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/05 13:18:35 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-// void	ft_echo_arg(char *s)
-// {
-// 	char	first_quote;
-// 	int		j;
-
-// 	j = 0;
-// 	first_quote = '\0';
-// 	while (s[j])
-// 	{
-// 		if ((s[j] == '\'' || s[j] == '\"') && first_quote == '\0')
-// 			first_quote = s[j];
-// 		else if (s[j] != first_quote)
-// 			write(1, &s[j], 1);
-// 		j++;
-// 	}
-// }
 
 int	is_newline(char *s)
 {
@@ -50,9 +33,9 @@ int	is_newline(char *s)
 	return (0);
 }
 
-int ft_echo(char **cmd)
+int	ft_echo(char **cmd)
 {
-	int i;
+	int	i;
 	int	nl;
 
 	i = 1;
@@ -66,7 +49,7 @@ int ft_echo(char **cmd)
 	{
 		nl = 0;
 		if (!cmd[++i])
-			break;
+			break ;
 	}
 	while (cmd[i])
 	{
