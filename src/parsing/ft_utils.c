@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:53:32 by gbertet           #+#    #+#             */
-/*   Updated: 2023/06/14 18:23:16 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/05 18:14:06 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,13 @@
 int	ft_betweenchar(char *s, int pos, char cquote)
 {
 	int		i;
-	int		len;
 	int		quote;
 	char	c;
 
 	i = -1;
 	quote = 0;
 	c = '\0';
-	if (!s[pos])
-		return (0);
-	len = ft_strlen(s);
-	if (len <= pos)
+	if ((int)ft_strlen(s) <= pos)
 		return (0);
 	while (s[++i])
 	{
@@ -44,7 +40,7 @@ int	ft_betweenchar(char *s, int pos, char cquote)
 
 /*	Return 1 si le char s[pos] est entre des
 	doubles/simples quotes, sinon return 0.	*/
-int ft_betweenquotes(char *s, int pos)
+int	ft_betweenquotes(char *s, int pos)
 {
 	if (pos < 0)
 		return (0);
@@ -61,7 +57,7 @@ int	ft_strstrlen(char **s)
 	return (i);
 }
 
-int ft_iswhitespace(char c)
+int	ft_iswhitespace(char c)
 {
 	if (c == ' ' || c == '\n' || c == '\t'
 		|| c == '\v' || c == '\f' || c == '\r')
@@ -71,7 +67,7 @@ int ft_iswhitespace(char c)
 
 char	**ft_strstrdup(char **s)
 {
-	int	i;
+	int		i;
 	char	**res;
 
 	i = 0;

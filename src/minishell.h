@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:30:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/05 17:44:32 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/05 18:05:51 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,8 +151,12 @@ char	*ft_read_here_doc(char *prompt, char *eof);
 char	*normalize_str(char *s, t_files *files);
 char	**ft_remove_redirections(char **cmd);
 char	*ft_remove_quotes(char *s);
+
+//		FT_NORMALIZE_LINE_UTILS.C//
+int		nb_end_whitespace(char *s);
 char	*remove_char(char *s, int pos);
 char	*ft_add_char(char *s, char c, int pos);
+char	*ft_less_whitespace(char *s);
 
 //		PARSING_REDIRECTION.C	//
 t_fds	*parsing_fd(char **str);

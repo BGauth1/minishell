@@ -6,15 +6,15 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 16:52:20 by gbertet           #+#    #+#             */
-/*   Updated: 2023/06/29 15:05:41 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/05 17:56:49 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int empty_str(const char *s)
+int	empty_str(const char *s)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!s)
@@ -54,16 +54,16 @@ int	check_redir(char *s)
 	i = 0;
 	while (s[i])
 	{
-		if ((s[i] == '<' || s[i] == '>') && (s[i + 1] == '<' ||
-			s[i + 1] == '>') && !ft_betweenquotes(s, i))
+		if ((s[i] == '<' || s[i] == '>') && (s[i + 1] == '<'
+				|| s[i + 1] == '>') && !ft_betweenquotes(s, i))
 		{
 			if (s[i + 2] == '<' || s[i + 2] == '>' || !s[i + 2])
 				return (s[i]);
 		}
 		else if (!ft_iswhitespace(s[i]))
 		{
-			if (s[i] != '<' && s[i] != '>' &&
-				(s[i + 1] == '<' || s[i + 1] == '>') && !ft_betweenquotes(s, i + 1))
+			if (s[i] != '<' && s[i] != '>' && (s[i + 1] == '<'
+					|| s[i + 1] == '>') && !ft_betweenquotes(s, i + 1))
 				return (s[i]);
 		}
 		i++;
@@ -75,8 +75,8 @@ int	check_redir(char *s)
 
 int	check_quotes(char *s)
 {
-	int i;
-	int sq;
+	int	i;
+	int	sq;
 	int	dq;
 
 	i = -1;
@@ -102,14 +102,8 @@ int	check_quotes(char *s)
 	return (0);
 }
 
-int synthax_check(char *s)
+int	synthax_check(char *s)
 {
-	// if (check_pipe(s))
-	// {
-	// 	printf("Synthax error near unexpected token '|'.\n");
-	// 	free(s);
-	// 	return (0);
-	// }
 	if (check_redir(s))
 	{
 		printf("Synthax error near unexpected token '%c'.\n", check_redir(s));
