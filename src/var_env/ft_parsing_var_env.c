@@ -3,14 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parsing_var_env.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 12:51:30 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/05 14:45:04 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/05 16:37:09 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+char	*add_quotes(char *s)
+{
+	int	i;
+
+	i = -1;
+	while (s[++i])
+	{
+		while (ft_iswhitespace(s[i]))
+			i++;
+		if (!s[i])
+			break;
+		if (!ft_iswhitespace(s[i]))
+		{
+			s = ft_add_char(s, '"', i);
+			while (!ft_iswhitespace(s[i]) && s[i])
+				i++;
+			s = ft_add_char(s, '"', i);
+		}
+		if (!s[i])
+			break;
+	}
+	return (s);
+}
 
 static int	ft_wheel_tab_var_env(t_files files, t_var_env *data, int j)
 {
@@ -30,6 +54,7 @@ static int	ft_wheel_tab_var_env(t_files files, t_var_env *data, int j)
 			data->val[j].len_v = ft_strlen(files.tab_var_env[i]);
 			data->val[j].val = ft_substr(files.tab_var_env[i], len_tmp + 1, \
 				data->val[j].len_v - (len_tmp + 1));
+			data->val[j].val = add_quotes(data->val[j].val);
 			return (0);
 		}
 		free(tmp);

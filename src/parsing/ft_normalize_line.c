@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 17:59:08 by gbertet           #+#    #+#             */
-/*   Updated: 2023/06/29 15:30:49 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/05 16:39:55 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*remove_char(char *s, int pos)
 	return (s);
 }
 
-char	*add_char_right(char *s, int pos)
+char	*ft_add_char(char *s, char c, int pos)
 {
 	int	i;
 
@@ -63,7 +63,7 @@ char	*add_char_right(char *s, int pos)
 		s[i] = s[i - 1];
 		i--;
 	}
-	s[pos] = ' ';
+	s[pos] = c;
 	return (s);
 }
 
@@ -80,15 +80,15 @@ char	*format_str_spaces(char *s)
 			{
 				if ((s[i + 1] == '|')
 					&& !ft_betweenquotes(s, i + 1))
-					s = add_char_right(s, i + 1);
+					s = ft_add_char(s, ' ', i + 1);
 			}
 			else if (s[i] == '|' && s[i + 1] != ' ')
-				s = add_char_right(s, i + 1);
+				s = ft_add_char(s, ' ', i + 1);
 			else if (s[i] == '<' || s[i] == '>')
 			{
 				if (s[i + 1] != '<' && s[i + 1] != '>' && s[i + 1] != ' '
 					&& s[i + 1])
-					s = add_char_right(s, i + 1);
+					s = ft_add_char(s, ' ', i + 1);
 			}
 		}
 	}
@@ -102,6 +102,7 @@ char	*normalize_str(char *s, t_files *files)
 	char	*res;
 	char	*tmp;
 
+	(void)files;
 	i = 0;
 	j = ft_strlen(s) - 1;
 	while (ft_iswhitespace(s[i]))
@@ -123,7 +124,7 @@ char	*normalize_str(char *s, t_files *files)
 		printf("Synthax error near unexpected token '|'.\n");
 		return (NULL);
 	}
-	res = ft_handle_var_env(res, *files);
+	// res = ft_handle_var_env(res, *files);
 	res = format_str_spaces(res);
 	// res = ft_remove_quotes(res);
 	return (res);
