@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:27:42 by gbertet           #+#    #+#             */
-/*   Updated: 2023/07/05 16:36:12 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/05 16:58:29 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	get_cmds(t_mishell *m)
 
 	i = 0;
 	m->full_cmd = ft_handle_var_env(m->full_cmd, *m->files);
+	g_status = 0;
 	tmp = ft_split_minishell(m->full_cmd, '|');
 	while (tmp[i])
 		i++;

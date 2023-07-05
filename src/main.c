@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 12:58:15 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/05 15:34:51 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/05 16:58:40 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ static int	ft_prompt_parsing(t_mishell *mish)
 	if (!empty_str(tmp))
 	{
 		mish->full_cmd = normalize_str(tmp, mish->files);
-		g_status = 0;
 		free(tmp);
 		if (empty_str(mish->full_cmd))
 		{

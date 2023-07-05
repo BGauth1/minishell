@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 13:21:26 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/30 13:12:03 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/05 15:34:16 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	ft_free_data_fork(char **cmd, char **env, char *path)
 		free(path);
 }
 
-static int	ft_check_data_before_exec(t_mishell *m, char **env, char **cmd, char *path)
+static int	check_data_exec(t_mishell *m, char **env, char **cmd, char *path)
 {
 	if (!m->cmds[m->pos_cmd].path && !check_if_cmd_built(m->cmds[m->pos_cmd]))
 	{
@@ -41,13 +41,14 @@ static int	ft_check_data_before_exec(t_mishell *m, char **env, char **cmd, char 
 
 int	ft_exec_cmd(t_mishell *m)
 {
-	char	*path = NULL;
+	char	*path;
 	char	**cmd;
 	char	**env;
 
+	path = NULL;
 	cmd = ft_strstrdup(m->cmds[m->pos_cmd].c);
 	env = ft_strstrdup(m->files->tab_var_env);
-	if (ft_check_data_before_exec(m, env, cmd, NULL) == 1)
+	if (check_data_exec(m, env, cmd, NULL) == 1)
 		exit (127);
 	else if (check_built_fork(m->cmds[m->pos_cmd].c, m->files) == 0)
 	{

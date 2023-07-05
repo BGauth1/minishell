@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:30:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/05 16:37:48 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/05 15:55:48 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,7 @@ void	ft_check_status_exec(t_mishell *m);
 int		open_fdout(t_fds fds);
 int		open_fdin(t_mishell *m, int fd_in);
 int		ft_check_pipe_and_exit(t_mishell *m);
+int		ft_init_tab_pid(t_mishell *m);
 
 //		FT_STRJOIN_PATH.C		//
 char	*ft_strjoin_path(char *path, char *cmd);
