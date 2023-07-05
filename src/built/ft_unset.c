@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:00:32 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/29 18:08:35 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/05 17:07:23 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,24 @@ static int	check_var_env_unset(char **tab, char *name)
 	return (0);
 }
 
+int	ft_move_tab(t_files *files, int i)
+{
+	char	*tmp;
+
+	while (files->tab_var_env[i] != NULL)
+	{
+		tmp = files->tab_var_env[i + 1];
+		files->tab_var_env[i] = tmp;
+		i++;
+	}
+	return (i);
+}
+
 int	ft_unset(char **c, t_files *files)
 {
 	int		i;
 	int		j;
 	int		b;
-	char	*tmp;
 
 	j = 0;
 	if (!c[1])
@@ -55,12 +67,7 @@ int	ft_unset(char **c, t_files *files)
 			&& ft_strlen(c[j]) != ft_strlen(files->tab_var_env[i]))
 			i++;
 		free(files->tab_var_env[i]);
-		while (files->tab_var_env[i] != NULL)
-		{
-			tmp = files->tab_var_env[i + 1];
-			files->tab_var_env[i] = tmp;
-			i++;
-		}
+		i = ft_move_tab(files, i);
 	}
 	return (0);
 }

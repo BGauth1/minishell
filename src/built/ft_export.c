@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:59:02 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/04 15:55:11 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/05 17:44:28 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	switch_env(t_files *files, char *name, char *str)
 	}
 	free(name);
 }
+
 //utiliser dans unset void si necessaire ou move in unset.c
 int	ft_parse_name(char *str)
 {
@@ -123,18 +124,9 @@ int	ft_export(char **c, t_files *files)
 		name = rec_var_env(c[i]);
 		if (!name)
 			return (1);
-		if (env_var_found(files->tab_var_env, name, c[i]) == 1)
-			switch_env(files, name, c[i]);
-		else if (env_var_found(files->tab_var_env, name, c[i]) == 2) //29/06 verif si name bien free ds ce cas
-		{
-			free(name);
+		b = env_var_found(files->tab_var_env, name, c[i]);
+		if (!ft_env_cases(files, name, c[i], b))
 			return (0);
-		}
-		else
-		{
-			free(name);
-			ft_realloc_tab_env(files, c[i]); 
-		}
 	}
 	return (0);
 }

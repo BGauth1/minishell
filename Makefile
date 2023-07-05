@@ -6,7 +6,7 @@
 #    By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/24 17:11:07 by lamasson          #+#    #+#              #
-#    Updated: 2023/07/05 15:33:02 by gbertet          ###   ########.fr        #
+#    Updated: 2023/07/05 17:41:43 by gbertet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,7 @@ SRC			= src/ft_check_builtins.c \
 			src/built/ft_exit.c \
 			src/built/ft_export.c \
 			src/built/ft_export_utils.c \
+			src/built/ft_export_algo.c \
 			src/built/ft_pwd.c \
 			src/built/ft_unset.c \
 			src/var_env/ft_parsing_var_env.c \

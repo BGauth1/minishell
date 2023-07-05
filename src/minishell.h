@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:30:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/05 15:55:48 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/05 17:44:32 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,13 +102,16 @@ int		ft_parse_name(char *str);
 int		ft_export_no_arg(t_files files);
 void	ft_free_n_tab(char **tab, int n);
 char	*concat_export(char *env_var, char *str);
-int		env_var_found(char **tab, char *name, char *c);
 
 //		FT_EXPORT_PARSING.C		//
+int		env_var_found(char **tab, char *name, char *c);
 int		ft_parse_len(char **c, t_files *files);
 int		ft_parse_name_export(char **c, int j);
 void	ft_error_export(char *c, int g, char *cmd);
 int		check_egal(char *c);
+
+//		FT_EXPORT_ALGO.C		//
+int		ft_env_cases(t_files *files, char *name, char *c, int n);
 
 //		FT_UNSET.C				//
 int		ft_unset(char **c, t_files *files);

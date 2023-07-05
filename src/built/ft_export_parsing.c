@@ -3,20 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export_parsing.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:32:04 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/29 17:25:26 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/05 17:10:21 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+int	env_var_found(char **tab, char *name, char *c)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	len = ft_strlen(name);
+	while (tab[i])
+	{
+		if (!ft_strncmp(tab[i], name, len))
+		{
+			if (tab[i][len] == '=' && !check_egal(c))
+				return (2);
+			if (tab[i][len] == '=' || tab[i][len] == '\0')
+				return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
 void	ft_error_export(char *c, int g, char *cmd)
 {
 	if (g == 1)
 	{
-		printf("minishell: %s: `%s': not a valid identifier\n", cmd, c);	
+		printf("minishell: %s: `%s': not a valid identifier\n", cmd, c);
 		g_status = 1;
 	}
 	else if (g == 2)
@@ -79,5 +100,5 @@ int	ft_parse_name_export(char **c, int j)
 		}
 		i++;
 	}
-	return(0);
+	return (0);
 }

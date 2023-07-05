@@ -6,32 +6,11 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 21:09:56 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/28 12:59:35 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/05 17:16:58 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int	env_var_found(char **tab, char *name, char *c)
-{
-	int	i;
-	int	len;
-
-	i = 0;
-	len = ft_strlen(name);
-	while (tab[i])
-	{
-		if (!ft_strncmp(tab[i], name, len))
-		{
-			if (tab[i][len] == '=' && !check_egal(c))
-				return (2);
-			if (tab[i][len] == '=' || tab[i][len] == '\0')
-				return (1);
-		}
-		i++;
-	}
-	return (0);
-}
 
 int	ft_one_by_one(char **tab, int i)
 {
@@ -63,11 +42,11 @@ void	ft_print_tab_export(char **tab, int len, int c)
 	int	j;
 
 	i = 0;
-	j = 0;
 	while (i < len)
 	{
+		j = -1;
 		ft_putstr_fd("declare -x ", 1);
-		while (tab[i][j] != '\0')
+		while (tab[i][++j] != '\0')
 		{
 			ft_putchar_fd(tab[i][j], 1);
 			if (tab[i][j] == '=' && c == 0)
@@ -75,15 +54,13 @@ void	ft_print_tab_export(char **tab, int len, int c)
 				ft_putchar_fd('\"', 1);
 				c = 1;
 			}
-			j++;
 		}
 		if (c == 1)
 			ft_putchar_fd('\"', 1);
 		ft_putchar_fd('\n', 1);
 		j = 0;
 		c = 0;
-		i++;
-		if (tab[i] && tab[i][j] == '_')
+		if (tab[++i] && tab[i][j] == '_')
 			i++;
 	}
 }
@@ -144,8 +121,8 @@ int	ft_export_no_arg(t_files files)
 
 char	*concat_export(char *env_var, char *str)
 {
-	int	i;
-	int	concat;
+	int		i;
+	int		concat;
 	char	*buff;
 	char	*res;
 
