@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:02:12 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/29 18:17:39 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/05 17:58:20 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ int	ft_pwd(char **c)
 	if (ft_parsing_pwd(c) != 0)
 		return (1);
 	pwd = malloc(sizeof(char *) * 1024);
-	if (pwd == NULL) //secu malloc
-		exit (1); //free en cas d'erreur de la fct malloc
-	if (getcwd(pwd, 1024) == NULL) //obtien path pos
+	if (pwd == NULL)
+		exit (1);
+	if (getcwd(pwd, 1024) == NULL)
 	{
 		printf("minishell: %s: %s\n", c[0], strerror(errno));
 		free(pwd);

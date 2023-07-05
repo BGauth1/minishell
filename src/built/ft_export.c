@@ -6,13 +6,13 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:59:02 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/05 17:44:28 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/05 18:02:05 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_realloc_tab_env(t_files *files, char *str) //envoyer addr & de files dans proto
+void	ft_realloc_tab_env(t_files *files, char *str)
 {
 	int		len;
 	int		i;
@@ -21,7 +21,7 @@ void	ft_realloc_tab_env(t_files *files, char *str) //envoyer addr & de files dan
 
 	i = 0;
 	len = ft_tablen(files->tab_var_env);
-	buf_tab = malloc(sizeof(char *) * (len + 2)); //new + NULL = 2
+	buf_tab = malloc(sizeof(char *) * (len + 2));
 	while (files->tab_var_env[i] != NULL)
 	{
 		buf_tab[i] = ft_strdup(files->tab_var_env[i]);
@@ -84,25 +84,6 @@ void	switch_env(t_files *files, char *name, char *str)
 		i++;
 	}
 	free(name);
-}
-
-//utiliser dans unset void si necessaire ou move in unset.c
-int	ft_parse_name(char *str)
-{
-	int	i;
-
-	i = 1;
-	if (ft_isalpha(str[0]) != 1)
-		return (1);
-	while (str[i])
-	{
-		if (str[i] == '=' || (str[i] == '+' && str[i + 1] == '='))
-			break ;
-		if (ft_isalnum(str[i]) != 1 && str[i] != '_' && str[i] != '-')
-			return (1);
-		i++;
-	}
-	return (0);
 }
 
 int	ft_export(char **c, t_files *files)

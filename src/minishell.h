@@ -6,66 +6,67 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:30:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/05 17:44:32 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/05 17:52:28 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <sys/types.h> //fork, wait, waitpid, wait3, wait4, open
-# include <sys/wait.h> //wait
-# include <fcntl.h> //access, open, unlink
-# include <stdio.h> //printf
-# include <stdlib.h> //malloc, free, getenv, exit
-# include <unistd.h> //write, read, pipe, dup, dup2, execve, getcwd, chdir
-# include <readline/readline.h> //readline, rl_clear_history, rl_on_new_line, rl_replace_line, rl_redisplay, add_history
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <fcntl.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <readline/readline.h>
 # include <readline/history.h>
-# include <signal.h> //signal, sigaction, sigemptyset, sigaddset, kill
-# include <errno.h> //strerror, perror
-# include <sys/stat.h> //stat, lstat, fstat
-# include <dirent.h> //opendir, readdir, closedir 
-# include <sys/time.h> //?
-# include <termios.h> //tcsetattr, tcgetattr, isatty, ttyname, ttyslot, ioctl
+# include <signal.h>
+# include <errno.h>
+# include <sys/stat.h>
+# include <dirent.h>
+# include <sys/time.h>
+# include <termios.h>
 # include "../libft/libft.h"
 
 extern int	g_status;
 
 typedef struct s_mishell
 {
-	struct s_cmd	*cmds;		//tableau de structure des commandes
-	char			**av;		//tab argv du main
-	char			*full_cmd;	//ligne de cmd du terminal
+	struct s_cmd	*cmds;
+	char			**av;
+	char			*full_cmd;
 	char			path[1024];
-	int				nb_cmds;	//nombre de commande dans la ligne
-	int				pos_cmd;	//pos dans tab de cmds pdt execution des pipes
+	int				nb_cmds;
+	int				pos_cmd;
 	int				type;
 	int				*here_doc;
-	char			**env;		//variable d'environnements du main 
+	char			**env;
 	struct s_files	*files;
 	pid_t			*pid;
-}               t_mishell;
+}t_mishell;
 
-typedef struct	s_cmd			//tableau de struct
+typedef struct s_cmd
 {
 	struct s_fds	*fds;
-	char			**c;				//tableau cmd avc opt et arg pour chaque
-	char			*path;				//path correspondant a la cmd ou NULL si builtin 
+	char			**c;
+	char			*path;
 	int				here_doc;
-}				t_cmd;
+}t_cmd;
 
-typedef struct 	s_fds
+typedef struct s_fds
 {
 	char	*fd_in;
 	char	*fd_out;
 	int		in;
-	int		out; // -1 = no fichier out / 0 redirection simple / 1 redirection append mode
+	int		out;
 	int		err;
-}				t_fds;
+}t_fds;
 
-typedef struct s_files{
-	char	**tab_var_env;	//notre tableau de variables d'environnements
-	char	**tab_path;		//PATH val split, tableau de tous les paths ':'
+typedef struct s_files
+{
+	char	**tab_var_env;
+	char	**tab_path;
 }t_files;
 
 typedef struct s_var_env{
@@ -102,9 +103,9 @@ int		ft_parse_name(char *str);
 int		ft_export_no_arg(t_files files);
 void	ft_free_n_tab(char **tab, int n);
 char	*concat_export(char *env_var, char *str);
+int		env_var_found(char **tab, char *name, char *c);
 
 //		FT_EXPORT_PARSING.C		//
-int		env_var_found(char **tab, char *name, char *c);
 int		ft_parse_len(char **c, t_files *files);
 int		ft_parse_name_export(char **c, int j);
 void	ft_error_export(char *c, int g, char *cmd);
@@ -129,11 +130,10 @@ char	*ft_home_directory(void);
 void	ft_echo_arg(char *s);
 int		ft_echo(char **cmd);
 
-
 //		FT_CHECK_BUILTINS.C		//
-int		check_built_no_fork(char **c, t_files *files, t_mishell *m); //exec built
-int		check_built_fork(char **c, t_files *files); //exec built
-int		check_if_cmd_built(t_cmd cmds); //return (0) si no built ou (1) si built
+int		check_built_no_fork(char **c, t_files *files, t_mishell *m);
+int		check_built_fork(char **c, t_files *files);
+int		check_if_cmd_built(t_cmd cmds);
 
 //		FT_UTILS.C				//
 int		ft_iswhitespace(char c);
@@ -181,8 +181,8 @@ void	ft_init_tab_env(char **env, t_mishell *mish);
 void	ft_free_tab_env(t_files *files);
 int		ft_tablen(char **tab);
 
-//		FT_MAJ_TAB_ENV.C		//HOME, USER, _ :pas fait  
-int		maj_tab_env_oldpwd(t_files *files); //appel en 1er recup pwd pour ca maj
+//		FT_MAJ_TAB_ENV.C		//
+int		maj_tab_env_oldpwd(t_files *files);
 int		maj_tab_env_pwd(t_files *files);
 
 //		FT_GET_PATH_CMD.C		//
@@ -191,7 +191,7 @@ void	ft_init_path_cmd(t_mishell *mish, t_files files, int j);
 void	ft_cmd_path_ready(t_mishell *mish);
 
 //		FT_PIPEX.C				//
-int		ft_call_pipex(t_mishell *mish); //appel pipe -> fork -> dup et exec_cmd
+int		ft_call_pipex(t_mishell *mish);
 
 //		FT_PIPEX_UTILS.C		//
 void	ft_check_status_exec(t_mishell *m);
@@ -229,7 +229,7 @@ void	signal_maj_outfork(void);
 int		signal_check_readline(void);
 
 //		FT_HEREDOC.C			//
-void    ft_heredoc(char **cmds);
+void	ft_heredoc(char **cmds);
 
 //		FT_FREE.C				//
 void	ft_free_n_tab(char **tab, int n);
