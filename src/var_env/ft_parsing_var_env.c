@@ -3,38 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parsing_var_env.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 12:51:30 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/04 15:36:45 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/05 14:45:04 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-char	*add_quotes(char *s)
-{
-	int	i;
-
-	i = -1;
-	while (s[++i])
-	{
-		while (ft_iswhitespace(s[i]))
-			i++;
-		if (!s[i])
-			break;
-		if (!ft_iswhitespace(s[i]))
-		{
-			s = ft_add_char(s, '"', i);
-			while (!ft_iswhitespace(s[i]) && s[i])
-				i++;
-			s = ft_add_char(s, '"', i);
-		}
-		if (!s[i])
-			break;
-	}
-	return (s);
-}
 
 static int	ft_wheel_tab_var_env(t_files files, t_var_env *data, int j)
 {
@@ -54,7 +30,6 @@ static int	ft_wheel_tab_var_env(t_files files, t_var_env *data, int j)
 			data->val[j].len_v = ft_strlen(files.tab_var_env[i]);
 			data->val[j].val = ft_substr(files.tab_var_env[i], len_tmp + 1, \
 				data->val[j].len_v - (len_tmp + 1));
-			data->val[j].val = add_quotes(data->val[j].val);
 			return (0);
 		}
 		free(tmp);
@@ -125,35 +100,3 @@ char	*ft_handle_var_env(char *str, t_files files)
 	ft_free_data_var_env(&data, data.nb_dol);
 	return (new_str);
 }
-/*
-int	main(int argc, char **argv, char **env)
-{
-	(void)argc;
-	(void)argv;
-
-	char	*str;
-
-
-
-	str = " lol$USER\"$USERXBX\"'$USER'"; // = lamasson.SDSS $USER$USER = lamassonlamasson $USERldl = ""
-
-	t_files	files;
-	ft_init_tab_env(env, &files);
-
-
-	char	*new;
-	new = ft_handle_var_env(str, files);
-	new = ft_remove_quotes(new);
-	printf("%s\n", new);
-
-	ft_free_tab(files.tab_var_env);
-	free(new);
-	return (0);
-}*/
-
-//GESTION D'ERREUR 2/?
-// "$DSHDHD" => PREND ENTRE DOUBLEQUOTE COMME ARGUMENT DE COMMANDE ET RETURN COMMAND NOT FOUND AVEC ARG VIDE 
-
-//TRAITEMENT DE LA VARIABLE ERREUR A AFFICHER 1/?
-//  $?.CCCCC$? => 127.CCCCC127  colle la valeur error partout ou il y a $? peut importe ou
-// "$?" TRAITEMENT AVEC VARIABLE GLOBAL NUM ERROR 
