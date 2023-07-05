@@ -6,7 +6,7 @@
 /*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 19:51:11 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/05 14:41:17 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/05 18:41:15 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,13 @@ int	maj_tab_env_oldpwd(t_files *files)
 	return (0);
 }
 
-int	maj_tab_env_pwd(t_files *files)
+static char	*maj_tab_rec_cwd(void)
 {
 	char	*pwd;
 	char	*tmp;
-	char	*name;
 
 	pwd = malloc(sizeof(char *) * 1024);
-	if (pwd == NULL)
+	if (pwd)
 		exit (1);
 	if (getcwd(pwd, 1024) == NULL)
 	{
@@ -70,8 +69,17 @@ int	maj_tab_env_pwd(t_files *files)
 	}
 	tmp = ft_strjoin("PWD=", pwd);
 	free(pwd);
-	if (tmp == NULL)
+	if (!tmp)
 		exit (1);
+	return (tmp);
+}
+
+int	maj_tab_env_pwd(t_files *files)
+{
+	char	*tmp;
+	char	*name;
+
+	tmp = maj_tab_rec_cwd();
 	name = ft_strdup("PWD");
 	if (env_var_found(files->tab_var_env, name, name) == 0)
 	{
