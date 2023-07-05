@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:27:42 by gbertet           #+#    #+#             */
-/*   Updated: 2023/07/04 15:46:36 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/05 13:44:55 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	get_cmds(t_mishell *m)
 	char	**tmp2;
 
 	i = 0;
-	m->full_cmd = ft_handle_var_env(m->full_cmd, *m->files);
 	tmp = ft_split_minishell(m->full_cmd, '|');
 	while (tmp[i])
 		i++;
@@ -64,6 +63,12 @@ void	get_cmds(t_mishell *m)
 		tmp2 = ft_split_minishell(tmp[i], ' ');
 		j = -1;
 		ft_heredoc(tmp2);
+		if (g_status == 130)
+		{
+			ft_free_str(tmp2);
+			free(m->cmds);
+			break ;
+		}
 		m->cmds[i].fds = parsing_fd(tmp2);
 		m->cmds[i].c = ft_remove_redirections(tmp2);
 		while (m->cmds[i].c[++j])

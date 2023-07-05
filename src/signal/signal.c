@@ -6,12 +6,11 @@
 /*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 12:48:56 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/12 13:36:50 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/04 18:39:45 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
 
 void	sigint_fork(int signum)
 {
@@ -30,68 +29,29 @@ void	sigquit_fork(int signum)
 	g_status = 131;
 }
 
+
+int	signal_check_readline(void)
+{
+	return (0);
+}
+
 void	sigint_outfork(int signum)
 {
 	if (signum == SIGINT)
 	{
-		g_status = 130;
-		ft_putstr_fd("\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 1);
-		rl_redisplay();
+		g_status = -1;
+		rl_done = 1;
+		//ft_putstr_fd("\n", 1);
+		//rl_on_new_line();
+		//rl_replace_line("", 1);
 	}
+	return ;
 }
 
 void	signal_maj_outfork(void)
 {
+	rl_event_hook = signal_check_readline;
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, SIG_IGN);
 	signal(SIGINT, sigint_outfork);
 }
-
-int	ft_fork(void)
-{
-	int	pid;
-	int	status;
-	char	*buf;
-
-	buf = malloc(sizeof(char) * 1024);
-	pid = fork();
-	signal(SIGQUIT, sigquit_fork);
-	if (pid == 0)
-	{
-		printf("i'm fork\n");
-		while (read(0, buf, sizeof(buf)) != 0)
-		{
-		}	
-	}
-	else if (pid > 0)
-	{
-		wait(&status);
-		if (WIFEXITED(status))
-			g_status = WEXITSTATUS(status);
-	}
-	else
-		printf("error\n");
-	return (0);
-}
-/*
-int	main(void)
-{
-	//char	*buf;
-
-	g_status = -1;
-	//buf = malloc(sizeof(char) * 1024);
-	
-
-	signal(SIGINT, sigint_outfork);
-	signal(SIGQUIT, SIG_IGN);
-	//while (read(0, buf, sizeof(buf)) != 0)
-	//{
-		ft_fork();
-	//	if (g_status >= 0)
-	//		break ;
-	//}
-	//printf(" stat = %d\n", g_status);
-	return (0);
-}*/
