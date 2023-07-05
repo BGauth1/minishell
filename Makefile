@@ -6,7 +6,7 @@
 #    By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/24 17:11:07 by lamasson          #+#    #+#              #
-#    Updated: 2023/07/05 15:27:13 by gbertet          ###   ########.fr        #
+#    Updated: 2023/07/05 15:33:02 by gbertet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,17 +36,18 @@ SRC			= src/ft_check_builtins.c \
 			src/pipex/ft_get_path_cmd.c \
 			src/var_env/ft_init_tab_env.c \
 			src/var_env/ft_maj_tab_env.c \
-			src/ft_normalize_line.c \
-			src/ft_parsing_cmd.c \
+			src/parsing/ft_normalize_line.c \
+			src/parsing/ft_parsing_cmd.c \
 			src/pipex/ft_pipex.c \
 			src/ft_readline.c \
-			src/ft_split_minishell.c \
+			src/parsing/ft_split_minishell.c \
 			src/pipex/ft_strjoin_path.c \
-			src/ft_utils.c \
+			src/parsing/ft_utils.c \
 			src/main.c \
+			src/ft_get_cmds.c \
 			src/ft_free.c \
-			src/parsing_redirection.c \
-			src/parsing_right_file.c \
+			src/redirection/parsing_redirection.c \
+			src/redirection/parsing_right_file.c \
 			src/built/ft_cd.c \
 			src/built/ft_echo.c \
 			src/built/ft_env.c \
@@ -59,8 +60,7 @@ SRC			= src/ft_check_builtins.c \
 			src/var_env/ft_parsing_var_env_utils.c \
 			src/var_env/ft_join_var_env_str.c \
 			src/signal/signal.c \
-			src/signal/main_signal_test.c \
-			src/ft_heredoc.c \
+			src/redirection/ft_heredoc.c \
 			src/pipex/ft_pipex_utils.c \
 			src/built/ft_export_parsing.c 
 

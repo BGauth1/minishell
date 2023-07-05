@@ -6,13 +6,13 @@
 /*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 19:51:11 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/27 12:50:25 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/05 14:41:17 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char *find_new_old_pwd(t_files *files, char *name)
+static char	*find_new_old_pwd(t_files *files, char *name)
 {
 	int		i;
 	int		len;
@@ -35,7 +35,7 @@ static char *find_new_old_pwd(t_files *files, char *name)
 int	maj_tab_env_oldpwd(t_files *files)
 {
 	char	*buf;
-	char 	*val;
+	char	*val;
 	char	*tmp;
 	char	*name;
 
@@ -61,7 +61,7 @@ int	maj_tab_env_pwd(t_files *files)
 	char	*name;
 
 	pwd = malloc(sizeof(char *) * 1024);
-	if (pwd == NULL) //secu
+	if (pwd == NULL)
 		exit (1);
 	if (getcwd(pwd, 1024) == NULL)
 	{
@@ -70,7 +70,7 @@ int	maj_tab_env_pwd(t_files *files)
 	}
 	tmp = ft_strjoin("PWD=", pwd);
 	free(pwd);
-	if (tmp == NULL) //secu
+	if (tmp == NULL)
 		exit (1);
 	name = ft_strdup("PWD");
 	if (env_var_found(files->tab_var_env, name, name) == 0)
@@ -78,7 +78,7 @@ int	maj_tab_env_pwd(t_files *files)
 		free(name);
 		ft_realloc_tab_env(files, tmp);
 	}
-	else 
+	else
 		switch_env(files, name, tmp);
 	free(tmp);
 	return (0);

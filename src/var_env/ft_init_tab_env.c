@@ -6,13 +6,13 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:12:52 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/13 13:38:05 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/05 14:39:07 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_init_tab_env(char **env, t_mishell *mish) //envoyer addr,(&) de files dans proto
+void	ft_init_tab_env(char **env, t_mishell *mish)
 {
 	int		len;
 	int		i;

@@ -6,11 +6,23 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:33:28 by gbertet           #+#    #+#             */
-/*   Updated: 2023/07/03 15:58:03 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/05 13:28:35 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
+
+int	ft_signal_heredoc(char *line, char *eof_buff, int fd)
+{
+	if (line[0] == 0 && g_status == -1)
+	{
+		free(eof_buff);
+		close(fd);
+		g_status = 130;
+		return (1);
+	}
+	return (0);
+}
 
 void    ft_fill_heredoc(char *eof, int fd)
 {
@@ -21,23 +33,18 @@ void    ft_fill_heredoc(char *eof, int fd)
 	eof_buff = ft_strdup(eof);
 	eof_buff = ft_remove_quotes(eof_buff);
 	line = ft_read_here_doc("> ", eof_buff);
+	if (ft_signal_heredoc(line, eof_buff, fd) == 1)
+		return ;
 	eof_len = ft_strlen(eof_buff);
 	if (eof_buff)
 	{
-		while (ft_strncmp(line, eof_buff, eof_len + 1))
+		while (ft_strncmp(line, eof_buff, eof_len + 1) || (line[0] && !eof_buff))
 		{
 			ft_putstr_fd(line, fd);
 			free(line);
 			line = ft_read_here_doc("> ", eof_buff);
-		}
-	}
-	else
-	{
-		while (line[0])
-		{
-			ft_putstr_fd(line, fd);
-			free(line);
-			line = ft_read_here_doc("> ", eof_buff);
+			if (ft_signal_heredoc(line, eof_buff, fd) == 1)
+				return ;
 		}
 	}
 	free(eof_buff);

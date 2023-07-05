@@ -6,11 +6,11 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:09:03 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/28 14:30:29 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/04 19:17:51 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 
 // char	*rec_file(char *str)
