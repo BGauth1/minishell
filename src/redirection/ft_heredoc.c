@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:33:28 by gbertet           #+#    #+#             */
-/*   Updated: 2023/07/05 13:28:35 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/05 18:09:46 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,37 +24,37 @@ int	ft_signal_heredoc(char *line, char *eof_buff, int fd)
 	return (0);
 }
 
-void    ft_fill_heredoc(char *eof, int fd)
+void	ft_fill_heredoc(char *eof, int fd)
 {
 	char	*line;
 	int		eof_len;
-	char	*eof_buff;
+	char	*eof_buf;
 
-	eof_buff = ft_strdup(eof);
-	eof_buff = ft_remove_quotes(eof_buff);
-	line = ft_read_here_doc("> ", eof_buff);
-	if (ft_signal_heredoc(line, eof_buff, fd) == 1)
+	eof_buf = ft_strdup(eof);
+	eof_buf = ft_remove_quotes(eof_buf);
+	line = ft_read_here_doc("> ", eof_buf);
+	if (ft_signal_heredoc(line, eof_buf, fd) == 1)
 		return ;
-	eof_len = ft_strlen(eof_buff);
-	if (eof_buff)
+	eof_len = ft_strlen(eof_buf);
+	if (eof_buf)
 	{
-		while (ft_strncmp(line, eof_buff, eof_len + 1) || (line[0] && !eof_buff))
+		while (ft_strncmp(line, eof_buf, eof_len + 1) || (line[0] && !eof_buf))
 		{
 			ft_putstr_fd(line, fd);
 			free(line);
-			line = ft_read_here_doc("> ", eof_buff);
-			if (ft_signal_heredoc(line, eof_buff, fd) == 1)
+			line = ft_read_here_doc("> ", eof_buf);
+			if (ft_signal_heredoc(line, eof_buf, fd) == 1)
 				return ;
 		}
 	}
-	free(eof_buff);
+	free(eof_buf);
 	close(fd);
 }
 
-void    ft_heredoc(char **cmds)
+void	ft_heredoc(char **cmds)
 {
-	int	i;
-    int	fd;
+	int		i;
+	int		fd;
 
 	i = 0;
 	while (cmds[i])
@@ -78,32 +78,3 @@ void    ft_heredoc(char **cmds)
 		}
 	}
 }
-
-// int	main(int ac, char **av)
-// {
-// 	char *s;
-// 	char **str;
-
-// 	str = malloc(10 * sizeof(char *));
-// 	str[9] = NULL;
-// 	str[0] = ft_strdup("<<");
-// 	str[1] = ft_strdup("oute");
-// 	str[2] = ft_strdup("<<");
-// 	str[3] = ft_strdup("out");
-// 	str[4] = ft_strdup("commande");
-// 	str[5] = ft_strdup(">");
-// 	str[6] = ft_strdup("ah");
-// 	str[7] = ft_strdup(">>");
-// 	str[8] = ft_strdup("bh");
-
-// 	ft_heredoc(str);
-// 	int fd = open(".heredoc", O_RDONLY);
-// 	s = get_next_line(fd);
-// 	while (s)
-// 	{
-// 		ft_printf("%s", s);
-// 		free(s);
-// 		s = get_next_line(fd);
-// 	}
-// 	close (fd);
-// }
