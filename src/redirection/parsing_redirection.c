@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:09:03 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/05 18:11:40 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/05 18:41:04 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,12 @@ int	redirect_type(char *str)
 	return (-1);
 }
 
-char	**find_redirect_left(char **str, t_fds *fds, int **type)
+char	**find_redirect(char **str, t_fds *fds, char **tmp_fds, int **type)
 {
 	int		i;
 	int		j;
-	char	**tmp_fds;
 
 	i = -1;
-	j = ft_count_char(str, '<') + ft_count_char(str, '>');
-	tmp_fds = malloc((j + 1) * sizeof(char *));
-	tmp_fds[j] = NULL;
 	j = 0;
 	while (str[++i])
 	{
@@ -78,28 +74,6 @@ char	**find_redirect_left(char **str, t_fds *fds, int **type)
 	return (tmp_fds);
 }
 
-char	**find_redirect_right(char **str, t_fds *fds)
-{
-	int		i;
-	int		j;
-	char	**fdouts;
-
-	i = -1;
-	j = ft_count_char(str, '>');
-	fdouts = malloc((j + 1) * sizeof(char *));
-	fdouts[j] = NULL;
-	j = 0;
-	while (str[++i])
-	{
-		if (str[i][0] == '>')
-		{
-			fds->out = redirect_type(str[i]);
-			fdouts[j++] = ft_strdup(str[++i]);
-		}
-	}
-	return (fdouts);
-}
-
 t_fds	*parsing_fd(char **str)
 {
 	char	**tmp_fds;
@@ -109,7 +83,10 @@ t_fds	*parsing_fd(char **str)
 	fds = malloc(sizeof(t_fds));
 	type = malloc((ft_count_char(str, '<') + \
 		ft_count_char(str, '>') + 1) * sizeof(int));
-	tmp_fds = find_redirect_left(str, fds, &type);
+	tmp_fds = malloc((ft_count_char(str, '<') + ft_count_char(str, '>') + 1)
+			* sizeof(char *));
+	tmp_fds[ft_count_char(str, '<') + ft_count_char(str, '>')] = NULL;
+	tmp_fds = find_redirect(str, fds, tmp_fds, &type);
 	fds->err = ft_check_fd(tmp_fds, type);
 	if (fds->err == 0)
 		set_fd(tmp_fds, fds, type);
