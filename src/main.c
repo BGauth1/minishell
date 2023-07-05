@@ -5,129 +5,76 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/24 17:27:42 by gbertet           #+#    #+#             */
-/*   Updated: 2023/07/05 13:44:55 by lamasson         ###   ########.fr       */
+/*   Created: 2023/06/12 12:58:15 by lamasson          #+#    #+#             */
+/*   Updated: 2023/07/05 15:12:52 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-int		*has_here_doc(char *s, int nb_cmds)
+int	g_status;
+
+static int	ft_mini_exec(t_mishell *mish)
 {
-	int	*here_doc;
-	int	n;
-	int	i;
-
-	n = 0;
-	i = 0;
-	here_doc = malloc(nb_cmds * sizeof(int));
-	while (n < nb_cmds)
+	if (synthax_check(mish->full_cmd))
 	{
-		here_doc[n] = 0;
-		n++;
-	}
-	n = 0;
-	while (n < nb_cmds && s[i])
-	{
-		if (s[i] == '|' && !ft_betweenquotes(s, i))
-			n++;
-		else if (s[i] == '<' && s[i + 1] == '<' && !ft_betweenquotes(s, i))
+		get_cmds(mish);
+		mish->files->tab_path = ft_get_tab_path(*mish->files);
+		if (g_status != 130)
 		{
-			here_doc[n] = 1;
-			i++;
+			ft_call_pipex(mish);
+			ft_free_cmds(mish);
 		}
-		i++;
+		else
+			free(mish->full_cmd);
+		ft_free_tab(mish->files->tab_path);
 	}
-	return (here_doc);
+	return (0);
 }
 
-void	get_cmds(t_mishell *m)
+static int	ft_prompt_parsing(t_mishell *mish)
 {
-	int	i;
-	int	j;
-	char	**tmp;
-	char	**tmp2;
+	char	*prompt;
+	char	*tmp;
 
-	i = 0;
-	tmp = ft_split_minishell(m->full_cmd, '|');
-	while (tmp[i])
-		i++;
-	m->nb_cmds = i;
-	m->here_doc = has_here_doc(m->full_cmd, m->nb_cmds);
-	m->cmds = malloc((m->nb_cmds + 1) * sizeof(t_cmd));
-	m->cmds[m->nb_cmds].c = NULL;
-	i = -1;
-	while (++i < m->nb_cmds)
+	if (getcwd(mish->path, sizeof(mish->path)) == NULL)
+		exit (1);
+	prompt = ft_strjoin(mish->path, "$ ");
+	tmp = ft_readline(prompt);
+	free(prompt);
+	if (!empty_str(tmp))
 	{
-		m->cmds[i].here_doc = m->here_doc[i];
-		tmp2 = ft_split_minishell(tmp[i], ' ');
-		j = -1;
-		ft_heredoc(tmp2);
-		if (g_status == 130)
+		mish->full_cmd = normalize_str(tmp, mish->files);
+		g_status = 0;
+		free(tmp);
+		if (empty_str(mish->full_cmd))
 		{
-			ft_free_str(tmp2);
-			free(m->cmds);
-			break ;
+			free(mish->full_cmd);
+			return (1);
 		}
-		m->cmds[i].fds = parsing_fd(tmp2);
-		m->cmds[i].c = ft_remove_redirections(tmp2);
-		while (m->cmds[i].c[++j])
-		{
-			// m->cmds[i].c[j] = ft_handle_var_env(m->cmds[i].c[j], *m->files);
-			m->cmds[i].c[j] = ft_remove_quotes(m->cmds[i].c[j]);
-		}
-		m->cmds[i].path = NULL;
+		ft_mini_exec(mish);
 	}
-	ft_free_str(tmp);
-	free(m->here_doc);
+	else
+		free(tmp);
+	return (0);
 }
 
-/*
-int main(int ac, char **av, char **ev)
+int	main(int argc, char **argv, char **env)
 {
 	t_mishell	mish;
-	char		*prompt;
-	char		*tmp;
-	int i;
-	int j;
 
-	if (getcwd(mish.path, sizeof(mish.path)) == NULL)
-    {
-        perror("getcwd");
-        return (1);
-    }
+	(void)argc;
+	(void)argv;
+	g_status = 0;
+	ft_init_tab_env(env, &mish);
+	signal_maj_outfork();
 	while (1)
 	{
-		prompt = ft_strjoin(mish.path, "$ ");
-		tmp = ft_readline(prompt);
-		free(prompt);
-		if (!empty_str(tmp))
-		{
-			mish.full_cmd = normalize_str(tmp);
-			printf("\"%s\"\n", mish.full_cmd);
-			if (synthax_check(mish.full_cmd))
-			{
-				get_cmds(&mish);
-				j = 0;
-				while (mish.cmds[j].c)
-				{
-					i = 0;
-					while (mish.cmds[j].c[i])
-					{
-						printf("\"%s\" ", mish.cmds[j].c[i]);
-						i++;
-					}
-					printf("\n");
-					j++;
-				}
-				if (!ft_strncmp(mish.full_cmd, "exit", 4))
-					ft_exit(&mish);
-				ft_free_cmds(&mish);
-			}
-		}
-		free(tmp);
+		if (ft_prompt_parsing(&mish) == 1)
+			continue ;
+		signal_maj_outfork();
+		unlink(".heredoc");
 	}
-	free(tmp);
-	free(prompt);
+	ft_free_files(&mish);
 	free(mish.full_cmd);
-}*/
+}

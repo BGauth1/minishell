@@ -6,7 +6,7 @@
 /*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 12:48:56 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/04 18:39:45 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/05 14:50:30 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	sigquit_fork(int signum)
 	g_status = 131;
 }
 
-
 int	signal_check_readline(void)
 {
 	return (0);
@@ -41,9 +40,6 @@ void	sigint_outfork(int signum)
 	{
 		g_status = -1;
 		rl_done = 1;
-		//ft_putstr_fd("\n", 1);
-		//rl_on_new_line();
-		//rl_replace_line("", 1);
 	}
 	return ;
 }
