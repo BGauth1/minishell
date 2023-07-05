@@ -6,7 +6,7 @@
 /*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 12:48:56 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/05 14:50:30 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/05 18:48:15 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	sigint_outfork(int signum)
 {
 	if (signum == SIGINT)
 	{
-		g_status = -1;
+		g_status = 130;
 		rl_done = 1;
 	}
 	return ;
