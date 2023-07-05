@@ -6,7 +6,7 @@
 /*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:45:48 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/30 11:38:45 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/05 17:10:22 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	check_built_no_fork(char **c, t_files *files, t_mishell *m)
 	len = ft_strlen(c[0]) + 1;
 	if (c[0] == NULL)
 		return (-1);
-	else if (check_if_cmd_built(m->cmds[m->pos_cmd]) == 1 && m->pos_cmd + 1 != m->nb_cmds)
+	else if (check_if_cmd_built(m->cmds[m->pos_cmd]) == 1 && \
+		m->pos_cmd + 1 != m->nb_cmds)
 		return (-1);
 	else if (ft_strncmp(c[0], "exit", len) == 0)
 		ft_exit(m);
@@ -37,7 +38,7 @@ int	check_built_no_fork(char **c, t_files *files, t_mishell *m)
 int	check_built_fork(char **c, t_files *files)
 {
 	size_t	len;
-	
+
 	len = ft_strlen(c[0]) + 1;
 	if (ft_strncmp(c[0], "pwd", len) == 0)
 		ft_pwd(c);
@@ -45,7 +46,7 @@ int	check_built_fork(char **c, t_files *files)
 		ft_env(*files, c);
 	else if (ft_strncmp(c[0], "echo", len) == 0)
 		ft_echo(c);
-	else 
+	else
 		return (0);
 	return (1);
 }
@@ -53,7 +54,7 @@ int	check_built_fork(char **c, t_files *files)
 int	check_if_cmd_built(t_cmd cmds)
 {
 	size_t	len;
-	char *c;
+	char	*c;
 
 	c = cmds.c[0];
 	len = ft_strlen(c) + 1;

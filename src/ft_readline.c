@@ -6,21 +6,21 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:16:03 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/05 13:36:27 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/05 17:19:30 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char *ft_readline(char *str)
+char	*ft_readline(char *str)
 {
-	char    *line;
+	char	*line;
 
 	line = readline(str);
 	if (line)
 	{
 		add_history(line);
-		return (line);		
+		return (line);
 	}
 	else
 		return (ft_strdup("exit"));
@@ -61,11 +61,11 @@ char	*ft_read_here_doc(char *prompt, char *eof)
 		if (line[0] == '\0')
 			return (line);
 		return (ft_strjoin(line, "\n"));
-		
 	}
 	else
 	{
-		printf("bash: warning: here-document delimited by end-of-file (wanted `%s')\n", eof);
+		printf("bash: warning: here-document delimited by end-of-file \
+(wanted `%s')\n", eof);
 		free(line);
 		return (eof);
 	}

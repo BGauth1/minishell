@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 12:51:30 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/05 16:37:09 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/05 18:12:40 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*add_quotes(char *s)
 		while (ft_iswhitespace(s[i]))
 			i++;
 		if (!s[i])
-			break;
+			break ;
 		if (!ft_iswhitespace(s[i]))
 		{
 			s = ft_add_char(s, '"', i);
@@ -31,7 +31,7 @@ char	*add_quotes(char *s)
 			s = ft_add_char(s, '"', i);
 		}
 		if (!s[i])
-			break;
+			break ;
 	}
 	return (s);
 }
