@@ -6,7 +6,7 @@
 /*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 19:51:11 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/05 18:41:15 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/06 11:26:11 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static char	*maj_tab_rec_cwd(void)
 	char	*tmp;
 
 	pwd = malloc(sizeof(char *) * 1024);
-	if (pwd)
+	if (!pwd)
 		exit (1);
 	if (getcwd(pwd, 1024) == NULL)
 	{
