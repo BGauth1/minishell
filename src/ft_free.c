@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 13:24:01 by gbertet           #+#    #+#             */
-/*   Updated: 2023/07/05 15:25:34 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/06 14:45:57 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,9 @@ void	ft_free_cmds(t_mishell *m)
 
 void	ft_free_files(t_mishell *mish)
 {
-	ft_free_tab(mish->files->tab_path);
-	ft_free_tab(mish->files->tab_var_env);
+	if (mish->files->tab_path)
+		ft_free_tab(mish->files->tab_path);
+	if (mish->files->tab_var_env)
+		ft_free_tab(mish->files->tab_var_env);
 	free(mish->files);
 }

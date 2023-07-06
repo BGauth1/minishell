@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:27:42 by gbertet           #+#    #+#             */
-/*   Updated: 2023/07/05 17:37:32 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/06 15:07:28 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,9 @@ static char	**ft_init_struct_cmds(t_mishell *m)
 
 static int	check_signal_here(char **tmp2, t_mishell *mish)
 {
-	if (g_status == 130)
+	if (g_status == -13)
 	{
+		g_status = 130;
 		ft_free_str(tmp2);
 		free(mish->cmds);
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:33:28 by gbertet           #+#    #+#             */
-/*   Updated: 2023/07/05 18:48:12 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/06 15:13:50 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_signal_heredoc(char *line, char *eof_buff, int fd)
 {
-	if (line[0] == 0 && g_status == 130)
+	if (line[0] == 0 && g_status == -13)
 	{
 		free(eof_buff);
 		close(fd);
