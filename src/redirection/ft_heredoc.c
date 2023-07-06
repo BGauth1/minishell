@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:33:28 by gbertet           #+#    #+#             */
-/*   Updated: 2023/07/06 15:13:50 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/06 17:00:00 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	ft_signal_heredoc(char *line, char *eof_buff, int fd)
 void	ft_fill_heredoc(char *eof, int fd)
 {
 	char	*line;
-	int		eof_len;
 	char	*eof_buf;
 
 	eof_buf = ft_strdup(eof);
@@ -34,12 +33,15 @@ void	ft_fill_heredoc(char *eof, int fd)
 	line = ft_read_here_doc("> ", eof_buf);
 	if (ft_signal_heredoc(line, eof_buf, fd) == 1)
 		return ;
-	eof_len = ft_strlen(eof_buf);
 	if (eof_buf)
 	{
-		while (ft_strncmp(line, eof_buf, eof_len + 1) || (line[0] && !eof_buf))
+		while (ft_strncmp(line, eof_buf, ft_strlen(eof_buf) + 1) || \
+			(line[0] && !eof_buf))
 		{
-			ft_putstr_fd(line, fd);
+			if (!line[0] && eof_buf[0])
+				ft_putstr_fd("\n", fd);
+			else
+				ft_putstr_fd(line, fd);
 			free(line);
 			line = ft_read_here_doc("> ", eof_buf);
 			if (ft_signal_heredoc(line, eof_buf, fd) == 1)
