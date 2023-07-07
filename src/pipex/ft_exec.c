@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 13:21:26 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/06 14:46:52 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/07 15:20:46 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	check_data_exec(t_mishell *m, char **env, char **cmd, char *path)
 	return (0);
 }
 
-int	ft_exec_cmd(t_mishell *m)
+void	ft_exec_cmd(t_mishell *m)
 {
 	char	*path;
 	char	**cmd;

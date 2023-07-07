@@ -207,7 +207,7 @@ int		ft_init_tab_pid(t_mishell *m);
 char	*ft_strjoin_path(char *path, char *cmd);
 
 //		FT_EXEC.C				//
-int		ft_exec_cmd(t_mishell *mish);
+void		ft_exec_cmd(t_mishell *mish);
 
 //		FT_PARSING_VAR_ENV.C	//
 char	*ft_handle_var_env(char *str, t_files files);

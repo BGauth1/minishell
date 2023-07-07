@@ -6,7 +6,7 @@
 /*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 15:55:00 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/06 14:41:52 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/07 15:29:46 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	**ft_get_tab_path(t_files files)
 
 static int	check_path_dir(char *c)
 {
-	if (c[0] == '.' && c[1] == '/')
+	if ((c[0] == '.' && c[1] == '/') || c[0] == '/')
 		return (1);
 	return (0);
 }
