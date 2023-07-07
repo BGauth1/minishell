@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:30:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/05 18:17:14 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/07 15:48:28 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,7 +207,7 @@ int		ft_init_tab_pid(t_mishell *m);
 char	*ft_strjoin_path(char *path, char *cmd);
 
 //		FT_EXEC.C				//
-void		ft_exec_cmd(t_mishell *mish);
+void	ft_exec_cmd(t_mishell *mish);
 
 //		FT_PARSING_VAR_ENV.C	//
 char	*ft_handle_var_env(char *str, t_files files);
