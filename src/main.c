@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 12:58:15 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/06 15:21:38 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/07 11:41:27 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,11 @@ static int	ft_mini_exec(t_mishell *mish)
 	return (0);
 }
 
-static int	ft_signal_parent(char *tmp)
+static int	ft_signal_parent(void)
 {
 	if (g_status == -13)
 	{
 		g_status = 130;
-		free(tmp);
 		return (1);
 	}
 	return (0);
@@ -54,7 +53,7 @@ static int	ft_prompt_parsing(t_mishell *mish)
 	prompt = ft_strjoin(mish->path, "$ ");
 	tmp = ft_readline(prompt);
 	free(prompt);
-	if (ft_signal_parent(tmp) == 1)
+	if (ft_signal_parent() == 1)
 		return (1);
 	else if (!empty_str(tmp))
 	{

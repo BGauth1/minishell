@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:16:03 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/05 17:19:30 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/07 11:40:38 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*ft_readline(char *str)
 	char	*line;
 
 	line = readline(str);
+	if (g_status == -13)
+		return (NULL);
 	if (line)
 	{
 		add_history(line);
