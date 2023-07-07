@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 13:47:51 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/05 15:56:39 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/07 12:42:12 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,18 @@ static void	ft_dup(int fd_in, int *fd, t_mishell m, int out)
 	}
 	else if (m.pos_cmd != m.nb_cmds - 1)
 	{
-		close(fd[0]);
 		dup2(fd[1], 1);
 		close(fd[1]);
 	}
 	if (fd_in > -1 && check_if_cmd_built(m.cmds[m.pos_cmd]) == 0)
 	{
-		close(fd[1]);
 		dup2(fd_in, 0);
 		close(fd_in);
+	}
+	else if (fd_in == -1)
+	{
+		dup2(fd[0], 0);
+		close(fd[0]);
 	}
 	if (fd_in > 1 && check_if_cmd_built(m.cmds[m.pos_cmd]) != 0)
 		close(fd_in);
