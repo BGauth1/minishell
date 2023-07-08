@@ -54,6 +54,8 @@ int	ft_check_end_name(char *str, int i)
 			break ;
 		if (str[i] >= 123 && str[i] <= 126)
 			break ;
+		if (str[i] == 10)
+			break ;
 		i++;
 	}
 	return (i);

@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:30:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/07 15:48:28 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/08 14:08:10 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,7 +232,7 @@ void	signal_maj_outfork(void);
 int		signal_check_readline(void);
 
 //		FT_HEREDOC.C			//
-void	ft_heredoc(char **cmds);
+void	ft_heredoc(char **cmds, t_mishell mish);
 
 //		FT_FREE.C				//
 void	ft_free_n_tab(char **tab, int n);

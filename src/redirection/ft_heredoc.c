@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:33:28 by gbertet           #+#    #+#             */
-/*   Updated: 2023/07/06 17:00:00 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/08 16:56:52 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,28 @@ int	ft_signal_heredoc(char *line, char *eof_buff, int fd)
 	return (0);
 }
 
-void	ft_fill_heredoc(char *eof, int fd)
+static void	ft_var_env_in_heredoc(char *tmp, t_mishell mish, char *eof, int fd)
+{
+	int		i;
+	char	*line;
+
+	i = ft_check_dollar(tmp, 0);
+	line = ft_handle_var_env(tmp, *mish.files);
+	if (i == -1)
+	{
+		line = ft_strdup(tmp);
+		free(tmp);
+	}
+	if (i != -1)
+		line = ft_remove_quotes(line);
+	if (!line[0] && eof[0])
+		ft_putstr_fd("\n", fd);
+	else
+		ft_putstr_fd(line, fd);
+	free(line);
+}
+
+void	ft_fill_heredoc(char *eof, int fd, t_mishell mish)
 {
 	char	*line;
 	char	*eof_buf;
@@ -38,11 +59,7 @@ void	ft_fill_heredoc(char *eof, int fd)
 		while (ft_strncmp(line, eof_buf, ft_strlen(eof_buf) + 1) || \
 			(line[0] && !eof_buf))
 		{
-			if (!line[0] && eof_buf[0])
-				ft_putstr_fd("\n", fd);
-			else
-				ft_putstr_fd(line, fd);
-			free(line);
+			ft_var_env_in_heredoc(line, mish, eof_buf, fd);
 			line = ft_read_here_doc("> ", eof_buf);
 			if (ft_signal_heredoc(line, eof_buf, fd) == 1)
 				return ;
@@ -52,7 +69,7 @@ void	ft_fill_heredoc(char *eof, int fd)
 	close(fd);
 }
 
-void	ft_heredoc(char **cmds)
+void	ft_heredoc(char **cmds, t_mishell mish)
 {
 	int		i;
 	int		fd;
@@ -72,10 +89,10 @@ void	ft_heredoc(char **cmds)
 					return ;
 				}
 				else
-					ft_fill_heredoc(cmds[i], fd);
+					ft_fill_heredoc(cmds[i], fd, mish);
 			}
 			else
-				ft_fill_heredoc(cmds[i], fd);
+				ft_fill_heredoc(cmds[i], fd, mish);
 		}
 	}
 }

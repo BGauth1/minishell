@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:27:42 by gbertet           #+#    #+#             */
-/*   Updated: 2023/07/06 15:07:28 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/08 14:06:28 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	get_cmds(t_mishell *m)
 		m->cmds[i].here_doc = m->here_doc[i];
 		tmp2 = ft_split_minishell(tmp[i], ' ');
 		j = -1;
-		ft_heredoc(tmp2);
+		ft_heredoc(tmp2, *m);
 		if (check_signal_here(tmp2, m) == 1)
 			break ;
 		m->cmds[i].fds = parsing_fd(tmp2);
