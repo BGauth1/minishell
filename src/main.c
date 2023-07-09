@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 12:58:15 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/07 11:41:27 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/09 22:01:07 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,29 @@ static int	ft_signal_parent(void)
 	return (0);
 }
 
+static char	*ft_prompt(t_mishell *mish)
+{
+	char	path[1024];
+	char	*prompt;
+
+	if (env_var_found(mish->files->tab_var_env, "PWD", "PWD") > 0)
+		prompt = ft_strjoin(mish->path, "$ ");
+	else
+	{
+		if (getcwd(path, sizeof(path)) == NULL)
+			exit (1);
+		prompt = ft_strjoin(path, "$ ");
+	}
+	free(mish->path);
+	return (prompt);
+}
+
 static int	ft_prompt_parsing(t_mishell *mish)
 {
 	char	*prompt;
 	char	*tmp;
 
-	if (getcwd(mish->path, sizeof(mish->path)) == NULL)
-		exit (1);
-	prompt = ft_strjoin(mish->path, "$ ");
+	prompt = ft_prompt(mish);
 	tmp = ft_readline(prompt);
 	free(prompt);
 	if (ft_signal_parent() == 1)
@@ -74,19 +89,24 @@ static int	ft_prompt_parsing(t_mishell *mish)
 int	main(int argc, char **argv, char **env)
 {
 	t_mishell	mish;
+	char		*pwd;
 
 	(void)argc;
 	(void)argv;
 	g_status = 0;
 	ft_init_tab_env(env, &mish);
-	signal_maj_outfork();
 	while (1)
 	{
+		signal_maj_outfork();
+		pwd = ft_strdup("$PWD");
+		mish.path = ft_handle_var_env(pwd, *mish.files);
+		if (mish.path)
+			mish.path = ft_remove_quotes(mish.path);
 		if (ft_prompt_parsing(&mish) == 1)
 			continue ;
-		signal_maj_outfork();
 		unlink(".heredoc");
 	}
+	free(mish.path);
 	ft_free_files(&mish);
 	free(mish.full_cmd);
 }
