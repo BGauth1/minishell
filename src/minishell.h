@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:30:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/09 22:02:34 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/09 22:15:04 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct s_mishell
 	struct s_cmd	*cmds;
 	char			**av;
 	char			*full_cmd;
-	char			path[1024];
+	char			*path;
 	int				nb_cmds;
 	int				pos_cmd;
 	int				type;
