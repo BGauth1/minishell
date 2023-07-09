@@ -6,13 +6,13 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:50:18 by gbertet           #+#    #+#             */
-/*   Updated: 2023/07/05 13:18:35 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/09 15:26:29 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	is_newline(char *s)
+static int	is_newline(char *s)
 {
 	int	res;
 	int	i;

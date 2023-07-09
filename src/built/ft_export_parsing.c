@@ -6,11 +6,25 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:32:04 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/05 17:10:21 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/09 15:32:53 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static int	check_egal(char *c)
+{
+	int	i;
+
+	i = 0;
+	while (c[i])
+	{
+		if (c[i] == '=')
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 int	env_var_found(char **tab, char *name, char *c)
 {
@@ -45,20 +59,6 @@ void	ft_error_export(char *c, int g, char *cmd)
 		printf("minishell: %s: %s: invalid option\n", cmd, c);
 		g_status = 2;
 	}
-}
-
-int	check_egal(char *c)
-{
-	int	i;
-
-	i = 0;
-	while (c[i])
-	{
-		if (c[i] == '=')
-			return (1);
-		i++;
-	}
-	return (0);
 }
 
 int	ft_parse_len(char **c, t_files *files)

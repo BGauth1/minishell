@@ -6,13 +6,13 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:42:56 by gbertet           #+#    #+#             */
-/*   Updated: 2023/07/05 13:18:51 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/09 15:27:41 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_parse_tab_name(char *str)
+static int	ft_parse_tab_name(char *str)
 {
 	int	i;
 
@@ -30,12 +30,16 @@ static void	ft_error_env(char *c, int g)
 {
 	if (g == 125)
 	{
-		printf("env: invalid option: %s\n", c);
+		ft_putstr_fd("env: invalid option: ", 2);
+		ft_putstr_fd(c, 2);
+		ft_putstr_fd("\n", 2);
 		g_status = 125;
 	}
 	if (g == 127)
 	{
-		printf("env: erreur argument: %s\n", c);
+		ft_putstr_fd("env: '", 2);
+		ft_putstr_fd(c, 2);
+		ft_putstr_fd("': No such file or directory\n", 2);
 		g_status = 127;
 	}
 }

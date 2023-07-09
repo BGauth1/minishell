@@ -6,13 +6,13 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:27:42 by gbertet           #+#    #+#             */
-/*   Updated: 2023/07/08 14:06:28 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/09 16:26:55 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	*has_here_doc(char *s, int nb_cmds)
+static int	*has_here_doc(char *s, int nb_cmds)
 {
 	int	*here_doc;
 	int	n;

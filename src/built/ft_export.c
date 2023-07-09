@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:59:02 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/05 18:02:05 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/09 16:05:42 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_realloc_tab_env(t_files *files, char *str)
 	files->tab_var_env = buf_tab;
 }
 
-char	*rec_var_env(char *str)
+static char	*rec_var_env(char *str)
 {
 	int		i;
 	char	*name;

@@ -6,13 +6,13 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 21:09:56 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/05 17:16:58 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/09 16:03:42 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_one_by_one(char **tab, int i)
+static int	ft_one_by_one(char **tab, int i)
 {
 	int	c;
 
@@ -36,7 +36,7 @@ int	ft_one_by_one(char **tab, int i)
 /* print tab avc declare -x + guillemet
  * et sans var_env _*/
 
-void	ft_print_tab_export(char **tab, int len, int c)
+static void	ft_print_tab_export(char **tab, int len, int c)
 {
 	int	i;
 	int	j;
@@ -67,7 +67,7 @@ void	ft_print_tab_export(char **tab, int len, int c)
 
 /*tri tab ordre alpha*/
 
-void	ft_sort_tab(char **tab, int len)
+static void	ft_sort_tab(char **tab, int len)
 {
 	int		i;
 	int		c;

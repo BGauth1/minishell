@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 18:54:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/04 15:17:21 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/09 16:19:35 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /* check si fd_in accessible
  * erreur chmod */
 
-int	ft_check_fdin(char *in)
+static int	ft_check_fdin(char *in)
 {
 	int	fd_in;
 
@@ -38,7 +38,7 @@ int	ft_check_fdin(char *in)
  * fichier de sortit si necessaire
  * et si possible*/
 
-int	ft_check_fdout(char *out, int err)
+static int	ft_check_fdout(char *out, int err)
 {
 	int	fd_out;
 

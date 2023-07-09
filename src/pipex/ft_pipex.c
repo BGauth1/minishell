@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 13:47:51 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/07 15:13:50 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/09 16:16:30 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static int	ft_pipe(t_mishell *m, int fd_in)
 	return (fd[0]);
 }
 
-void	waitpid_tab(t_mishell *m)
+static void	waitpid_tab(t_mishell *m)
 {
 	int	i;
 	int	status;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 12:48:56 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/06 15:14:42 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/09 16:21:09 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ void	sigquit_fork(int signum)
 	g_status = 131;
 }
 
-int	signal_check_readline(void)
+static int	signal_check_readline(void)
 {
 	return (0);
 }
 
-void	sigint_outfork(int signum)
+static void	sigint_outfork(int signum)
 {
 	if (signum == SIGINT)
 	{

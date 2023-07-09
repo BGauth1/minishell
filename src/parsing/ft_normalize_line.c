@@ -6,13 +6,13 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 17:59:08 by gbertet           #+#    #+#             */
-/*   Updated: 2023/07/05 18:09:48 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/09 16:10:42 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*format_str_spaces(char *s)
+static char	*format_str_spaces(char *s)
 {
 	int	i;
 
@@ -67,7 +67,7 @@ char	*normalize_str(char *s, t_files *files)
 	return (res);
 }
 
-int	ft_nb_redir(char **cmd)
+static int	ft_nb_redir(char **cmd)
 {
 	int		i;
 	int		size;

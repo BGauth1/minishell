@@ -6,13 +6,13 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:09:03 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/05 18:41:04 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/09 16:18:46 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_count_char(char **str, char c)
+static int	ft_count_char(char **str, char c)
 {
 	int		i;
 	int		j;
@@ -32,7 +32,7 @@ int	ft_count_char(char **str, char c)
 	return (j);
 }
 
-int	redirect_type(char *str)
+static int	redirect_type(char *str)
 {
 	if (!ft_strncmp(str, "<", 2) || !ft_strncmp(str, ">", 2))
 		return (0);
@@ -46,7 +46,7 @@ int	redirect_type(char *str)
 	return (-1);
 }
 
-char	**find_redirect(char **str, t_fds *fds, char **tmp_fds, int **type)
+static char	**find_redirect(char **str, t_fds *fds, char **tmp_fds, int **type)
 {
 	int		i;
 	int		j;

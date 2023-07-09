@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 16:52:20 by gbertet           #+#    #+#             */
-/*   Updated: 2023/07/05 17:56:49 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/09 16:12:05 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	check_pipe(char *s)
 	return (0);
 }
 
-int	check_redir(char *s)
+static int	check_redir(char *s)
 {
 	int	i;
 
@@ -73,7 +73,7 @@ int	check_redir(char *s)
 	return (0);
 }
 
-int	check_quotes(char *s)
+static int	check_quotes(char *s)
 {
 	int	i;
 	int	sq;

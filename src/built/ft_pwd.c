@@ -6,13 +6,13 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:02:12 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/05 17:58:20 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/09 21:24:41 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_parsing_pwd(char **c)
+static int	ft_parsing_pwd(char **c)
 {
 	if (c[1] && c[1][0] == '-')
 	{

@@ -6,13 +6,13 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:33:28 by gbertet           #+#    #+#             */
-/*   Updated: 2023/07/08 16:56:52 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/09 16:18:00 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_signal_heredoc(char *line, char *eof_buff, int fd)
+static int	ft_signal_heredoc(char *line, char *eof_buff, int fd)
 {
 	if (line[0] == 0 && g_status == -13)
 	{
@@ -44,7 +44,7 @@ static void	ft_var_env_in_heredoc(char *tmp, t_mishell mish, char *eof, int fd)
 	free(line);
 }
 
-void	ft_fill_heredoc(char *eof, int fd, t_mishell mish)
+static void	ft_fill_heredoc(char *eof, int fd, t_mishell mish)
 {
 	char	*line;
 	char	*eof_buf;

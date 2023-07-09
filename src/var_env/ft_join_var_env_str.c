@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_join_var_env_str.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 17:29:51 by lamasson          #+#    #+#             */
-/*   Updated: 2023/06/15 13:04:41 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/09 16:23:33 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*ft_strjoin_loop(char *tmp, char *buf)
 	return (s3);
 }
 
-void	ft_choose_loop(t_var_env *data, int new_start)
+static void	ft_choose_loop(t_var_env *data, int new_start)
 {
 	char	*buf;
 

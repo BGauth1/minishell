@@ -6,13 +6,13 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 12:51:30 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/05 18:12:40 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/09 21:53:12 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*add_quotes(char *s)
+static char	*add_quotes(char *s)
 {
 	int	i;
 
@@ -121,7 +121,10 @@ char	*ft_handle_var_env(char *str, t_files files)
 		return (data.str);
 	ft_parse_struct_var_env(str, &data);
 	ft_init_new_str(files, &data);
-	new_str = ft_strdup(data.tmp);
+	if (data.tmp[0])
+		new_str = ft_strdup(data.tmp);
+	else
+		new_str = NULL;
 	ft_free_data_var_env(&data, data.nb_dol);
 	return (new_str);
 }
