@@ -6,14 +6,11 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 18:54:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/04 15:17:21 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/09 15:22:17 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-/* check si fd_in accessible
- * erreur chmod */
 
 int	ft_check_fdin(char *in)
 {
@@ -32,11 +29,6 @@ int	ft_check_fdin(char *in)
 		close(fd_in);
 	return (0);
 }
-
-/* check si fd_out accessible
- * erreur chmod et creation du
- * fichier de sortit si necessaire
- * et si possible*/
 
 int	ft_check_fdout(char *out, int err)
 {
