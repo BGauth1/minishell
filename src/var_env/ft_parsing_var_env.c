@@ -121,10 +121,7 @@ char	*ft_handle_var_env(char *str, t_files files)
 		return (data.str);
 	ft_parse_struct_var_env(str, &data);
 	ft_init_new_str(files, &data);
-	if (data.tmp[0])
-		new_str = ft_strdup(data.tmp);
-	else
-		new_str = NULL;
+	new_str = ft_strdup(data.tmp);
 	ft_free_data_var_env(&data, data.nb_dol);
 	return (new_str);
 }
