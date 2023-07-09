@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 12:58:15 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/09 22:02:19 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/09 22:08:11 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,23 @@ static int	ft_signal_parent(void)
 		return (1);
 	}
 	return (0);
+}
+
+static char	*ft_prompt(t_mishell *mish)
+{
+	char	path[1024];
+	char	*prompt;
+
+	if (env_var_found(mish->files->tab_var_env, "PWD", "PWD") > 0)
+		prompt = ft_strjoin(mish->path, "$ ");
+	else
+	{
+		if (getcwd(path, sizeof(path)) == NULL)
+			exit (1);
+		prompt = ft_strjoin(path, "$ ");
+	}
+	free(mish->path);
+	return (prompt);
 }
 
 static int	ft_prompt_parsing(t_mishell *mish)

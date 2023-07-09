@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:53:32 by gbertet           #+#    #+#             */
-/*   Updated: 2023/07/05 18:14:06 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/09 15:20:53 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ int	ft_betweenchar(char *s, int pos, char cquote)
 	return (0);
 }
 
-/*	Return 1 si le char s[pos] est entre des
-	doubles/simples quotes, sinon return 0.	*/
 int	ft_betweenquotes(char *s, int pos)
 {
 	if (pos < 0)

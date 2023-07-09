@@ -6,16 +6,13 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 18:54:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/09 16:19:35 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/09 22:06:05 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-/* check si fd_in accessible
- * erreur chmod */
-
-static int	ft_check_fdin(char *in)
+int	ft_check_fdin(char *in)
 {
 	int	fd_in;
 
@@ -33,12 +30,7 @@ static int	ft_check_fdin(char *in)
 	return (0);
 }
 
-/* check si fd_out accessible
- * erreur chmod et creation du
- * fichier de sortit si necessaire
- * et si possible*/
-
-static int	ft_check_fdout(char *out, int err)
+int	ft_check_fdout(char *out, int err)
 {
 	int	fd_out;
 

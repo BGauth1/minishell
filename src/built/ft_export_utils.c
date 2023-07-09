@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 21:09:56 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/09 16:03:42 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/09 22:07:22 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,6 @@ static int	ft_one_by_one(char **tab, int i)
 	}
 	return (1);
 }
-
-/* print tab avc declare -x + guillemet
- * et sans var_env _*/
 
 static void	ft_print_tab_export(char **tab, int len, int c)
 {
@@ -65,8 +62,6 @@ static void	ft_print_tab_export(char **tab, int len, int c)
 	}
 }
 
-/*tri tab ordre alpha*/
-
 static void	ft_sort_tab(char **tab, int len)
 {
 	int		i;
@@ -89,8 +84,6 @@ static void	ft_sort_tab(char **tab, int len)
 	}
 	ft_print_tab_export(tab, len, c);
 }
-
-/* malloc nvx tab copy tab_var_env ds nvx tab */
 
 int	ft_export_no_arg(t_files files)
 {
