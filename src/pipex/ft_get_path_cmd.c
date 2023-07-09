@@ -6,7 +6,7 @@
 /*   By: lamasson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 15:55:00 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/07 15:29:46 by lamasson         ###   ########.fr       */
+/*   Updated: 2023/07/09 13:48:39 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,11 @@ void	ft_cmd_path_ready(t_mishell *mish)
 	while (j < mish->nb_cmds)
 	{
 		if (check_if_cmd_built(mish->cmds[j]) == 0 && \
-			mish->cmds[j].c[0][0] != '\0' && mish->files->tab_path != NULL)
+			mish->cmds[j].c[0][0] != '\0')
 		{
-			ft_init_path_cmd(mish, *mish->files, j);
-			if (mish->cmds[j].path == NULL && \
-				check_path_dir(mish->cmds[j].c[0]) == 1)
+			if (mish->files->tab_path != NULL)
+				ft_init_path_cmd(mish, *mish->files, j);
+			if (!mish->cmds[j].path && check_path_dir(mish->cmds[j].c[0]) == 1)
 			{
 				if (access(mish->cmds[j].c[0], F_OK) == 0)
 					mish->cmds[j].path = ft_strdup (mish->cmds[j].c[0]);
