@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:08:33 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/05 13:17:50 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/09 13:54:00 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	parsing_cd(char **c)
 		printf("minishell: %s: too many arguments\n", c[0]);
 		g_status = 1;
 	}
-	else if (c[1][0] == '-')
+	else if (len > 1 && c[1][0] == '-')
 		ft_error_export(c[1], 2, c[0]);
 	else
 		return (0);
