@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 12:58:15 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/09 22:13:10 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/10 15:39:15 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,14 @@ int	g_status;
 
 static int	ft_mini_exec(t_mishell *mish)
 {
+	char	**tmp;
+
 	if (synthax_check(mish->full_cmd))
 	{
-		get_cmds(mish);
+		tmp = ft_init_struct_cmds(mish);
+		if (!tmp)
+			return (1);
+		get_cmds(mish, tmp);
 		mish->files->tab_path = ft_get_tab_path(*mish->files);
 		if (g_status != 130)
 		{

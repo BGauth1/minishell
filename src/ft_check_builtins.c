@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:45:48 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/09 21:26:51 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/10 14:57:04 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	check_built_no_fork(char **c, t_files *files, t_mishell *m)
 		ft_exit(m);
 	else if (ft_strncmp(c[0], "cd", len) == 0)
 		ft_cd(c, files);
-	else if (ft_strncmp(c[0], "export", len) == 0)
+	else if (ft_strncmp(c[0], "export", len) == 0 && m->nb_cmds == 1)
 		ft_export(c, files);
 	else if (ft_strncmp(c[0], "unset", len) == 0)
 		ft_unset(c, files);
@@ -46,6 +46,8 @@ int	check_built_fork(char **c, t_files *files)
 		ft_env(*files, c);
 	else if (ft_strncmp(c[0], "echo", len) == 0)
 		ft_echo(c);
+	else if (ft_strncmp(c[0], "export", len) == 0)
+		ft_export(c, files);
 	else
 		return (0);
 	return (1);
@@ -65,7 +67,7 @@ int	check_if_cmd_built(t_cmd cmds)
 	else if (ft_strncmp(c, "exit", len) == 0)
 		return (3);
 	else if (ft_strncmp(c, "export", len) == 0)
-		return (1);
+		return (2);
 	else if (ft_strncmp(c, "unset", len) == 0)
 		return (1);
 	else if (ft_strncmp(c, "pwd", len) == 0)

@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:27:42 by gbertet           #+#    #+#             */
-/*   Updated: 2023/07/09 16:26:55 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/10 15:40:53 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	*has_here_doc(char *s, int nb_cmds)
 	return (here_doc);
 }
 
-static char	**ft_init_struct_cmds(t_mishell *m)
+char	**ft_init_struct_cmds(t_mishell *m)
 {
 	int		i;
 	char	**tmp;
@@ -49,6 +49,11 @@ static char	**ft_init_struct_cmds(t_mishell *m)
 	i = 0;
 	m->full_cmd = ft_handle_var_env(m->full_cmd, *m->files);
 	g_status = 0;
+	if (m->full_cmd[0] == '\0')
+	{
+		free(m->full_cmd);
+		return (NULL);
+	}
 	tmp = ft_split_minishell(m->full_cmd, '|');
 	while (tmp[i])
 		i++;
@@ -71,14 +76,12 @@ static int	check_signal_here(char **tmp2, t_mishell *mish)
 	return (0);
 }
 
-void	get_cmds(t_mishell *m)
+void	get_cmds(t_mishell *m, char **tmp)
 {
 	int		i;
 	int		j;
-	char	**tmp;
 	char	**tmp2;
 
-	tmp = ft_init_struct_cmds(m);
 	i = -1;
 	while (++i < m->nb_cmds)
 	{
