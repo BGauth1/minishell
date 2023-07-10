@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:54:31 by gbertet           #+#    #+#             */
-/*   Updated: 2023/07/05 15:31:04 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/10 19:33:50 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ static char	*ft_parsing_exit(t_mishell *m)
 		len = -1;
 	while (arg[i] != '\0')
 	{
-		if ((ft_isdigit(arg[i]) == 0 && arg[i] != '-') || len == -1)
+		if ((ft_isdigit(arg[i]) == 0 && arg[i] != '-' && arg[i] != '+') || \
+			len == -1)
 		{
 			g_status = 2;
 			printf("minishell: exit: %s: numeric argument required\n", arg);
