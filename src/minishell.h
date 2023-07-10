@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:30:57 by lamasson          #+#    #+#             */
-/*   Updated: 2023/07/09 22:15:04 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/10 15:41:16 by lamasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,7 +220,8 @@ void	ft_free_cmds(t_mishell *m);
 void	ft_free_files(t_mishell *mish);
 
 //		./FT_GET_CMDS.C			//
-void	get_cmds(t_mishell *m);
+void	get_cmds(t_mishell *m, char **tmp);
+char	**ft_init_struct_cmds(t_mishell *m);
 
 //			FT_READLINE.C		//
 char	*ft_readline(char *str);
