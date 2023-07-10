@@ -6,7 +6,7 @@
 /*   By: gbertet <gbertet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 18:02:41 by gbertet           #+#    #+#             */
-/*   Updated: 2023/07/05 18:09:22 by gbertet          ###   ########.fr       */
+/*   Updated: 2023/07/10 19:39:11 by gbertet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*remove_char(char *s, int pos)
 	while (s[pos])
 	{
 		s[pos] = s[pos + 1];
-			pos++;
+		pos++;
 	}
 	s[ft_strlen(s)] = '\0';
 	return (s);
